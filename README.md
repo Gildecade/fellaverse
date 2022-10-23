@@ -32,9 +32,10 @@
   <a href="#license">License</a>
 </p>
 
-![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
 -->
-## Fellas Community
+![screenshot](https://github.com/darren-zdc/fellaverse/blob/main/title.png)
+
+## Fellaverse
 This project is meant to create a fun community for all the fellas. 
 As the first step, a gym community will be implemented for everyone who wants to learn how to work out and mark their fitness records.   
 
