@@ -1,7 +1,12 @@
 server:
   port: 8080
-
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   type-aliases-package: com.fellaverse.backend.bean
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/employee?serverTimezone=UTC
+    username: root
+    password: root
 
