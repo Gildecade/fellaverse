@@ -8,16 +8,18 @@ import {
   HomeOutlined,
 } from '@ant-design/icons';
 import { Breadcrumb, Col, Layout, Menu, Row, theme, Space } from 'antd';
-import Index from './pages';
 import {
   Routes,
   Route,
   Link
 } from "react-router-dom";
-import logo from './images/title.png'
+// import logo from './images/title.png'
+
+import Index from './pages';
 import LoginForm from './pages/authentication/login';
 import RegisterForm from './pages/authentication/register';
 import HeaderSearch from './pages/headerSearch';
+// TODO: import your components here
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -30,6 +32,7 @@ function getItem(label, key, icon, children) {
 }
 const homePage = 'Home';
 const items = [
+  // TODO: modify sider contents here
   getItem(<Link to='/'>{homePage}</Link>, '1', <HomeOutlined />),
   getItem('eShop', '2', <ShopOutlined />),
   getItem('User', 'sub1', <UserOutlined />, [
@@ -40,6 +43,7 @@ const items = [
   getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
   getItem('Files', '9', <FileOutlined />),
 ];
+
 const App = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -105,6 +109,7 @@ const App = () => {
             }}
           >
             <Routes>
+              {/* TODO: link your components(element) with route paths here */}
               <Route path="/" element={<Index />} />
             </Routes>
           </div>
