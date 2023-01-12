@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import {
-  DesktopOutlined,
+  ShopOutlined,
   FileOutlined,
   PieChartOutlined,
   TeamOutlined,
   UserOutlined,
+  HomeOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Breadcrumb, Col, Layout, Menu, Row, theme, Space } from 'antd';
 import Index from './pages';
 import {
   Routes,
@@ -14,6 +15,9 @@ import {
   Link
 } from "react-router-dom";
 import logo from './images/title.png'
+import LoginForm from './pages/authentication/login';
+import RegisterForm from './pages/authentication/register';
+import HeaderSearch from './pages/headerSearch';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -24,12 +28,13 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
+const homePage = 'Home';
 const items = [
-  getItem('Option 1', '1', <PieChartOutlined />),
-  getItem('Option 2', '2', <DesktopOutlined />),
+  getItem(<Link to='/'>{homePage}</Link>, '1', <HomeOutlined />),
+  getItem('eShop', '2', <ShopOutlined />),
   getItem('User', 'sub1', <UserOutlined />, [
-    getItem('Tom', '3'),
-    getItem('Bill', '4'),
+    getItem('Record', '3'),
+    getItem('Schedule', '4'),
     getItem('Alex', '5'),
   ]),
   getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
@@ -57,12 +62,24 @@ const App = () => {
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
       </Sider>
       <Layout className="site-layout">
-        <Header
-          style={{
+        <Header style={{
             padding: 0,
             background: colorBgContainer,
           }}
-        />
+        >
+          <Row>
+            <Col span={4} style={{top:15,}} offset={6}>
+              <HeaderSearch></HeaderSearch>
+            </Col>
+            <Col span={1} offset={10}>
+              <LoginForm></LoginForm>
+            </Col>
+            <Col span={1} >
+              <RegisterForm></RegisterForm>
+            </Col>
+          </Row>
+          
+        </Header>
         <Content
           style={{
             margin: '0 16px',
@@ -73,7 +90,11 @@ const App = () => {
               margin: '16px 0',
             }}
           >
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to='/'>
+                {homePage}
+              </Link>
+            </Breadcrumb.Item>
             {/* <Breadcrumb.Item>Bill</Breadcrumb.Item> */}
           </Breadcrumb>
           <div
