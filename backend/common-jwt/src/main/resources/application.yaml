@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: JWT-TEST
+
+fellaverse:
+  security:
+    config:
+      jwt:
+        sign: fellaverse
+        issuer: fellas
+        secret: www.fellaverse.com/gch/darren/chiu/jingshuo
+        expire: 600
+      password:
+        encrypt:
+          repeat: 5
+          salt: www.fellaverse.com
