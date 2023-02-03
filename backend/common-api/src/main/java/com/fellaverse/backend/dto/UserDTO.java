@@ -1,6 +1,7 @@
 package com.fellaverse.backend.dto;
 
 import com.fellaverse.backend.Validator.ValidGroup;
+import com.fellaverse.backend.annotation.EnumString;
 import com.fellaverse.backend.enumerator.UserStatus;
 import jakarta.validation.constraints.*;
 import lombok.Data;
@@ -31,5 +32,6 @@ public class UserDTO {
 
     @Null(groups = ValidGroup.Crud.Create.class, message = "Status should be null when registering")
     @NotNull(groups = ValidGroup.Crud.Update.class, message = "Status cannot be null")
+    @EnumString(value = {"normal","locked","unknown"}, message="invalid status")
     private UserStatus status;
 }
