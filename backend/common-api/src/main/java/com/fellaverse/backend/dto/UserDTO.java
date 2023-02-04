@@ -1,6 +1,6 @@
 package com.fellaverse.backend.dto;
 
-import com.fellaverse.backend.Validator.ValidGroup;
+import com.fellaverse.backend.validator.ValidGroup;
 import com.fellaverse.backend.annotation.EnumString;
 import com.fellaverse.backend.enumerator.UserStatus;
 import jakarta.validation.constraints.*;
