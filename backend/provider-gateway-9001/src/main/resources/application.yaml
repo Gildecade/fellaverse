@@ -1,0 +1,68 @@
+server:
+  port: 9001
+
+# register this microservice to eureka server
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: springcloud-gateway-9001
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.client.eureka-server-port}/eureka/
+    eureka-server-port: 8761
+# enable eureka status, then we can access to port/actuator/info
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+# springboot actuator info
+info:
+  app.name: microservice-gateway
+  author: GCH
+
+spring:
+  application:
+    name: springcloud-gateway
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      discovery:
+        locator:
+          enabled: true  # current service can discover and find other services
+          lower-case-service-id: true  # transform into lower case
+      routes:
+        - id: provider-token
+          uri: lb://springcloud-provider-token
+          predicates:
+            - Path=/token/**
+
+learn:
+  security:
+    config:
+      jwt:
+        sign: fellaverse
+        issuer: gch
+        secret: www.fellaverse.com/gch/darren/chiu/jingshuo
+        expire: 600
+      password:
+        encrypt:
+          repeat: 5
+          salt: www.fellaverse.com
+
+gateway:  # DIY config
+  config:
+    jwt:
+      header-name: fellaverse-token  #  para name
+      skip-auth-urls:  # no auth needed url
+        - /token/create
