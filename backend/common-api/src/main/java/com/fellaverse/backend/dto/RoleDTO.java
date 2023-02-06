@@ -7,9 +7,11 @@ import jakarta.validation.constraints.Null;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 @Data
 @Accessors(chain = true)
-public class RoleDTO {
+public class RoleDTO implements Serializable {
     @Null(groups = ValidGroup.Crud.Create.class, message = "Role ID should be null when creating")
     @NotNull(groups = {ValidGroup.Crud.Update.class, ValidGroup.Crud.Delete.class}, message = "Role ID cannot be null")
     private Long id;

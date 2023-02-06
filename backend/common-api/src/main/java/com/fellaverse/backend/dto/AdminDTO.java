@@ -5,9 +5,11 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 @Data
 @Accessors(chain = true)
-public class AdminDTO {
+public class AdminDTO implements Serializable {
     @Null(groups = ValidGroup.Crud.Create.class, message = "Admin ID should be null when creating")
     @NotNull(groups = {ValidGroup.Crud.Update.class, ValidGroup.Crud.Delete.class}, message = "Admin ID cannot be null")
     private Long id;
