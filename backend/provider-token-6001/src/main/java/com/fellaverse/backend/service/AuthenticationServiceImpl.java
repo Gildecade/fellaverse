@@ -40,8 +40,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                 result.put("status", true);
                 // store userId, username, functions and more useful information in token
                 result.put("id", user.getId());
-                result.put("name", user.getUsername());
                 Map<String, Object> resource = new HashMap<>();
+                resource.put("username", user.getUsername());
                 // TODO: add functions
                 //List<Long> functionIds = this.functionRepository.findFunctionIdsByUserId(id);
                 //resource.put("functions", functionIds);
@@ -52,8 +52,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
             result.put("status", true);
             // store adminId, username, roles and more useful information in token
             result.put("id", admin.getId());
-            result.put("name", admin.getUsername());
             Map<String, Object> resource = new HashMap<>();
+            resource.put("username", admin.getUsername());
             List<Long> roleIds = this.roleRepository.findRoleIdsByAdminId(admin.getId());
             resource.put("roles", roleIds);
             result.put("resource", resource);
