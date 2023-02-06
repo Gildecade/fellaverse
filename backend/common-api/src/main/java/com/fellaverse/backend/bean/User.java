@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -44,4 +45,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     // create a enum in package enumerator
     private UserStatus status;
+
+    @OneToMany(mappedBy = "id")
+    private Set<CheckIn> checkIns;
 }
