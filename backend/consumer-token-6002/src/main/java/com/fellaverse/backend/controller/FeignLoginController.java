@@ -7,6 +7,7 @@ import com.fellaverse.backend.validator.ValidGroup;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,11 +21,9 @@ public class FeignLoginController {
     private FeignAuthenticationService feignAuthenticationService;
 
     @PostMapping("/create")
-    public Object login(@Validated(value = ValidGroup.Crud.Query.class) @RequestBody UserDTO userDTO, HttpServletResponse response) {
-        Object result = feignAuthenticationService.login(userDTO);
-        if (result == null) {
-            return ResultData.fail(HttpStatus.BAD_REQUEST.value(), "Login Failed");
-        }
+    public String login(@Validated(value = ValidGroup.Crud.Query.class) @RequestBody UserDTO userDTO) {
+        String result = feignAuthenticationService.login(userDTO);
+        Assert.notNull(result, "Login Failed");
         return result;
     }
 }

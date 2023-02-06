@@ -62,4 +62,10 @@ public class RestExceptionHandler {
 
         return new ResponseEntity<>(resp,HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResultData<String> exception(IllegalArgumentException e) {
+        return ResultData.fail(ReturnCode.ILLEGAL_ARGUMENT.getCode(),e.getMessage());
+    }
 }
