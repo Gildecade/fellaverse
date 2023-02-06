@@ -3,8 +3,10 @@ package com.fellaverse.backend.dto;
 import com.fellaverse.backend.validator.ValidGroup;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
+@Accessors(chain = true)
 public class AdminDTO {
     @Null(groups = ValidGroup.Crud.Create.class, message = "Admin ID should be null when creating")
     @NotNull(groups = {ValidGroup.Crud.Update.class, ValidGroup.Crud.Delete.class}, message = "Admin ID cannot be null")

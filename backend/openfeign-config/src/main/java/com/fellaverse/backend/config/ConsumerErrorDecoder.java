@@ -15,6 +15,7 @@ public class ConsumerErrorDecoder implements ErrorDecoder {
         Exception exception;
         try {
             String json = Util.toString(response.body().asReader(StandardCharsets.UTF_8));
+            System.out.println(response.body());
             // DIY exception
             exception = new RuntimeException(json);
         } catch (IOException ex) {

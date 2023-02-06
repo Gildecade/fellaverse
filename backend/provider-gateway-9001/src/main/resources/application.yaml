@@ -5,7 +5,7 @@ server:
 eureka:
   instance:
     hostname: localhost
-    instance-id: springcloud-gateway-9001
+    instance-id: provider-gateway-9001
   client:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${eureka.client.eureka-server-port}/eureka/
@@ -26,7 +26,7 @@ info:
 
 spring:
   application:
-    name: springcloud-gateway
+    name: provider-gateway
   main:
     web-application-type: reactive
   cloud:
@@ -42,17 +42,22 @@ spring:
           enabled: true  # current service can discover and find other services
           lower-case-service-id: true  # transform into lower case
       routes:
-        - id: provider-token
-          uri: lb://springcloud-provider-token
-          predicates:
-            - Path=/token/**
+        - id: provider-token  # meaningless, but unique required
+          uri: lb://provider-token  # corresponding spring application name, lb:// means enable load balance
+          predicates:  # see tutorial to find more kinds of filter
+            - Path=/api/token/**  # corresponding microservice url
+        # add more microservice here
+        - id: consumer-token  # meaningless, but unique required
+          uri: lb://consumer-token  # corresponding spring application name, lb:// means enable load balance
+          predicates: # see tutorial to find more kinds of filter
+            - Path=/token/**  # corresponding microservice url
 
-learn:
+fellaverse:
   security:
     config:
       jwt:
         sign: fellaverse
-        issuer: gch
+        issuer: fellas
         secret: www.fellaverse.com/gch/darren/chiu/jingshuo
         expire: 600
       password:
@@ -66,3 +71,4 @@ gateway:  # DIY config
       header-name: fellaverse-token  #  para name
       skip-auth-urls:  # no auth needed url
         - /token/create
+        - /api/token/create

@@ -5,8 +5,10 @@ import com.fellaverse.backend.annotation.EnumString;
 import com.fellaverse.backend.enumerator.UserStatus;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
+@Accessors(chain = true)
 public class UserDTO {
     @Null(groups = ValidGroup.Crud.Create.class, message = "User ID should be null when creating")
     @NotNull(groups = {ValidGroup.Crud.Update.class, ValidGroup.Crud.Delete.class}, message = "User ID cannot be null")
@@ -15,10 +17,10 @@ public class UserDTO {
     @NotBlank(groups = {ValidGroup.Crud.Create.class, ValidGroup.Crud.Update.class}, message = "Username cannot be blank")
     private String username;
 
-    @NotBlank(groups = {ValidGroup.Crud.Create.class, ValidGroup.Crud.Update.class}, message = "Password cannot be blank")
+    @NotBlank(groups = {ValidGroup.Crud.Create.class, ValidGroup.Crud.Update.class, ValidGroup.Crud.Query.class}, message = "Password cannot be blank")
     private String password;
 
-    @NotBlank(groups = {ValidGroup.Crud.Create.class, ValidGroup.Crud.Update.class}, message = "Email cannot be blank")
+    @NotBlank(groups = {ValidGroup.Crud.Create.class, ValidGroup.Crud.Update.class, ValidGroup.Crud.Query.class}, message = "Email cannot be blank")
     @Email(message = "Please enter correct Email address")
     private String email;
 
@@ -32,6 +34,6 @@ public class UserDTO {
 
     @Null(groups = ValidGroup.Crud.Create.class, message = "Status should be null when registering")
     @NotNull(groups = ValidGroup.Crud.Update.class, message = "Status cannot be null")
-    @EnumString(value = {"normal","locked","unknown"}, message="invalid status")
+    @EnumString(value = {"normal","locked","unknown"}, groups = ValidGroup.Crud.Update.class, message="invalid status")
     private UserStatus status;
 }
