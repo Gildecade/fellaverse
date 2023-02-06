@@ -1,6 +1,7 @@
 package com.fellaverse.backend.bean;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,8 +35,9 @@ public class CheckIn {
     @Column(name = "weight")
     private Float weight;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @Id
+    @ManyToOne(optional = false)
+    @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName="id")
     private User user;
 
 }
