@@ -1,9 +1,8 @@
 package com.fellaverse.backend.repository;
 
 import com.fellaverse.backend.bean.Role;
+import com.fellaverse.backend.projection.RoleInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

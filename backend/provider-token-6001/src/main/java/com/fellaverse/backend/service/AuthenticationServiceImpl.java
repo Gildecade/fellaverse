@@ -2,10 +2,9 @@ package com.fellaverse.backend.service;
 
 import com.fellaverse.backend.bean.Admin;
 import com.fellaverse.backend.bean.User;
-import com.fellaverse.backend.dto.UserDTO;
 import com.fellaverse.backend.dto.UserLoginDTO;
+import com.fellaverse.backend.projection.RoleInfo;
 import com.fellaverse.backend.repository.AdminRepository;
-import com.fellaverse.backend.repository.RoleInfo;
 import com.fellaverse.backend.repository.RoleRepository;
 import com.fellaverse.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
