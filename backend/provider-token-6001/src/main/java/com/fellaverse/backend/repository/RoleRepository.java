@@ -10,6 +10,5 @@ import java.util.List;
 
 @Repository
 public interface RoleRepository  extends JpaRepository<Role, Long> {
-    @Query(value = "select role_id from admin_role where admin_id = :adminId", nativeQuery = true)
-    public List<Long> findRoleIdsByAdminId(@Param("adminId") Long adminId);
+    List<RoleInfo> findByAdmins_Id(Long id);
 }

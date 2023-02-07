@@ -1,6 +1,7 @@
 package com.fellaverse.backend.controller;
 
 import com.fellaverse.backend.dto.UserDTO;
+import com.fellaverse.backend.dto.UserLoginDTO;
 import com.fellaverse.backend.jwt.service.JWTTokenService;
 import com.fellaverse.backend.jwt.service.PasswordEncryptService;
 import com.fellaverse.backend.service.AuthenticationService;
@@ -26,10 +27,10 @@ public class LoginController {
 
     @PostMapping("/create")  // whole url is localhost:port/api/token/create, only allow post method
     // @Validated to enable parameters validation for login, @RequestBody to acquire json object from request body
-    public Object login(@Validated(value = ValidGroup.Crud.Query.class) @RequestBody UserDTO userDTO) {
+    public Object login(@Validated @RequestBody UserLoginDTO userLoginDTO) {
         // encrypt password from cleartext to ciphertext
-        userDTO.setPassword(this.passwordEncryptService.getEncryptedPassword(userDTO.getPassword()));
-        Map<String, Object> result = this.authenticationService.login(userDTO);
+        userLoginDTO.setPassword(this.passwordEncryptService.getEncryptedPassword(userLoginDTO.getPassword()));
+        Map<String, Object> result = this.authenticationService.login(userLoginDTO);
         if ((Boolean)result.get("status")) {
             return this.jwtTokenService.createToken(result.get("id").toString(), (Map<String, Object>) result.get("resource"));
         }
