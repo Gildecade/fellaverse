@@ -48,6 +48,9 @@ public class User {
     // create a enum in package enumerator
     private UserStatus status;
 
+    @OneToMany(mappedBy = "id")
+    private Set<CheckIn> checkIns;
+
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private Set<Schedule> schedules = new LinkedHashSet<>();
 
