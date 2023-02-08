@@ -49,6 +49,10 @@ public class User {
     @OneToMany(mappedBy = "id")
     private Set<CheckIn> checkIns;
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany @JoinTable(
+            name = "user_function",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "function_id")
+    )
     private Set<Function> functions;
 }
