@@ -48,6 +48,5 @@
             <groupId>org.hibernate.common</groupId>
             <artifactId>hibernate-commons-annotations</artifactId>
         </dependency>
-
     </dependencies>
 </project>

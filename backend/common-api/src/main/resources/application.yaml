@@ -3,13 +3,6 @@ server:
 spring:
   application:
     name: springJpa
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    # create db fellaverse manually in IDEA
-    url: jdbc:mysql://localhost:3306/fellaverse?serverTimeZone=UTC&useSSL=true
-    username: root
-    password: root
   jpa:
     show-sql: true
     properties:
@@ -17,3 +10,6 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: update  # if table is not sure, switch to create-drop
+  profiles:
+    include:
+      - dev
