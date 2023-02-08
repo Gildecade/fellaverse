@@ -48,4 +48,7 @@ public class User {
 
     @OneToMany(mappedBy = "id")
     private Set<CheckIn> checkIns;
+
+    @ManyToMany(mappedBy = "users")
+    private Set<Function> functions;
 }
