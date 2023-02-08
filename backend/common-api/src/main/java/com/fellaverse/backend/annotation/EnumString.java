@@ -1,6 +1,6 @@
 package com.fellaverse.backend.annotation;
 
-import com.fellaverse.backend.Validator.EnumStringValidator;
+import com.fellaverse.backend.validator.EnumStringValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

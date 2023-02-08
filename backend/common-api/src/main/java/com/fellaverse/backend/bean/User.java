@@ -11,7 +11,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -57,4 +56,6 @@ public class User {
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private Set<Course> courses = new LinkedHashSet<>();
 
+    @ManyToMany(mappedBy = "users")
+    private Set<Function> functions;
 }
