@@ -1,11 +1,12 @@
 package com.fellaverse.backend.test;
 
 import com.fellaverse.backend.TokenServer_6001;
-import com.fellaverse.backend.dto.UserDTO;
 import com.fellaverse.backend.dto.UserLoginDTO;
 import com.fellaverse.backend.jwt.service.PasswordEncryptService;
 import com.fellaverse.backend.service.AuthenticationService;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,15 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @SpringBootTest(classes = TokenServer_6001.class)
 @AutoConfigureMockMvc
 @Slf4j
+@DisplayName("Provider token test: login")
 public class TestAuthService {
     @Autowired
     private PasswordEncryptService passwordEncryptService;
@@ -36,22 +41,27 @@ public class TestAuthService {
     private MockMvc mockMvc;
 
     @Test
+    @DisplayName("Login service success")
     public void testLoginSuccess() {
         UserLoginDTO userLoginDTO = new UserLoginDTO();
         userLoginDTO.setEmail("superadmin@admin.com")
                 .setPassword(this.passwordEncryptService.getEncryptedPassword("hello"));
-        System.out.println(this.authenticationService.login(userLoginDTO));
+        Assertions.assertNotNull(this.authenticationService.login(userLoginDTO));
     }
 
     @Test
+    @DisplayName("Login service failure")
     public void testLoginFailure() {
         UserLoginDTO userLoginDTO = new UserLoginDTO();
         userLoginDTO.setEmail("")
                 .setPassword(this.passwordEncryptService.getEncryptedPassword("hello"));
-        System.out.println(this.authenticationService.login(userLoginDTO));
+        Map<String, Object> result = new HashMap<>();
+        result.put("status", false);
+        Assertions.assertEquals(this.authenticationService.login(userLoginDTO), result);
     }
 
     @Test
+    @DisplayName("Login controller success")
     public void testLoginControllerSuccess() throws Exception {
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/token/create")
                 .content("{\n" +
@@ -63,11 +73,12 @@ public class TestAuthService {
         perform.andExpect(MockMvcResultMatchers.status().isOk());
         MvcResult mvcResult = perform.andReturn();
         MockHttpServletResponse response=mvcResult.getResponse();
-        log.info("Response status: {}",response.getStatus());
-        log.info("Response content: {}",response.getContentAsString());
+        Assertions.assertEquals(200, response.getStatus());
+        Assertions.assertNotNull(response.getContentAsString());
     }
 
     @Test
+    @DisplayName("Login controller failure")
     public void testLoginControllerFail() throws Exception {
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/token/create")
                 .content("{\n" +
@@ -79,7 +90,7 @@ public class TestAuthService {
         perform.andExpect(MockMvcResultMatchers.status().isOk());
         MvcResult mvcResult = perform.andReturn();
         MockHttpServletResponse response=mvcResult.getResponse();
-        log.info("Response status: {}",response.getStatus());
-        log.info("Response content: {}",response.getContentAsString());
+        Assertions.assertEquals(200, response.getStatus());
+        Assertions.assertEquals(response.getContentAsString(), "");
     }
 }
