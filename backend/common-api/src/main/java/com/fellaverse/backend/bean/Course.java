@@ -43,4 +43,8 @@ public class Course {
     @Column(name = "product_status", nullable = false)
     private ProductStatus productStatus;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 }

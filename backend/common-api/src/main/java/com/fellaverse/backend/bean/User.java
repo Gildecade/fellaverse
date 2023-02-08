@@ -9,6 +9,9 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -44,4 +47,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     // create a enum in package enumerator
     private UserStatus status;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private Set<Schedule> schedules = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private Set<Course> courses = new LinkedHashSet<>();
+
 }
