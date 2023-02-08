@@ -31,7 +31,10 @@ public class Function {
     @Column(name = "description", nullable = false)
     private String description;
 
-
-    @ManyToMany(mappedBy = "functions")
+    @ManyToMany @JoinTable(
+            name = "user_function",
+            joinColumns = @JoinColumn(name = "function_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     private Set<User> users;
 }
