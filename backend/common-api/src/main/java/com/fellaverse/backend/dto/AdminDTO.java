@@ -1,11 +1,15 @@
 package com.fellaverse.backend.dto;
 
-import com.fellaverse.backend.Validator.ValidGroup;
+import com.fellaverse.backend.validator.ValidGroup;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 @Data
-public class AdminDTO {
+@Accessors(chain = true)
+public class AdminDTO implements Serializable {
     @Null(groups = ValidGroup.Crud.Create.class, message = "Admin ID should be null when creating")
     @NotNull(groups = {ValidGroup.Crud.Update.class, ValidGroup.Crud.Delete.class}, message = "Admin ID cannot be null")
     private Long id;

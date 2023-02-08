@@ -1,4 +1,4 @@
-package com.fellaverse.backend.Validator;
+package com.fellaverse.backend.validator;
 
 import com.fellaverse.backend.annotation.EnumString;
 import jakarta.validation.ConstraintValidator;

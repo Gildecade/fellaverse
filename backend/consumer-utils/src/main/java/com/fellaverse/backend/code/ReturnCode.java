@@ -4,7 +4,8 @@ import org.springframework.http.HttpStatus;
 
 public enum ReturnCode {
     OK(HttpStatus.OK.value(), "OK"),
-    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal server error");
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal server error"),
+    ILLEGAL_ARGUMENT(HttpStatus.FORBIDDEN.value(), "Illegal argument");
 
     private  int code;
     private String message;
