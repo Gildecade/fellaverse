@@ -6,9 +6,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Set;
 
 public interface FunctionRepository extends JpaRepository<Function, Long> {
-    List<Function> findByFunctionNameNotContains(String functionName);
-    @Query("select f from Function f inner join f.users users where users.id = ?1")
+    @Query("select f from Function f inner join UserFunction uf on f.id = uf.function.id and uf.user.id = ?1")
     List<FunctionInfo> findByUsers_Id(Long id);
+
+    @Query("select f from Function f where f.functionName not like concat('%', ?1, '%')")
+    Set<Function> findByFunctionNameNotContains(String functionName);
+
+    @Query("select count(f) from Function f inner join UserFunction uf on f.id = uf.function.id and uf.user.id = ?1")
+    long countByUsers_Id(Long id);
 }

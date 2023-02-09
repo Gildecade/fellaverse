@@ -8,9 +8,6 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.List;
-import java.util.Set;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,10 +28,4 @@ public class Function {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @ManyToMany @JoinTable(
-            name = "user_function",
-            joinColumns = @JoinColumn(name = "function_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Set<User> users;
 }
