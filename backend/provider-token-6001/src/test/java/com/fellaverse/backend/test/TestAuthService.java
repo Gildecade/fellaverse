@@ -67,7 +67,7 @@ public class TestAuthService {
     @Test
     @DisplayName("Login controller success")
     public void testLoginControllerSuccess() throws Exception {
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/token/create")
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/auth/login")
                 .content("{\n" +
                         "    \"email\": \"superadmin@admin.com\",\n" +
                         "    \"password\": \"hello\"\n" +
@@ -80,7 +80,7 @@ public class TestAuthService {
         Assertions.assertEquals(200, response.getStatus());
         Assertions.assertNotNull(response.getContentAsString());
 
-        MvcResult userResult = mockMvc.perform(MockMvcRequestBuilders.post("/api/token/create")
+        MvcResult userResult = mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/login")
                         .content("{\n" +
                                 "    \"email\": \"user01@user.com\",\n" +
                                 "    \"password\": \"hello\"\n" +
@@ -96,7 +96,7 @@ public class TestAuthService {
     @Test
     @DisplayName("Login controller failure")
     public void testLoginControllerFail() throws Exception {
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/token/create")
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/token/login")
                 .content("{\n" +
                         "    \"email\": \"superain@admin.com\",\n" +
                         "    \"password\": \"hello\"\n" +
