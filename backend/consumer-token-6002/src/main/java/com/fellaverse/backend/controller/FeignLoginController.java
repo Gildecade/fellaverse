@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/token")
+@RequestMapping("/auth")
 public class FeignLoginController {
     @Autowired
     private FeignAuthenticationService feignAuthenticationService;
 
-    @PostMapping("/create")
+    @PostMapping("/login")
     public String login(@Validated @RequestBody UserLoginDTO userLoginDTO) {
         String result = feignAuthenticationService.login(userLoginDTO);
         Assert.notNull(result, "Login Failed");

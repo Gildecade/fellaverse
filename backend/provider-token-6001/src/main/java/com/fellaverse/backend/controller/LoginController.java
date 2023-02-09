@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/token/*")  // any requests under token will be proceeded
+@RequestMapping("/api/auth/*")  // any requests under token will be proceeded
 public class LoginController {
     @Autowired
     private AuthenticationService authenticationService;
@@ -23,7 +23,7 @@ public class LoginController {
     @Autowired
     private JWTTokenService jwtTokenService;
 
-    @PostMapping("/create")  // whole url is localhost:port/api/token/create, only allow post method
+    @PostMapping("/login")  // whole url is localhost:port/api/auth/login, only allow post method
     // @Validated to enable parameters validation for login, @RequestBody to acquire json object from request body
     public Object login(@Validated @RequestBody UserLoginDTO userLoginDTO) {
         // encrypt password from cleartext to ciphertext
