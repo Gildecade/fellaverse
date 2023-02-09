@@ -47,6 +47,10 @@ public class TestAuthService {
         userLoginDTO.setEmail("superadmin@admin.com")
                 .setPassword(this.passwordEncryptService.getEncryptedPassword("hello"));
         Assertions.assertNotNull(this.authenticationService.login(userLoginDTO));
+
+        userLoginDTO.setEmail("user01@user.com")
+                .setPassword(this.passwordEncryptService.getEncryptedPassword("hello"));
+        Assertions.assertNotNull(this.authenticationService.login(userLoginDTO));
     }
 
     @Test
@@ -72,9 +76,21 @@ public class TestAuthService {
         ResultActions perform = mockMvc.perform(request);
         perform.andExpect(MockMvcResultMatchers.status().isOk());
         MvcResult mvcResult = perform.andReturn();
-        MockHttpServletResponse response=mvcResult.getResponse();
+        MockHttpServletResponse response = mvcResult.getResponse();
         Assertions.assertEquals(200, response.getStatus());
         Assertions.assertNotNull(response.getContentAsString());
+
+        MvcResult userResult = mockMvc.perform(MockMvcRequestBuilders.post("/api/token/create")
+                        .content("{\n" +
+                                "    \"email\": \"user01@user.com\",\n" +
+                                "    \"password\": \"hello\"\n" +
+                                "}")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+        MockHttpServletResponse userResponse = userResult.getResponse();
+        Assertions.assertEquals(200, userResponse.getStatus());
+        Assertions.assertNotNull(userResponse.getContentAsString());
     }
 
     @Test
