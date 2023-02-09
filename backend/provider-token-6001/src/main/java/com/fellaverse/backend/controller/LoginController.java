@@ -1,11 +1,9 @@
 package com.fellaverse.backend.controller;
 
-import com.fellaverse.backend.dto.UserDTO;
 import com.fellaverse.backend.dto.UserLoginDTO;
 import com.fellaverse.backend.jwt.service.JWTTokenService;
 import com.fellaverse.backend.jwt.service.PasswordEncryptService;
 import com.fellaverse.backend.service.AuthenticationService;
-import com.fellaverse.backend.validator.ValidGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;

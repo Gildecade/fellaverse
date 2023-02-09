@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface FunctionRepository extends JpaRepository<Function, Long> {
+    List<Function> findByFunctionNameNotContains(String functionName);
     @Query("select f from Function f inner join f.users users where users.id = ?1")
     List<FunctionInfo> findByUsers_Id(Long id);
 }
