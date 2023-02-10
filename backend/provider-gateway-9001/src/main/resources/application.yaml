@@ -70,5 +70,9 @@ gateway:  # DIY config
     jwt:
       header-name: fellaverse-token  #  para name
       skip-auth-urls:  # no auth needed url
-        - /auth/create
-        - /api/auth/create
+        - /auth/login
+        - /auth/register
+        - /auth/resetPassword
+        - /api/auth/login
+        - /api/auth/register
+        - /api/auth/resetPassword
