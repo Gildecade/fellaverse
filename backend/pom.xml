@@ -19,6 +19,7 @@
         <module>provider-token-6001</module>
         <module>common-api</module>
         <module>consumer-token-6002</module>
+        <module>provider-management-8001</module>
     </modules>
 
     <properties>
