@@ -15,16 +15,16 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class UserRegisterDTO implements Serializable {
     @NotBlank(message = "Username cannot be blank")
-    private final String username;
+    private String username;
 
     @NotBlank(message = "Password cannot be blank")
-    private final String password;
+    private String password;
 
     @NotBlank(message = "Email cannot be blank")
     @Email(message = "Please enter correct Email address")
-    private final String email;
+    private String email;
 
     @NotBlank(message = "Phone number cannot be blank")
-    @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$", message = "Phone number format is wrong")
-    private final String phoneNumber;
+    @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$", message = "Phone number format is wrong")
+    private String phoneNumber;
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface FunctionRepository extends JpaRepository<Function, Long> {
+    long countByFunctionNameNotContains(String functionName);
     @Query("select f from Function f inner join UserFunction uf on f.id = uf.function.id and uf.user.id = ?1")
     List<FunctionInfo> findByUsers_Id(Long id);
 

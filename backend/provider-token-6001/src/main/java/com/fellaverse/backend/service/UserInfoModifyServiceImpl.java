@@ -2,18 +2,13 @@ package com.fellaverse.backend.service;
 
 import com.fellaverse.backend.bean.Function;
 import com.fellaverse.backend.bean.User;
-import com.fellaverse.backend.bean.UserFunction;
-import com.fellaverse.backend.bean.UserFunctionId;
-import com.fellaverse.backend.dto.UserDTO;
-import com.fellaverse.backend.dto.UserRegisterDTO;
-import com.fellaverse.backend.mapper.UserRegisterMapper;
 import com.fellaverse.backend.repository.FunctionRepository;
-import com.fellaverse.backend.repository.UserFunctionRepository;
 import com.fellaverse.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserInfoModifyServiceImpl implements UserInfoModifyService {
@@ -21,26 +16,32 @@ public class UserInfoModifyServiceImpl implements UserInfoModifyService {
     private UserRepository userRepository;
     @Autowired
     private FunctionRepository functionRepository;
-    @Autowired
-    private UserFunctionRepository userFunctionRepository;
-    private UserRegisterMapper userRegisterMapper;
 
     @Override
-    public Boolean register(UserRegisterDTO userRegisterDTO) {
-        User user = userRepository.save(userRegisterMapper.toEntity(userRegisterDTO));
-        Long userId = user.getId();
-        List<Function> functions = functionRepository.findByFunctionNameNotContains("course");
-        for (Function function : functions) {
-            UserFunctionId userFunctionId = new UserFunctionId(function.getId(), userId);
-            UserFunction userFunction = new UserFunction();
-            userFunction.setId(userFunctionId);
-            userFunctionRepository.save(userFunction);
-        }
-        return true;
+    public User register(User user) {
+        return userRepository.save(user);
     }
 
     @Override
-    public Boolean forgetPassword(UserDTO userDTO) {
-        return null;
+    @Async
+    public void addFunctions(User user) {
+        Set<Function> functions = functionRepository.findByFunctionNameNotContains("course");
+        user.getFunctions().addAll(functions);
+        userRepository.save(user);
+    }
+
+    @Override
+    public String forgetPassword(User user) {
+        User oldUser = userRepository.findByUsername(user.getUsername());
+        if (user.getEmail().equals(oldUser.getEmail()) && user.getPhoneNumber().equals(oldUser.getPhoneNumber())) {
+            if (user.getPassword().equals(oldUser.getPassword())) {
+                return "New password cannot be the same as old password";
+            } else {
+                oldUser.setPassword(user.getPassword());
+                userRepository.save(oldUser);
+                return "Password reset successfully";
+            }
+        }
+        return "No such user";
     }
 }

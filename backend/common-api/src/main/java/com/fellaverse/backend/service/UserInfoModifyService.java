@@ -1,18 +1,19 @@
 package com.fellaverse.backend.service;
 
-import com.fellaverse.backend.dto.UserDTO;
-import com.fellaverse.backend.dto.UserRegisterDTO;
+import com.fellaverse.backend.bean.User;
 
 public interface UserInfoModifyService {
     /**
      * return status of registry
      * true = success, false = failure
      */
-    public Boolean register(UserRegisterDTO userRegisterDTO);
+    public User register(User user);
+
+    public void addFunctions(User user);
 
     /**
      * return status of changing password
      * true = success, false = failure
      */
-    public Boolean forgetPassword(UserDTO userDTO);
+    public String forgetPassword(User user);
 }
