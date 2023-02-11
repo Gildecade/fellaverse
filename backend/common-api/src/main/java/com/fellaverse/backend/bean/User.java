@@ -11,7 +11,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -66,4 +65,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Set<Product> product = new LinkedHashSet<>();
 
+    @ManyToMany(mappedBy = "users")
+    private Set<Function> functions;
 }
