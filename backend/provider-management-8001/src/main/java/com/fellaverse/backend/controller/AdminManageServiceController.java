@@ -1,10 +1,12 @@
 package com.fellaverse.backend.controller;
 
 import com.fellaverse.backend.bean.Admin;
+import com.fellaverse.backend.bean.Role;
 import com.fellaverse.backend.dto.AdminDTO;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
 import com.fellaverse.backend.mapper.AdminMapper;
 import com.fellaverse.backend.service.AdminManageService;
+import com.fellaverse.backend.service.RoleManageService;
 import com.fellaverse.backend.validator.ValidGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +19,8 @@ import java.util.List;
 public class AdminManageServiceController {
     @Autowired
     private AdminManageService adminManageService;
+    @Autowired
+    private RoleManageService roleManageService;
     @Autowired
     private AdminMapper adminMapper;
 
@@ -46,5 +50,16 @@ public class AdminManageServiceController {
     public String deleteAdmin(@PathVariable("id") Long id) {
         adminManageService.deleteAdmin(id);
         return "Delete admin success";
+    }
+
+    @JWTCheckToken(role = "SuperAdmin")
+    @PutMapping("/{id}")
+    public String updateRoles(@PathVariable("id") Long id, @RequestBody List<Long> roleIds) {
+        List<Role> roles = roleManageService.findRoleByIds(roleIds);
+        Admin admin = adminManageService.findAdminById(id);
+        admin.getRoles().clear();
+        admin.getRoles().addAll(roles);
+        adminManageService.updateAdmin(admin);
+        return "Update roles success";
     }
 }
