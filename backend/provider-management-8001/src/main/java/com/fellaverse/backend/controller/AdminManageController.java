@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/adminManagement")
-public class AdminManageServiceController {
+@RequestMapping("/api/management/admin")
+public class AdminManageController {
     @Autowired
     private AdminManageService adminManageService;
     @Autowired
@@ -26,6 +26,12 @@ public class AdminManageServiceController {
 
     @JWTCheckToken(role = "SuperAdmin")
     @GetMapping("")
+    public List<Admin> findAllAdmin() {
+        return adminManageService.findAllAdmin();
+    }
+
+    @JWTCheckToken(role = "SuperAdmin")
+    @GetMapping("/conditions")
     public List<Admin> findAdminByCondition(@RequestBody AdminDTO adminDTO) {
         return adminManageService.findAdminByCondition(adminMapper.toEntity(adminDTO));
     }
