@@ -4,6 +4,7 @@ import com.fellaverse.backend.annotation.UniqueUser;
 import com.fellaverse.backend.dto.UserRegisterDTO;
 import com.fellaverse.backend.service.FeignUserInfoModifyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,8 @@ public class FeignUserInfoModifyController {
 
     @PostMapping("/resetPassword")
     public String resetPassword(@Validated @RequestBody UserRegisterDTO userRegisterDTO) {
-        return feignUserInfoModifyService.resetPassword(userRegisterDTO);
+        String message = feignUserInfoModifyService.resetPassword(userRegisterDTO);
+        Assert.isTrue("Password reset successfully!".equals(message), message);
+        return message;
     }
 }

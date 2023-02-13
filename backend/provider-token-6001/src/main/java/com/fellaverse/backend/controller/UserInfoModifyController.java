@@ -31,7 +31,7 @@ public class UserInfoModifyController {
         user.setStatus(UserStatus.valueOf("NORMAL")).setWallet(1000L);
         User register = this.userInfoModifyService.register(user);
         this.userInfoModifyService.addFunctions(register);
-        return "Register success";
+        return "Register success!";
     }
 
     @PostMapping("/resetPassword")

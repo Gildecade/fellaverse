@@ -33,15 +33,17 @@ public class UserInfoModifyServiceImpl implements UserInfoModifyService {
     @Override
     public String forgetPassword(User user) {
         User oldUser = userRepository.findByUsername(user.getUsername());
-        if (user.getEmail().equals(oldUser.getEmail()) && user.getPhoneNumber().equals(oldUser.getPhoneNumber())) {
-            if (user.getPassword().equals(oldUser.getPassword())) {
-                return "New password cannot be the same as old password";
-            } else {
-                oldUser.setPassword(user.getPassword());
-                userRepository.save(oldUser);
-                return "Password reset successfully";
+        if (oldUser != null) {
+            if (user.getEmail().equals(oldUser.getEmail()) && user.getPhoneNumber().equals(oldUser.getPhoneNumber())) {
+                if (user.getPassword().equals(oldUser.getPassword())) {
+                    return "New password cannot be the same as old password!";
+                } else {
+                    oldUser.setPassword(user.getPassword());
+                    userRepository.save(oldUser);
+                    return "Password reset successfully!";
+                }
             }
         }
-        return "No such user";
+        return "No such user!";
     }
 }
