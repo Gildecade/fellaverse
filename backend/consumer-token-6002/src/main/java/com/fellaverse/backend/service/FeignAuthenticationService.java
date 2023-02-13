@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.PostMapping;
 @FeignClient(value = "provider-gateway", contextId = "token", configuration = FeignBasicAuthRequestInterceptor.class)
 public interface FeignAuthenticationService {
     @PostMapping("/api/auth/login")
-    public String login(UserLoginDTO userLoginDTO);
+    Object login(UserLoginDTO userLoginDTO);
 }

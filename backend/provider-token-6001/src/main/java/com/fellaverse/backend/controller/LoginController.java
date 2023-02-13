@@ -1,5 +1,6 @@
 package com.fellaverse.backend.controller;
 
+import com.fellaverse.backend.dto.LoginTokenDTO;
 import com.fellaverse.backend.dto.UserLoginDTO;
 import com.fellaverse.backend.jwt.service.JWTTokenService;
 import com.fellaverse.backend.jwt.service.PasswordEncryptService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -30,7 +32,11 @@ public class LoginController {
         userLoginDTO.setPassword(this.passwordEncryptService.getEncryptedPassword(userLoginDTO.getPassword()));
         Map<String, Object> result = this.authenticationService.login(userLoginDTO);
         if ((Boolean)result.get("status")) {
-            return this.jwtTokenService.createToken(result.get("id").toString(), (Map<String, Object>) result.get("resource"));
+            Map<String, Object> resource = (Map<String, Object>) result.get("resource");
+            return new LoginTokenDTO(this.jwtTokenService.createToken(result.get("id").toString(), resource),
+                    (String) resource.get("username"),
+                    (List<String>) resource.get("roles"),
+                    (List<String>) resource.get("functions"));
         }
         return null;
     }
