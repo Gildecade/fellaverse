@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { UserAddOutlined } from '@ant-design/icons';
-import { Button, Col, Drawer, Form, Input, Row, Space } from 'antd';
+import { Button, Col, Drawer, Form, Input, Row, Space, Select, message } from 'antd';
+import axios from 'axios';
+import { domain } from '../../config';
+
+const { Option } = Select;
 
 const formItemLayout = {
   labelCol: {
@@ -35,15 +39,47 @@ const tailFormItemLayout = {
 const RegisterForm = () => {
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const delay = ms => new Promise(res => setTimeout(res, ms));
   const showDrawer = () => {
     setOpen(true);
   };
   const onClose = () => {
     setOpen(false);
   };
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
+    setLoading(true);
     console.log('Received values of form: ', values);
+    try {
+      const result = await axios.post(`${domain}auth/register`, values);
+      message.success("Register successfully.");
+      const data = result.data;
+      console.log(data);
+      await delay(1000);
+      const title = data.message;
+      const subTitle = "Enjoy your new journey in Fellaverse!";
+      window.location.href = `/success/${title}/${subTitle}`;
+    } catch (error) {
+      console.log(error);
+      if (error.response) {
+        let msg = error.response.data.message;
+        message.error(msg);
+      } else {
+        message.error("Login failed. Internal server error.");}
+    }
   };
+  const prefixSelector = (
+    <Form.Item name="prefix" noStyle>
+      <div
+        style={{
+          width: 30,
+        }}
+      >
+        +1
+      </div>
+    </Form.Item>
+  );
   return (
     <>
       <Button type="primary" onClick={showDrawer} icon={<UserAddOutlined />}>
@@ -51,7 +87,7 @@ const RegisterForm = () => {
       </Button>
       <Drawer
         title="Sign up"
-        width={720}
+        width={540}
         onClose={onClose}
         open={open}
         bodyStyle={{
@@ -71,6 +107,7 @@ const RegisterForm = () => {
       form={form}
       name="register"
       onFinish={onFinish}
+      labelCol={{span:7}}
       initialValues={{
         residence: ['zhejiang', 'hangzhou', 'xihu'],
         prefix: '86',
@@ -108,7 +145,23 @@ const RegisterForm = () => {
       >
         <Input />
       </Form.Item>
-
+      <Form.Item
+        name="phoneNumber"
+        label="Phone Number"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your phone number!',
+          },
+        ]}
+      >
+        <Input
+          addonBefore={prefixSelector}
+          style={{
+            width: '100%',
+          }}
+        />
+      </Form.Item>
       <Form.Item
         name="password"
         label="Password"
@@ -279,7 +332,7 @@ const RegisterForm = () => {
         </Checkbox>
       </Form.Item> */}
       <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={loading}>
           Sign up
         </Button>
       </Form.Item>

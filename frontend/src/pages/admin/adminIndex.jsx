@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 // function(component) name
-const Index = () => {
+const AdminIndex = () => {
     // declare varibles and corresponding setter here
     // useState means varibles' initialized value, like "", [], false
     const [ username, setUsername] = useState(null);
@@ -19,12 +19,12 @@ const Index = () => {
         { username ? 
           (
             <h1 style={{marginLeft: '40px',}}>
-                Welcome to Fellaverse, {username}.
+                Welcome back, {username}.
             </h1>
           ) :
           (
             <h1>
-                Welcome to Fellaverse, please Login.
+                Something went wrong, please Login again.
             </h1>
           )
         }
@@ -33,4 +33,4 @@ const Index = () => {
   }
 
   // remember to export your component
-  export default Index;
+  export default AdminIndex;
