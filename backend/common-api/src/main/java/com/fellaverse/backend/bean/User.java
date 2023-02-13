@@ -56,6 +56,15 @@ public class User {
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private Set<Course> courses = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private Set<Record> records = new LinkedHashSet<>();
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "Orders",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private Set<Product> product = new LinkedHashSet<>();
+
     @ManyToMany(mappedBy = "users")
     private Set<Function> functions;
 }

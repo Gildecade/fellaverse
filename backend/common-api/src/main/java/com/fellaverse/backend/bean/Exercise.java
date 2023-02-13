@@ -30,4 +30,7 @@ public class Exercise {
             inverseJoinColumns = @JoinColumn(name = "program_id", referencedColumnName = "id"))
     private Set<Program> programs = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "exercise", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private Set<Record> records = new LinkedHashSet<>();
+
 }
