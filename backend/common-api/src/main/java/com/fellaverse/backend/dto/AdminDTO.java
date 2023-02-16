@@ -18,7 +18,6 @@ public class AdminDTO implements Serializable {
     private String username;
 
     @NotBlank(groups = ValidGroup.Crud.Create.class, message = "Password cannot be blank")
-    @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$", message = "Phone number format is wrong")
     private String password;
 
     @NotBlank(groups = ValidGroup.Crud.Create.class, message = "Email cannot be blank")
@@ -26,5 +25,6 @@ public class AdminDTO implements Serializable {
     private String email;
 
     @NotBlank(groups = ValidGroup.Crud.Create.class, message = "Phone number cannot be blank")
+    @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$", message = "Phone number format is wrong")
     private String phoneNumber;
 }

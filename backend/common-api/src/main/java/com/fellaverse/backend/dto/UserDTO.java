@@ -27,7 +27,7 @@ public class UserDTO implements Serializable {
     private String email;
 
     @NotBlank(groups = {ValidGroup.Crud.Create.class, ValidGroup.Crud.Update.class}, message = "Phone number cannot be blank")
-    @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$", message = "Phone number format is wrong")
+    @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$", message = "Phone number format is wrong")
     private String phoneNumber;
 
     @Null(groups = ValidGroup.Crud.Create.class, message = "Wallet should be null when registering")
