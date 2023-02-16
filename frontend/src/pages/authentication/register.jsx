@@ -61,12 +61,13 @@ const RegisterForm = () => {
       const subTitle = "Enjoy your new journey in Fellaverse!";
       window.location.href = `/success/${title}/${subTitle}`;
     } catch (error) {
+      setLoading(false);
       console.log(error);
       if (error.response) {
         let msg = error.response.data.message;
         message.error(msg);
       } else {
-        message.error("Login failed. Internal server error.");}
+        message.error("Register failed. Internal server error.");}
     }
   };
   const prefixSelector = (
@@ -109,8 +110,7 @@ const RegisterForm = () => {
       onFinish={onFinish}
       labelCol={{span:7}}
       initialValues={{
-        residence: ['zhejiang', 'hangzhou', 'xihu'],
-        prefix: '86',
+        prefix: '1',
       }}
       scrollToFirstError
     >

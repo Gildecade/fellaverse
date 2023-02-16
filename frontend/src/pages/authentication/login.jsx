@@ -51,6 +51,7 @@ const LoginForm = () => {
         window.location.href = `/`;
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
       if (error.response) {
         let msg = error.response.data.message;
