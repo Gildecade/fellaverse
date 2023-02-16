@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { UserAddOutlined } from '@ant-design/icons';
 import { Button, Col, Drawer, Form, Input, Row, Space, Select, message } from 'antd';
 import axios from 'axios';
@@ -40,19 +41,20 @@ const EditAdmin = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [roles, setRoles] = useState([]);
+  const { id } = useParams();
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
   const onFinish = async (values) => {
     setLoading(true);
     console.log('Received values of form: ', values);
     try {
-      const result = await axios.post(`${domain}api/management/admin`, values);
-      message.success("Add successfully.");
+      const result = await axios.put(`${domain}api/management/admin`, values);
+      message.success("Update successfully.");
       const data = result.data;
       console.log(data);
       await delay(1000);
       const title = data;
-      const subTitle = "Add new admin success!";
+      const subTitle = "Update admin info success!";
       window.location.href = `/success/${title}/${subTitle}`;
     } catch (error) {
       setLoading(false);
@@ -61,7 +63,7 @@ const EditAdmin = () => {
         let msg = error.response.data.message;
         message.error(msg);
       } else {
-        message.error("Add failed. Internal server error.");}
+        message.error("Update failed. Internal server error.");}
     }
   };
   const prefixSelector = (
@@ -189,7 +191,7 @@ const EditAdmin = () => {
     
     <Form.Item {...tailFormItemLayout}>
     <Button type="primary" htmlType="submit" loading={loading}>
-        Add
+        Submit
     </Button>
     </Form.Item>
 </Form>

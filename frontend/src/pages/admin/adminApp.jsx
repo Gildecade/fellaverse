@@ -132,7 +132,7 @@ const AdminApp = () => {
                 <Route path="/" element={<AdminIndex />} />
                 <Route path="/admin" element={<AdminManagement/>} />
                 <Route path="/admin/add" element={<AddAdmin/>} />
-                <Route path="/admin/edit" element={<EditAdmin/>} />
+                <Route path="/admin/edit/:id" element={<EditAdmin/>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>

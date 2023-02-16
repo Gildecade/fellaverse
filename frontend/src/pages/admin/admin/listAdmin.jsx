@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Input, Space, Table, Tag, Popconfirm } from 'antd';
+import { Button, Input, Space, Table, Tag, Popconfirm, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { domain } from '../../../config';
 import axios from 'axios';
 import { useLocation } from 'react-router'
+import { Link } from 'react-router-dom';
 
 const AdminManagement = () => {
   const [admins, setAdmins] = useState([]);
@@ -128,23 +129,59 @@ const AdminManagement = () => {
       key: 'username',
       render: (text) => <a>{text}</a>,
       ...getColumnSearchProps('username'),
-        sorter: ((a, b) => a.username.length - b.username.length),
+        sorter: (a, b) => {
+          const nameA = a.username.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.username.toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+        
+          // names must be equal
+          return 0;
+        },
         sortDirections: ['descend', 'ascend'],
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
-      ...getColumnSearchProps('username'),
-        sorter: (a, b) => a.email.length - b.email.length,
+      ...getColumnSearchProps('email'),
+        sorter: (a, b) => {
+          const nameA = a.email.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.email.toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+        
+          // names must be equal
+          return 0;
+        },
         sortDirections: ['descend', 'ascend'],
     },
     {
       title: 'Phone Number',
       dataIndex: 'phoneNumber',
       key: 'phoneNumber',
-      ...getColumnSearchProps('username'),
-        sorter: (a, b) => a.phoneNumber.length - b.phoneNumber.length,
+      ...getColumnSearchProps('phone number'),
+        sorter: (a, b) => {
+          const nameA = a.phoneNumber.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.phoneNumber.toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+        
+          // names must be equal
+          return 0;
+        },
         sortDirections: ['descend', 'ascend'],
     },
     {
@@ -155,13 +192,19 @@ const AdminManagement = () => {
         tags ? 
         <span>
           {tags.map((tag) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
+            let color = 'geekblue';
+            if (tag === 'SuperAdmin') {
+              color = 'gold';
+            } else if (tag === 'ShopAdmin') {
+              color = 'green';
+            } else if (tag === 'WorkoutAdmin') {
               color = 'volcano';
-            }
+            } else if (tag === 'TweetAdmin') {
+              color = 'magenta';
+            } 
             return (
               <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
+                {tag}
               </Tag>
             );
           })}
@@ -174,7 +217,7 @@ const AdminManagement = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <a>Edit</a>
+          <Link to={'edit/'+record.key}>Edit</Link>
           <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
             <a>Delete</a>
           </Popconfirm>
@@ -197,6 +240,7 @@ const AdminManagement = () => {
         
       } catch (error) {
         console.log(error);
+        message.error(error.response.data.message);
       }
 
     }
