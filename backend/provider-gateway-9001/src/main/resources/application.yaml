@@ -51,6 +51,14 @@ spring:
           uri: lb://consumer-token  # corresponding spring application name, lb:// means enable load balance
           predicates: # see tutorial to find more kinds of filter
             - Path=/auth/**  # corresponding microservice url
+        - id: provider-management
+          uri: lb://provider-management
+          predicates:
+            - Path=/api/management/**
+        - id: consumer-management
+          uri: lb://consumer-management
+          predicates:
+            - Path=/management/**
 
 fellaverse:
   security:
@@ -59,7 +67,7 @@ fellaverse:
         sign: fellaverse
         issuer: fellas
         secret: www.fellaverse.com/gch/darren/chiu/jingshuo
-        expire: 600
+        expire: 3600
       password:
         encrypt:
           repeat: 5
