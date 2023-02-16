@@ -23,6 +23,9 @@ import AdminIndex from './adminIndex';
 import LogoutForm from '../authentication/logout';
 import NotFound from '../result/404';
 // TODO: import your components here
+import AdminManagement from './admin/listAdmin';
+import AddAdmin from './admin/addAdmin';
+import EditAdmin from './admin/editAdmin';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -58,11 +61,13 @@ const AdminApp = () => {
     ];
     // TODO: modify sider contents here
     if (roles.indexOf("SuperAdmin") != -1) {
-      items.push(getItem(<Link to='/admin'>Admin Management</Link>, '2', <ContactsOutlined />));
+      items.push(getItem(<Link to='/admin/admin'>Admin Management</Link>, '2', <ContactsOutlined />));
     }
     if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
-      items.push(getItem(<Link to='/admin'>Product Management</Link>, '3', <ShoppingOutlined />));
-      items.push(getItem(<Link to='/admin'>Order Management</Link>, '4', <ShoppingCartOutlined />));
+      items.push(getItem("Shop Management", 'sub1', <ShopOutlined />, [
+        getItem(<Link to='/admin'>Product</Link>, '3', <ShoppingOutlined />),
+        getItem(<Link to='/admin'>Order</Link>, '4', <ShoppingCartOutlined />),
+      ]));
     }
     setItems(items);
   }, []);
@@ -103,6 +108,18 @@ const AdminApp = () => {
               margin: '0 16px',
             }}
           >
+            <Breadcrumb
+              style={{
+                margin: '16px 0',
+              }}
+            >
+              <Breadcrumb.Item>
+                <Link to='/admin'>
+                  {homePage}
+                </Link>
+              </Breadcrumb.Item>
+              {/* <Breadcrumb.Item>Bill</Breadcrumb.Item> */}
+            </Breadcrumb>
             <div
               style={{
                 padding: 24,
@@ -113,6 +130,9 @@ const AdminApp = () => {
               <Routes>
                 {/* TODO: link your components(element) with route paths here */}
                 <Route path="/" element={<AdminIndex />} />
+                <Route path="/admin" element={<AdminManagement/>} />
+                <Route path="/admin/add" element={<AddAdmin/>} />
+                <Route path="/admin/edit" element={<EditAdmin/>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
