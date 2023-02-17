@@ -25,6 +25,8 @@ import AdminManagement from './admin/listAdmin';
 import AddAdmin from './admin/addAdmin';
 import EditAdmin from './admin/editAdmin';
 import RoleManagement from './role/listRole';
+import AddRole from './role/addRole';
+import EditRole from './role/editRole';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -135,6 +137,8 @@ const AdminApp = () => {
                 <Route path="/admin/add" element={<AddAdmin/>} />
                 <Route path="/admin/edit/:id" element={<EditAdmin/>} />
                 <Route path="/role" element={<RoleManagement/>} />
+                <Route path="/role/add" element={<AddRole/>} />
+                <Route path="/role/edit/:id" element={<EditRole/>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
