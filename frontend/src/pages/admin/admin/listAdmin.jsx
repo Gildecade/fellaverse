@@ -12,6 +12,14 @@ const AdminManagement = () => {
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
   const navigate = useNavigate();
+  var colors = ["magenta", "red", "volcano", "volcano", "gold", "lime", "green", "cyan", "blue", "geekblue", "purple"];
+  var colorDict = new Array();
+
+  const getExtract = (array) => {
+    const random = (min, max) => Math.floor(Math.random() * (max - min) + min);
+    let index=random(0, array.length);
+    return array.splice(index, 1);
+  }
   const handleDelete = async (key) => {
     try {
       const result = await axios.delete(`${domain}management/admin/` + key);
@@ -208,18 +216,11 @@ const AdminManagement = () => {
         tags ? 
         <span>
           {tags.map((tag) => {
-            let color = 'geekblue';
-            if (tag === 'SuperAdmin') {
-              color = 'gold';
-            } else if (tag === 'ShopAdmin') {
-              color = 'green';
-            } else if (tag === 'WorkoutAdmin') {
-              color = 'volcano';
-            } else if (tag === 'TweetAdmin') {
-              color = 'magenta';
-            } 
+            let color = getExtract(colors)[0];
+            colorDict[tag] = color;
+            console.log(colorDict);
             return (
-              <Tag color={color} key={tag}>
+              <Tag color={colorDict[tag]} key={tag}>
                 {tag}
               </Tag>
             );
