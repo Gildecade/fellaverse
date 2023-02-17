@@ -29,7 +29,7 @@ public class FeignRoleManageController {
     @PostMapping("")
     public String addRole(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) RoleDTO roleDTO) {
         String result = feignRoleManageService.addRole(roleDTO);
-        Assert.isTrue("Add Role success!".equals(result), "Add Role failed!");
+        Assert.isTrue("Add role success!".equals(result), "Add role failed!");
         return result;
     }
 

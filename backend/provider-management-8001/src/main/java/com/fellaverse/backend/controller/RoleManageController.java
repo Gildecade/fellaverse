@@ -37,7 +37,7 @@ public class RoleManageController {
     @PostMapping("")
     public String addRole(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) RoleDTO roleDTO) {
         roleManageService.addRole(roleMapper.toEntity(roleDTO));
-        return "Add Role success!";
+        return "Add role success!";
     }
 
     @JWTCheckToken(role = "SuperAdmin")
@@ -45,13 +45,13 @@ public class RoleManageController {
     public String updateRole(@RequestBody @Validated(value = ValidGroup.Crud.Update.class) RoleDTO roleDTO) {
         Role role = roleManageService.findRoleById(roleDTO.getId());
         roleManageService.updateRole(roleMapper.partialUpdate(roleDTO, role));
-        return "Update admin success!";
+        return "Update role success!";
     }
 
     @JWTCheckToken(role = "SuperAdmin")
     @DeleteMapping("/{id}")
     public String deleteRole(@PathVariable("id") Long id) {
         roleManageService.deleteRole(id);
-        return "Delete admin success!";
+        return "Delete role success!";
     }
 }
