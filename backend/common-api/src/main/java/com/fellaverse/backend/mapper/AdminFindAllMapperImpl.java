@@ -12,7 +12,6 @@ public class AdminFindAllMapperImpl implements AdminFindAllMapper{
         AdminFindAllDTO adminFindAllDTO = new AdminFindAllDTO();
         adminFindAllDTO.setId(admin.getId())
                 .setUsername(admin.getUsername())
-                .setPassword(admin.getPassword())
                 .setEmail(admin.getEmail())
                 .setPhoneNumber(admin.getPhoneNumber());
         return adminFindAllDTO;
