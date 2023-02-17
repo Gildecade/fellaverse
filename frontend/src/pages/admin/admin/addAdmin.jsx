@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Form, Input, message } from 'antd';
+import { Button, Form, Input, message, Select } from 'antd';
 import axios from 'axios';
 import { domain } from '../../../config';
+
+const { Option } = Select;
 
 const formItemLayout = {
   labelCol: {
@@ -80,7 +82,7 @@ const AddAdmin = () => {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
         axios.defaults.headers.common['Fellaverse-token'] = token;
         const result = await axios.get(`${domain}management/role`);
-        const roles = result.data.map(res => res.roleName);
+        const roles = result.data.data;
         console.log(roles);
         setRoles(roles);
         
@@ -183,7 +185,24 @@ const AddAdmin = () => {
         }),
     ]}
     >
-    <Input.Password />
+      <Input.Password />
+    </Form.Item>
+
+    <Form.Item
+      name="roleIds"
+      label="Roles"
+      rules={[
+        {
+          required: false,
+          type: 'array',
+        },
+      ]}
+    >
+      <Select mode="multiple" placeholder="Please select admin roles">
+        {roles.map(role => (
+          <Option key={role.id} value={role.id}>{role.roleName}</Option>
+        ))}
+      </Select>
     </Form.Item>
     
     <Form.Item {...tailFormItemLayout}>
