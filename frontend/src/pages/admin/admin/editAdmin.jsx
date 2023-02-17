@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { UserAddOutlined } from '@ant-design/icons';
 import { Button, Col, Drawer, Form, Input, Row, Space, Select, message } from 'antd';
 import axios from 'axios';
@@ -41,31 +41,48 @@ const EditAdmin = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [roles, setRoles] = useState([]);
-  const { id } = useParams();
+  const [roleIds, setRoleIds] = useState([]);
+  const adminId = useParams().id;
+  form.setFieldsValue({
+    "roleIds": roleIds,
+  })
+  const parameters = useLocation();
+  const record = parameters.state;
+  // console.log(record);
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
   const onFinish = async (values) => {
     setLoading(true);
-    console.log('Received values of form: ', values);
+    const request = {...values, id: adminId};
+    console.log('Received values of form: ', request);
     try {
-      const result = await axios.put(`${domain}api/management/admin`, values);
+      const result = await axios.put(`${domain}management/admin`, request);
+      if (request.roles != roleIds) {
+        const roleResult = await axios.put(`${domain}management/admin/` + adminId, request.roleIds);
+      }
       message.success("Update successfully.");
-      const data = result.data;
+      const data = result.data.data;
       console.log(data);
       await delay(1000);
       const title = data;
       const subTitle = "Update admin info success!";
-      window.location.href = `/success/${title}/${subTitle}`;
+      window.location.href = `/admin/success/${title}/${subTitle}`;
     } catch (error) {
       setLoading(false);
       console.log(error);
+      let msg = null;
       if (error.response) {
-        let msg = error.response.data.message;
+        if (error.response.data.message) {
+          msg = error.response.data.message;
+        } else {
+          msg = error.response.data;
+        }
         message.error(msg);
       } else {
         message.error("Update failed. Internal server error.");}
     }
   };
+  const getRoleIdByRoleName = (rname, rlist) => rlist.find(item => item.roleName == rname).id;
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
       <div
@@ -82,11 +99,11 @@ const EditAdmin = () => {
       try {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
         axios.defaults.headers.common['Fellaverse-token'] = token;
-        const result = await axios.get(`${domain}api/management/role`);
-        const roles = result.data.map(res => res.roleName);
-        console.log(roles);
+        const result = await axios.get(`${domain}management/role`);
+        const roles = result.data.data;
+        // console.log(roles);
         setRoles(roles);
-        
+        setRoleIds(record.roles.map(role=>getRoleIdByRoleName(role, roles)))
       } catch (error) {
         console.log(error);
       }
@@ -108,10 +125,9 @@ const EditAdmin = () => {
       name="username"
       label="Username"
       tooltip="What do you want others to call you?"
+      initialValue={record.username}
       rules={[
         {
-        required: true,
-        message: 'Please input your username!',
         whitespace: true,
         },
     ]}
@@ -122,13 +138,13 @@ const EditAdmin = () => {
     <Form.Item
       name="email"
       label="E-mail"
+      initialValue={record.email}
       rules={[
         {
         type: 'email',
         message: 'The input is not valid E-mail!',
         },
         {
-        required: true,
         message: 'Please input your E-mail!',
         },
     ]}
@@ -138,12 +154,7 @@ const EditAdmin = () => {
     <Form.Item
       name="phoneNumber"
       label="Phone Number"
-      rules={[
-        {
-        required: true,
-        message: 'Please input your phone number!',
-        },
-    ]}
+      initialValue={record.phoneNumber}
     >
     <Input
       addonBefore={prefixSelector}
@@ -155,12 +166,6 @@ const EditAdmin = () => {
     <Form.Item
       name="password"
       label="Password"
-      rules={[
-        {
-        required: true,
-        message: 'Please input your password!',
-        },
-    ]}
     hasFeedback
     >
       <Input.Password />
@@ -172,10 +177,6 @@ const EditAdmin = () => {
       dependencies={['password']}
       hasFeedback
       rules={[
-        {
-        required: true,
-        message: 'Please confirm your password!',
-        },
         ({ getFieldValue }) => ({
         validator(_, value) {
             if (!value || getFieldValue('password') === value) {
@@ -187,6 +188,24 @@ const EditAdmin = () => {
     ]}
     >
     <Input.Password />
+    </Form.Item>
+
+    <Form.Item
+      name="roleIds"
+      label="Roles"
+      // initialValue={roleIds}
+      rules={[
+        {
+          required: false,
+          type: 'array',
+        },
+      ]}
+    >
+      <Select mode="multiple" placeholder="Please select admin roles">
+        {roles.map(role => (
+              <Option key={role.id} value={role.id}>{role.roleName}</Option>
+        ))}
+      </Select>
     </Form.Item>
     
     <Form.Item {...tailFormItemLayout}>

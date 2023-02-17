@@ -12,11 +12,28 @@ const AdminManagement = () => {
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
-  const location = useLocation();
-  const handleAdd = () => {
-    window.location = location.pathname + '/add';
-  };
-  const handleDelete = (key) => {
+  const handleDelete = async (key) => {
+    try {
+      const result = await axios.delete(`${domain}management/admin/` + key);
+      message.success("Delete successfully.");
+      const data = result.data.data;
+      console.log(data);
+      const title = data;
+      const subTitle = "Delete admin info success!";
+      window.location.href = `/admin/success/${title}/${subTitle}`;
+    } catch (error) {
+      console.log(error);
+      let msg = null;
+      if (error.response) {
+        if (error.response.data.message) {
+          msg = error.response.data.message;
+        } else {
+          msg = error.response.data;
+        }
+        message.error(msg);
+      } else {
+        message.error("Update failed. Internal server error.");}
+    }
   };
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -217,7 +234,7 @@ const AdminManagement = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <Link to={'edit/'+record.key}>Edit</Link>
+          <Link to={'edit/'+record.key} state={record}>Edit</Link>
           <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
             <a>Delete</a>
           </Popconfirm>
@@ -231,9 +248,9 @@ const AdminManagement = () => {
       try {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
         axios.defaults.headers.common['Fellaverse-token'] = token;
-        const result = await axios.get(`${domain}api/management/admin`);
-        console.log(result);
-        const adminList = result.data.map(f => {
+        const result = await axios.get(`${domain}management/admin`);
+        // console.log(result);
+        const adminList = result.data.data.map(f => {
           return {...f, key: f.id};
         });
         setAdmins(adminList);
@@ -256,12 +273,13 @@ const AdminManagement = () => {
         }}
         dataSource={admins}
       />
-      <Button
-        onClick={handleAdd}
-        type="primary"
-      >
-        Add new admin
-      </Button>
+      <Link to={'/admin/admin/add'}>
+        <Button
+          type="primary"
+        >
+          Add new admin
+        </Button>
+      </Link>
     </div>
   );
 };

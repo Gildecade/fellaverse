@@ -21,6 +21,7 @@ import axios from 'axios';
 
 import AdminIndex from './adminIndex';
 import LogoutForm from '../authentication/logout';
+import Success from '../result/Success';
 import NotFound from '../result/404';
 // TODO: import your components here
 import AdminManagement from './admin/listAdmin';
@@ -130,6 +131,7 @@ const AdminApp = () => {
               <Routes>
                 {/* TODO: link your components(element) with route paths here */}
                 <Route path="/" element={<AdminIndex />} />
+                <Route path='/success/:title/:subTitle' element={<Success />} />
                 <Route path="/admin" element={<AdminManagement/>} />
                 <Route path="/admin/add" element={<AddAdmin/>} />
                 <Route path="/admin/edit/:id" element={<EditAdmin/>} />

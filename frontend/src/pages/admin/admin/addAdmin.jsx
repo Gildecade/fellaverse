@@ -46,19 +46,19 @@ const AddAdmin = () => {
     setLoading(true);
     console.log('Received values of form: ', values);
     try {
-      const result = await axios.post(`${domain}api/management/admin`, values);
+      const result = await axios.post(`${domain}management/admin`, values);
       message.success("Add successfully.");
-      const data = result.data;
+      const data = result.data.data;
       console.log(data);
       await delay(1000);
       const title = data;
       const subTitle = "Add new admin success!";
-      window.location.href = `/success/${title}/${subTitle}`;
+      window.location.href = `/admin/success/${title}/${subTitle}`;
     } catch (error) {
       setLoading(false);
       console.log(error);
       if (error.response) {
-        let msg = error.response.data.message;
+        let msg = error.response.data.data.message;
         message.error(msg);
       } else {
         message.error("Add failed. Internal server error.");}
@@ -80,7 +80,7 @@ const AddAdmin = () => {
       try {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
         axios.defaults.headers.common['Fellaverse-token'] = token;
-        const result = await axios.get(`${domain}api/management/role`);
+        const result = await axios.get(`${domain}management/role`);
         const roles = result.data.map(res => res.roleName);
         console.log(roles);
         setRoles(roles);
