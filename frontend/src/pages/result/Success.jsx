@@ -1,5 +1,5 @@
 import { Button, Result } from 'antd';
-import { useParams, Link } from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 
 const Success = () => {
   const { title, subTitle } = useParams();

@@ -3,13 +3,11 @@ import {
   Button,
   Form,
   Input,
-  Select,
   message,
 } from 'antd';
 import axios from 'axios';
 import { domain } from '../../config';
 
-const { Option } = Select;
 const formItemLayout = {
   labelCol: {
     xs: {

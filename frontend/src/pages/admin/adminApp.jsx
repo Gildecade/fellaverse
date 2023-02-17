@@ -7,14 +7,11 @@ import {
 import { Breadcrumb, Col, Layout, Menu, Row, theme, Space } from 'antd';
 import {
   ShopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
   HomeOutlined,
   ContactsOutlined,
   ShoppingOutlined,
   ShoppingCartOutlined,
+  ApartmentOutlined,
 } from '@ant-design/icons';
 import { domain } from '../../config';
 import axios from 'axios';
@@ -27,6 +24,7 @@ import NotFound from '../result/404';
 import AdminManagement from './admin/listAdmin';
 import AddAdmin from './admin/addAdmin';
 import EditAdmin from './admin/editAdmin';
+import RoleManagement from './role/listRole';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -63,11 +61,12 @@ const AdminApp = () => {
     // TODO: modify sider contents here
     if (roles.indexOf("SuperAdmin") != -1) {
       items.push(getItem(<Link to='/admin/admin'>Admin Management</Link>, '2', <ContactsOutlined />));
+      items.push(getItem(<Link to='/admin/role'>Role Management</Link>, '3', <ApartmentOutlined />));
     }
     if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
       items.push(getItem("Shop Management", 'sub1', <ShopOutlined />, [
-        getItem(<Link to='/admin'>Product</Link>, '3', <ShoppingOutlined />),
-        getItem(<Link to='/admin'>Order</Link>, '4', <ShoppingCartOutlined />),
+        getItem(<Link to='/admin'>Product</Link>, '4', <ShoppingOutlined />),
+        getItem(<Link to='/admin'>Order</Link>, '5', <ShoppingCartOutlined />),
       ]));
     }
     setItems(items);
@@ -135,6 +134,7 @@ const AdminApp = () => {
                 <Route path="/admin" element={<AdminManagement/>} />
                 <Route path="/admin/add" element={<AddAdmin/>} />
                 <Route path="/admin/edit/:id" element={<EditAdmin/>} />
+                <Route path="/role" element={<RoleManagement/>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>

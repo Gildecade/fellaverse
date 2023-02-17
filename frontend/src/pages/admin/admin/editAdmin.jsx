@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import { UserAddOutlined } from '@ant-design/icons';
-import { Button, Col, Drawer, Form, Input, Row, Space, Select, message } from 'antd';
+import { Button, Form, Input, Select, message } from 'antd';
 import axios from 'axios';
 import { domain } from '../../../config';
 

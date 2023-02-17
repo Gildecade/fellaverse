@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { UserAddOutlined } from '@ant-design/icons';
-import { Button, Col, Drawer, Form, Input, Row, Space, Select, message } from 'antd';
+import { Button, Drawer, Form, Input, message } from 'antd';
 import axios from 'axios';
 import { domain } from '../../config';
-
-const { Option } = Select;
 
 const formItemLayout = {
   labelCol: {

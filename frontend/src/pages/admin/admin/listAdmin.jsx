@@ -4,7 +4,6 @@ import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { domain } from '../../../config';
 import axios from 'axios';
-import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom';
 
 const AdminManagement = () => {
@@ -144,7 +143,6 @@ const AdminManagement = () => {
       title: 'Userame',
       dataIndex: 'username',
       key: 'username',
-      render: (text) => <a>{text}</a>,
       ...getColumnSearchProps('username'),
         sorter: (a, b) => {
           const nameA = a.username.toUpperCase(); // ignore upper and lowercase

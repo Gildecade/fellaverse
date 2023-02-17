@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import { Button, Col, Drawer, Form, Input, Row, Space, Checkbox, message } from 'antd';
+import React from 'react';
+import { Button, message } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
-
-import { domain } from '../../config';
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 const LogoutForm = () => {
