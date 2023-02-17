@@ -49,7 +49,7 @@ const LoginForm = () => {
       if (roles) {
         navigate(`/admin`);
       } else {
-        navigate(`/`);
+        window.location.href = `/`;
       }
     } catch (error) {
       setLoading(false);
