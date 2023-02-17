@@ -57,6 +57,7 @@ const LoginForm = () => {
         let msg = error.response.data.message;
         message.error(msg);
       } else {
+        console.log("Check whether nginx booted.");
         message.error("Login failed. Internal server error.");}
     }
   };
