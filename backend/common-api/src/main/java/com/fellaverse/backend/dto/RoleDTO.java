@@ -16,9 +16,9 @@ public class RoleDTO implements Serializable {
     @NotNull(groups = {ValidGroup.Crud.Update.class, ValidGroup.Crud.Delete.class}, message = "Role ID cannot be null")
     private Long id;
 
-    @NotBlank(groups = {ValidGroup.Crud.Create.class, ValidGroup.Crud.Update.class}, message = "Role name cannot be blank")
+    @NotBlank(groups = ValidGroup.Crud.Create.class, message = "Role name cannot be blank")
     private String roleName;
 
-    @NotBlank(groups = {ValidGroup.Crud.Create.class, ValidGroup.Crud.Update.class}, message = "Role description cannot be blank")
+    @NotBlank(groups = ValidGroup.Crud.Create.class, message = "Role description cannot be blank")
     private String description;
 }

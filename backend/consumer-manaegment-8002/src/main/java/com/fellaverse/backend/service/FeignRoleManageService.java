@@ -17,4 +17,13 @@ public interface FeignRoleManageService {
 
     @GetMapping("/admin/{id}")
     List<String> findRoleNameByAdminId(@PathVariable("id") Long adminId);
+
+    @PostMapping("")
+    String addRole(RoleDTO roleDTO);
+
+    @PutMapping("")
+    String updateRole(RoleDTO roleDTO);
+
+    @DeleteMapping("/{id}")
+    String deleteRole(@PathVariable("id") Long id);
 }

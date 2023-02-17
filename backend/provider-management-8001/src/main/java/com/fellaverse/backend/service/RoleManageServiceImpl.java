@@ -28,4 +28,24 @@ public class RoleManageServiceImpl implements RoleManageService {
     public List<Role> findRoleByIds(List<Long> roleIds) {
         return roleRepository.findByIdIn(roleIds);
     }
+
+    @Override
+    public Role findRoleById(Long id) {
+        return roleRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void addRole(Role role) {
+        roleRepository.save(role);
+    }
+
+    @Override
+    public void deleteRole(Long id) {
+        roleRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateRole(Role role) {
+        roleRepository.save(role);
+    }
 }

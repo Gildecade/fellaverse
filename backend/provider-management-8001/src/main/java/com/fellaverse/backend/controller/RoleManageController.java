@@ -3,10 +3,11 @@ package com.fellaverse.backend.controller;
 import com.fellaverse.backend.bean.Role;
 import com.fellaverse.backend.dto.RoleDTO;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
-import com.fellaverse.backend.mapper.AdminMapper;
 import com.fellaverse.backend.mapper.RoleMapper;
 import com.fellaverse.backend.service.RoleManageService;
+import com.fellaverse.backend.validator.ValidGroup;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,5 +31,27 @@ public class RoleManageController {
     @GetMapping("/admin/{id}")
     public List<String> findRoleNameByAdminId(@PathVariable("id") Long adminId) {
         return roleManageService.findRoleNameByAdminId(adminId);
+    }
+
+    @JWTCheckToken(role = "SuperAdmin")
+    @PostMapping("")
+    public String addRole(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) RoleDTO roleDTO) {
+        roleManageService.addRole(roleMapper.toEntity(roleDTO));
+        return "Add Role success!";
+    }
+
+    @JWTCheckToken(role = "SuperAdmin")
+    @PutMapping("")
+    public String updateRole(@RequestBody @Validated(value = ValidGroup.Crud.Update.class) RoleDTO roleDTO) {
+        Role role = roleManageService.findRoleById(roleDTO.getId());
+        roleManageService.updateRole(roleMapper.partialUpdate(roleDTO, role));
+        return "Update admin success!";
+    }
+
+    @JWTCheckToken(role = "SuperAdmin")
+    @DeleteMapping("/{id}")
+    public String deleteRole(@PathVariable("id") Long id) {
+        roleManageService.deleteRole(id);
+        return "Delete admin success!";
     }
 }

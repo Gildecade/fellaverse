@@ -1,7 +1,6 @@
 package com.fellaverse.backend.service;
 
 import com.fellaverse.backend.bean.Role;
-import org.springframework.dao.OptimisticLockingFailureException;
 
 import java.util.List;
 
@@ -35,4 +34,12 @@ public interface RoleManageService {
      * @return the saved entity; will never be {@literal null}.
      */
     List<Role> findRoleByIds(List<Long> roleIds);
+
+    Role findRoleById(Long id);
+
+    void addRole(Role role);
+
+    void deleteRole(Long id);
+
+    void updateRole(Role role);
 }
