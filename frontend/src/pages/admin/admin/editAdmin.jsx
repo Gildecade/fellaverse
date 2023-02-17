@@ -203,7 +203,7 @@ const EditAdmin = () => {
     >
       <Select mode="multiple" placeholder="Please select admin roles">
         {roles.map(role => (
-              <Option key={role.id} value={role.id}>{role.roleName}</Option>
+          <Option key={role.id} value={role.id}>{role.roleName}</Option>
         ))}
       </Select>
     </Form.Item>
