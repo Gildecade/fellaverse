@@ -2,6 +2,7 @@ package com.fellaverse.backend.service;
 
 import com.fellaverse.backend.config.FeignBasicAuthRequestInterceptor;
 import com.fellaverse.backend.dto.AdminDTO;
+import com.fellaverse.backend.dto.AdminFindAllDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -9,10 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Component
-@FeignClient(value = "provider-gateway", contextId = "adminManagement", configuration = FeignBasicAuthRequestInterceptor.class)
+@FeignClient(value = "provider-gateway", contextId = "adminManagement",
+        configuration = FeignBasicAuthRequestInterceptor.class, path = "/api/management/admin")
 public interface FeignAdminManageService {
     @GetMapping("")
-    List<AdminDTO> findAllAdmin();
+    List<AdminFindAllDTO> findAllAdmin();
 
     @PostMapping("")
     String addAdmin(AdminDTO adminDTO);

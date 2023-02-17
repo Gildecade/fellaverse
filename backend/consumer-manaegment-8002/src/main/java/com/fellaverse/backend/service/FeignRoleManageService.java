@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Component
-@FeignClient(value = "provider-gateway", contextId = "roleManagement", configuration = FeignBasicAuthRequestInterceptor.class)
+@FeignClient(value = "provider-gateway", contextId = "roleManagement",
+        configuration = FeignBasicAuthRequestInterceptor.class, path = "/api/management/role")
 public interface FeignRoleManageService {
     @GetMapping("")
     List<RoleDTO> findAllRoles();
