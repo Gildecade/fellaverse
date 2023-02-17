@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Form, Input, Select, message } from 'antd';
 import axios from 'axios';
 import { domain } from '../../../config';
@@ -42,6 +42,7 @@ const EditAdmin = () => {
   const [roles, setRoles] = useState([]);
   const [roleIds, setRoleIds] = useState([]);
   const adminId = useParams().id;
+  const navigate = useNavigate();
   form.setFieldsValue({
     "roleIds": roleIds,
   })
@@ -65,7 +66,7 @@ const EditAdmin = () => {
       await delay(1000);
       const title = data;
       const subTitle = "Update admin info success!";
-      window.location.href = `/admin/success/${title}/${subTitle}`;
+      navigate(`/admin/success/${title}/${subTitle}`);
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -113,7 +114,7 @@ const EditAdmin = () => {
   <Form
     {...formItemLayout}
     form={form}
-    name="Add admin"
+    name="Edit admin"
     onFinish={onFinish}
     initialValues={{
     prefix: '1',

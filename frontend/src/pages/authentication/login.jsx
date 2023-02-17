@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { LoginOutlined, EyeInvisibleOutlined, EyeTwoTone, UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Button, Drawer, Form, Input, Checkbox, message } from 'antd';
 import axios from 'axios';
@@ -7,6 +8,7 @@ import { domain } from '../../config';
 const LoginForm = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const showDrawer = () => {
     setOpen(true);
   };
@@ -45,9 +47,9 @@ const LoginForm = () => {
       }
       await delay(1000);
       if (roles) {
-        window.location.href = `/admin`;
+        navigate(`/admin`);
       } else {
-        window.location.href = `/`;
+        navigate(`/`);
       }
     } catch (error) {
       setLoading(false);

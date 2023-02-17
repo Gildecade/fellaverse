@@ -1,5 +1,5 @@
 import { Button, Result } from 'antd';
-import { useParams} from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 const Success = () => {
   const { title, subTitle } = useParams();
@@ -15,9 +15,11 @@ const Success = () => {
       title={title}
       subTitle={subTitle}
       extra={[
-        <Button type="primary" href={homePage}>
-          Back Home
-        </Button>
+        <Link to={homePage}>
+          <Button type="primary">
+            Back Home
+          </Button>
+        </Link>
       ]}
     />
   );

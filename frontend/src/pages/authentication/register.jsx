@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UserAddOutlined } from '@ant-design/icons';
 import { Button, Drawer, Form, Input, message } from 'antd';
 import axios from 'axios';
@@ -38,6 +39,7 @@ const RegisterForm = () => {
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
   const showDrawer = () => {
@@ -57,7 +59,7 @@ const RegisterForm = () => {
       await delay(1000);
       const title = data.message;
       const subTitle = "Enjoy your new journey in Fellaverse!";
-      window.location.href = `/success/${title}/${subTitle}`;
+      navigate(`/success/${title}/${subTitle}`);
     } catch (error) {
       setLoading(false);
       console.log(error);

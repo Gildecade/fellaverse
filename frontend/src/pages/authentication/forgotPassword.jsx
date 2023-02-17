@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Button,
   Form,
@@ -41,6 +42,7 @@ const tailFormItemLayout = {
 const ForgotPasswordForm = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const delay = ms => new Promise(res => setTimeout(res, ms));
   const onFinish = async (values) => {
     setLoading(true);
@@ -53,7 +55,7 @@ const ForgotPasswordForm = () => {
       message.success(title);
       console.log(data);
       await delay(1000);
-      window.location.href = `/success/${title}/${subTitle}`;
+      navigate(`/success/${title}/${subTitle}`);
     } catch (error) {
       setLoading(false);
       console.log(error);

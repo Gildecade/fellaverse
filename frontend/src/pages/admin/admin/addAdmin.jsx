@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, message } from 'antd';
 import axios from 'axios';
 import { domain } from '../../../config';
@@ -37,6 +38,7 @@ const AddAdmin = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [roles, setRoles] = useState([]);
+  const navigate = useNavigate();
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
   const onFinish = async (values) => {
@@ -50,7 +52,7 @@ const AddAdmin = () => {
       await delay(1000);
       const title = data;
       const subTitle = "Add new admin success!";
-      window.location.href = `/admin/success/${title}/${subTitle}`;
+      navigate(`/admin/success/${title}/${subTitle}`);
     } catch (error) {
       setLoading(false);
       console.log(error);

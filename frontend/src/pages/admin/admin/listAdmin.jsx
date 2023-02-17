@@ -4,13 +4,14 @@ import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { domain } from '../../../config';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const AdminManagement = () => {
   const [admins, setAdmins] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
+  const navigate = useNavigate();
   const handleDelete = async (key) => {
     try {
       const result = await axios.delete(`${domain}management/admin/` + key);
@@ -19,7 +20,7 @@ const AdminManagement = () => {
       console.log(data);
       const title = data;
       const subTitle = "Delete admin info success!";
-      window.location.href = `/admin/success/${title}/${subTitle}`;
+      navigate(`/admin/success/${title}/${subTitle}`);
     } catch (error) {
       console.log(error);
       let msg = null;
