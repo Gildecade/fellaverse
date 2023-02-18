@@ -4,3 +4,5 @@ insert into role (role_name, description)
 VALUES ('WorkoutAdmin', 'Administrators for schedule and record module. Able to crud all schedules and records.');
 insert into role (role_name, description)
 VALUES ('TweetAdmin', 'Administrators for tweet module. Able to crud all tweets and comments.');
+insert into role (role_name, description)
+VALUES ('UserAdmin', 'Administrators for User management module. Able to read user info and modify user balance and status.');
