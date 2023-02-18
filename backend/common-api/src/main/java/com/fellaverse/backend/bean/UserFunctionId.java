@@ -3,12 +3,16 @@ package com.fellaverse.backend.bean;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserFunctionId implements Serializable {
     private static final long serialVersionUID = 6674143811880140754L;
     @NotNull
