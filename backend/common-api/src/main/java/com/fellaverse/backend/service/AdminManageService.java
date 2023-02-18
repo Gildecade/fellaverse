@@ -1,26 +1,9 @@
 package com.fellaverse.backend.service;
 
-import java.util.List;
 import com.fellaverse.backend.bean.Admin;
-import com.fellaverse.backend.bean.User;
-import com.fellaverse.backend.dto.UserBalanceStatusDTO;
+
+import java.util.List;
 public interface AdminManageService {
-
-    /**
-     * return true for successful update a certain user's balance or status
-     */
-    public Boolean updateUserBalanceStatus(UserBalanceStatusDTO userBalanceStatusDTO);
-
-    /**
-     * return user object by username
-     */
-    public User findUserByUsername(String userName);
-
-    /**
-     * return user object by user email
-     */
-    public User findUserByEmail(String userEmail);
-
     List<Admin> findAllAdmin();
 
     void addAdmin(Admin admin);
