@@ -9,7 +9,7 @@ fellaverse:
         sign: fellaverse
         issuer: fellas
         secret: www.fellaverse.com/gch/darren/chiu/jingshuo
-        expire: 600
+        expire: 3600
       password:
         encrypt:
           repeat: 5

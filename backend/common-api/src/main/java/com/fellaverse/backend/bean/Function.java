@@ -8,7 +8,6 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.List;
 import java.util.Set;
 
 @Data

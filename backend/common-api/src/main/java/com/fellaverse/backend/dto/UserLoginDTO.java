@@ -1,6 +1,5 @@
 package com.fellaverse.backend.dto;
 
-import com.fellaverse.backend.validator.ValidGroup;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.experimental.Accessors;

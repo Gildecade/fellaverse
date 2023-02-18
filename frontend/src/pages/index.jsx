@@ -1,34 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { domain } from '../config';
-import axios from 'axios';
 
 // function(component) name
 const Index = () => {
     // declare varibles and corresponding setter here
     // useState means varibles' initialized value, like "", [], false
-    const [ msg, setMsg] = useState("");
+    const [ username, setUsername] = useState(null);
   
-  
-    // useEffect: get data from backend when first rendering this page
+    // useEffect: run this block when first rendering this page
     useEffect(() => {
-      // ajax to render other components while waiting for data
-      const initialize = async () => {
-        // console.log(response) if you do not know what it is, could be json
-        const response = await axios.get(`${domain}/`);
-        // response.data means get the value of key "data" in json response
-        const message = response.data;
-        setMsg(message);
-      }
-      initialize();
+      const username = localStorage.getItem('username') ? localStorage.getItem('username') : sessionStorage.getItem('username');
+      setUsername(username);
     }, []);
   
     
     // return real html code here
     return (
       <div>
-        <h1>
-            {msg}
-        </h1>
+        { username ? 
+          (
+            <h1 style={{marginLeft: '40px',}}>
+                Welcome to Fellaverse, {username}.
+            </h1>
+          ) :
+          (
+            <h1>
+                Welcome to Fellaverse, please Login.
+            </h1>
+          )
+        }
       </div>
     );
   }

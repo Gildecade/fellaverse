@@ -41,7 +41,7 @@ public class User {
     private Long wallet;
 
     // use columnDefinition to add specific constraints manually
-    @Column(name = "status", nullable = false, columnDefinition = "enum('normal', 'locked', 'unknown') default 'normal'")
+    @Column(name = "status", nullable = false, columnDefinition = "varchar(60) default 'NORMAL'")
     // Enum pass by string
     @Enumerated(EnumType.STRING)
     // create a enum in package enumerator
