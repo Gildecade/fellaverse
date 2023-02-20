@@ -16,7 +16,7 @@ public class AdminManageExerciseServiceImpl implements AdminManageExerciseServic
     private ExerciseRepository exerciseRepository;
     @Override
     public Boolean addExercise(Exercise exercise) {
-        if (exerciseRepository.findByExerciseName(exercise.getExercise_name()) != null)
+        if (exerciseRepository.findByExerciseName(exercise.getExerciseName()) != null)
             return false;
         else
             exerciseRepository.save(exercise);
@@ -25,7 +25,7 @@ public class AdminManageExerciseServiceImpl implements AdminManageExerciseServic
 
     @Override
     public Boolean editExercise(Exercise exercise) {
-        if (exerciseRepository.findByExerciseName(exercise.getExercise_name()) == null)
+        if (exerciseRepository.findByExerciseName(exercise.getExerciseName()) == null)
             return false;
         else
             exerciseRepository.save(exercise);
@@ -48,5 +48,10 @@ public class AdminManageExerciseServiceImpl implements AdminManageExerciseServic
     @Override
     public Set<Exercise> findExerciseByKeyword(String keyword) {
         return exerciseRepository.findByExerciseNameContains(keyword);
+    }
+
+    @Override
+    public Exercise findExerciseByName(String name) {
+        return exerciseRepository.findByExerciseName(name);
     }
 }

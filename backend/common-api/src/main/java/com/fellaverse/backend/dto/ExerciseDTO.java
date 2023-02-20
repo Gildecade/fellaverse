@@ -17,5 +17,5 @@ public class ExerciseDTO implements Serializable {
     @NotNull(groups = ValidGroup.Crud.Update.class, message = "ID cannot be null")
     private final Long id;
     @NotBlank(message = "exercise name cannot be blank")
-    private final String exercise_name;
+    private final String exerciseName;
 }

@@ -33,14 +33,14 @@ public class AdminManageExerciseController {
     @JWTCheckToken(role = {"SuperAdmin", "WorkoutAdmin"})
     @PutMapping("")
     public Boolean editExercise(@RequestBody @Validated(value = ValidGroup.Crud.Update.class) ExerciseDTO exerciseDTO){
-        Exercise exercise = exerciseRepository.findByExerciseName(exerciseDTO.getExercise_name());
+        Exercise exercise = adminManageExerciseService.findExerciseByName(exerciseDTO.getExerciseName());
         return adminManageExerciseService.editExercise(exerciseMapper.partialUpdate(exerciseDTO, exercise));
     }
 
     @JWTCheckToken(role = {"SuperAdmin", "WorkoutAdmin"})
     @DeleteMapping("")
     public Boolean deleteExercise(@RequestBody ExerciseDTO exerciseDTO){
-        Exercise exercise = exerciseRepository.findByExerciseName(exerciseDTO.getExercise_name());
+        Exercise exercise = adminManageExerciseService.findExerciseByName(exerciseDTO.getExerciseName());
         return adminManageExerciseService.deleteExercise(exercise);
     }
 
