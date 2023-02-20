@@ -20,4 +20,6 @@ public interface AdminManageUserInfoService {
      * return user object by user email
      */
     public Set<User> findUserByEmail(String userEmail);
+
+    public Set<User> findAllUser();
 }

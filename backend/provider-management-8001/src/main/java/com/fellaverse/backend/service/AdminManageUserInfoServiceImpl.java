@@ -1,5 +1,6 @@
 package com.fellaverse.backend.service;
 
+import com.fellaverse.backend.bean.Exercise;
 import com.fellaverse.backend.bean.User;
 import com.fellaverse.backend.dto.UserBalanceStatusDTO;
 import com.fellaverse.backend.mapper.UserBalanceStatusMapper;
@@ -8,6 +9,8 @@ import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -36,4 +39,12 @@ public class AdminManageUserInfoServiceImpl implements AdminManageUserInfoServic
     public Set<User> findUserByEmail(String userEmail) {
         return userRepository.findByEmailContains(userEmail);
     }
+
+    @Override
+    public Set<User> findAllUser() {
+        List<User> userList = userRepository.findAll();
+        Set<User> userSet = new HashSet<>(userList);
+        return userSet;
+    }
+
 }

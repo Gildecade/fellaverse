@@ -1,5 +1,7 @@
 package com.fellaverse.backend.dto;
 
+import com.fellaverse.backend.annotation.EnumString;
+import com.fellaverse.backend.enumerator.UserStatus;
 import com.fellaverse.backend.validator.ValidGroup;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -15,7 +17,7 @@ public class UserBalanceStatusDTO implements Serializable {
     private Long id;
 
     private Long wallet;
-
-    private Enum status;
+    @EnumString(value = {"normal","locked","unknown"}, message="invalid status")
+    private UserStatus status;
 
 }
