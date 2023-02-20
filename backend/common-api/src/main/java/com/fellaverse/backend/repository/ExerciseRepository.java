@@ -11,5 +11,4 @@ import java.util.Set;
 public interface ExerciseRepository  extends JpaRepository<Exercise, Long> {
     Exercise findByExerciseName(String exerciseName);
     Set<Exercise> findByExerciseNameContains(@NonNull String exerciseName);
-    long deleteByExerciseName(@NonNull String exerciseName);
 }

@@ -18,7 +18,7 @@ public interface AdminManageExerciseService {
     /**
      * return true for successfully deleting a new exercise
      */
-    public Boolean deleteExercise(Exercise exercise);
+    public Boolean deleteExercise(Long id);
 
     /**
      * return a set of all exercises

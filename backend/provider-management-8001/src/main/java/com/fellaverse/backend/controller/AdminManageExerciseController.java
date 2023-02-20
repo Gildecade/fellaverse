@@ -38,10 +38,9 @@ public class AdminManageExerciseController {
     }
 
     @JWTCheckToken(role = {"SuperAdmin", "WorkoutAdmin"})
-    @DeleteMapping("")
-    public Boolean deleteExercise(@RequestBody ExerciseDTO exerciseDTO){
-        Exercise exercise = adminManageExerciseService.findExerciseByName(exerciseDTO.getExerciseName());
-        return adminManageExerciseService.deleteExercise(exercise);
+    @DeleteMapping("del/{id}")
+    public Boolean deleteExercise(@PathVariable Long id){
+        return adminManageExerciseService.deleteExercise(id);
     }
 
     @JWTCheckToken(role = {"SuperAdmin", "WorkoutAdmin"})
@@ -55,6 +54,4 @@ public class AdminManageExerciseController {
     public Set<ExerciseDTO> findExercise(@PathVariable String keyword){
         return adminManageExerciseService.findExerciseByKeyword(keyword).stream().map(exerciseMapper::toDto).collect(Collectors.toSet());
     }
-
-
 }

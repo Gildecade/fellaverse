@@ -33,8 +33,8 @@ public class AdminManageExerciseServiceImpl implements AdminManageExerciseServic
     }
 
     @Override
-    public Boolean deleteExercise(Exercise exercise) {
-        exerciseRepository.delete(exercise);
+    public Boolean deleteExercise(Long id) {
+        exerciseRepository.deleteById(id);
         return true;
     }
 
