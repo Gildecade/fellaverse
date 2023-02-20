@@ -8,28 +8,28 @@ public interface AdminManageExerciseService {
     /**
      * return true for successfully adding a new exercise
      */
-    public Boolean addExercise(Exercise exercise);
+    Boolean addExercise(Exercise exercise);
 
     /**
      * return true for successfully updating a new exercise
      */
-    public Boolean editExercise(Exercise exercise);
+    Boolean editExercise(Exercise exercise);
 
     /**
      * return true for successfully deleting a new exercise
      */
-    public Boolean deleteExercise(Long id);
+    Boolean deleteExercise(Long id);
 
     /**
      * return a set of all exercises
      */
-    public Set<Exercise> findAllExercise();
+    Set<Exercise> findAllExercise();
 
     /**
      * return a set of exercise contains the keyword
      */
-    public Set<Exercise> findExerciseByKeyword(String keyword);
+    Set<Exercise> findExerciseByKeyword(String keyword);
 
-    public Exercise findExerciseByName(String name);
+    Exercise findExerciseByName(String name);
 
 }

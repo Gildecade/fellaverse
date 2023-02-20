@@ -4,14 +4,12 @@ import com.fellaverse.backend.bean.Exercise;
 import com.fellaverse.backend.dto.ExerciseDTO;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
 import com.fellaverse.backend.mapper.ExerciseMapper;
-import com.fellaverse.backend.repository.ExerciseRepository;
 import com.fellaverse.backend.service.AdminManageExerciseService;
 import com.fellaverse.backend.validator.ValidGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,8 +20,6 @@ public class AdminManageExerciseController {
     private AdminManageExerciseService adminManageExerciseService;
     @Autowired
     private ExerciseMapper exerciseMapper;
-    @Autowired
-    private ExerciseRepository exerciseRepository;
     @JWTCheckToken(role = {"SuperAdmin", "WorkoutAdmin"})
     @PostMapping("")
     public Boolean addExercise(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) ExerciseDTO exerciseDTO){
@@ -38,7 +34,7 @@ public class AdminManageExerciseController {
     }
 
     @JWTCheckToken(role = {"SuperAdmin", "WorkoutAdmin"})
-    @DeleteMapping("del/{id}")
+    @DeleteMapping("/{id}")
     public Boolean deleteExercise(@PathVariable Long id){
         return adminManageExerciseService.deleteExercise(id);
     }

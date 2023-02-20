@@ -18,31 +18,36 @@ public class AdminManageExerciseServiceImpl implements AdminManageExerciseServic
     public Boolean addExercise(Exercise exercise) {
         if (exerciseRepository.findByExerciseName(exercise.getExerciseName()) != null)
             return false;
-        else
+        else {
             exerciseRepository.save(exercise);
-        return true;
+            return true;
+        }
     }
 
     @Override
     public Boolean editExercise(Exercise exercise) {
         if (exerciseRepository.findByExerciseName(exercise.getExerciseName()) == null)
             return false;
-        else
+        else {
             exerciseRepository.save(exercise);
-        return true;
+            return true;
+        }
     }
 
     @Override
     public Boolean deleteExercise(Long id) {
-        exerciseRepository.deleteById(id);
-        return true;
+        if (exerciseRepository.existsById(id)) {
+            exerciseRepository.deleteById(id);
+            return true;
+        }
+        else
+            return false;
     }
 
     @Override
     public Set<Exercise> findAllExercise() {
-        List<Exercise> sourceList = exerciseRepository.findAll();;
-        Set<Exercise> targetSet = new HashSet<>(sourceList);
-        return targetSet;
+        List<Exercise> sourceList = exerciseRepository.findAll();
+        return new HashSet<>(sourceList);
     }
 
     @Override
