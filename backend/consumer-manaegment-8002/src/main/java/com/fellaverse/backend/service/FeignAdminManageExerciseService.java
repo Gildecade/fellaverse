@@ -20,10 +20,10 @@ public interface FeignAdminManageExerciseService {
     Boolean editExercise(ExerciseDTO exerciseDTO);
 
     @DeleteMapping("/{id}")
-    Boolean deleteExercise(@PathVariable Long id);
+    Boolean deleteExercise(@PathVariable("id") Long id);
 
     @GetMapping("")
     Set<ExerciseDTO> findAllExercise();
     @GetMapping("/{keyword}")
-    Set<ExerciseDTO> findExercise(@PathVariable String keyword);
+    Set<ExerciseDTO> findExercise(@PathVariable("keyword") String keyword);
 }

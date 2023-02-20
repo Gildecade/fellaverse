@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/management/exercise")
+@RequestMapping("/management/user")
 public class FeignAdminManageUserInfoController {
     @Autowired
     private FeignAdminManageUserInfoService feignAdminManageUserInfoService;
@@ -18,7 +18,7 @@ public class FeignAdminManageUserInfoController {
         return feignAdminManageUserInfoService.editUserBalanceStatus(userBalanceStatusDTO);
     }
     @GetMapping("/{userNameOrEmail}")
-    Set<UserBasicInfoDTO> findUser(@PathVariable String userNameOrEmail) {
+    Set<UserBasicInfoDTO> findUser(@PathVariable("userNameOrEmail") String userNameOrEmail) {
         return feignAdminManageUserInfoService.findUser(userNameOrEmail);
     }
     @GetMapping("")

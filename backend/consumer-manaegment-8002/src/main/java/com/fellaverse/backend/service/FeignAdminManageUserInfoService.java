@@ -17,7 +17,7 @@ public interface FeignAdminManageUserInfoService {
     @PutMapping("")
     Boolean editUserBalanceStatus(UserBalanceStatusDTO userBalanceStatusDTO);
     @GetMapping("/{userNameOrEmail}")
-    Set<UserBasicInfoDTO> findUser(@PathVariable String userNameOrEmail);
+    Set<UserBasicInfoDTO> findUser(@PathVariable("userNameOrEmail") String userNameOrEmail);
     @GetMapping("")
     Set<UserBasicInfoDTO> findAllUser();
 }

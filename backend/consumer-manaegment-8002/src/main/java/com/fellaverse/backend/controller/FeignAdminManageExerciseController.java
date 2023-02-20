@@ -26,7 +26,7 @@ public class FeignAdminManageExerciseController {
     }
 
     @DeleteMapping("/{id}")
-    public Boolean deleteExercise(@PathVariable Long id){
+    public Boolean deleteExercise(@PathVariable("id") Long id){
         return feignAdminManageExerciseService.deleteExercise(id);
     }
 
@@ -36,7 +36,7 @@ public class FeignAdminManageExerciseController {
     }
 
     @GetMapping("/{keyword}")
-    public Set<ExerciseDTO> findExercise(@PathVariable String keyword){
+    public Set<ExerciseDTO> findExercise(@PathVariable("keyword") String keyword){
         return feignAdminManageExerciseService.findExercise(keyword);
     }
 }
