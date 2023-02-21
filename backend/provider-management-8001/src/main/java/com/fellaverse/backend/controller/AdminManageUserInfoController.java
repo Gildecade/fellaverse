@@ -29,7 +29,7 @@ public class AdminManageUserInfoController {
     }
     @JWTCheckToken(role = {"SuperAdmin", "UserAdmin"})
     @GetMapping("/{userNameOrEmail}")
-    public Set<UserBasicInfoDTO> findUser(@PathVariable String userNameOrEmail) {
+    public Set<UserBasicInfoDTO> findUser(@PathVariable("userNameOrEmail") String userNameOrEmail) {
         Set<User> usersFromEmail = new HashSet<>(adminManageUserInfoService.findUserByEmail(userNameOrEmail));
         Set<User> usersFromName = new HashSet<>(adminManageUserInfoService.findUserByUsername(userNameOrEmail));
         Set<User> usersFound = new HashSet<>(usersFromEmail);

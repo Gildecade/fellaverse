@@ -1,10 +1,10 @@
 package com.fellaverse.backend.mapper;
 
-import com.fellaverse.backend.dto.CheckInDTO;
 import com.fellaverse.backend.bean.CheckIn;
+import com.fellaverse.backend.dto.CheckInDTO;
 import org.mapstruct.*;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring", uses = {UserMapper.class})
 public interface CheckInMapper {
     CheckIn toEntity(CheckInDTO checkInDto);
 

@@ -18,6 +18,7 @@ public class UserBalanceStatusDTO implements Serializable {
 
     private Long wallet;
     @EnumString(value = {"normal","locked","unknown"}, message="invalid status")
+    @NotNull(message = "User status cannot be null")
     private UserStatus status;
 
 }

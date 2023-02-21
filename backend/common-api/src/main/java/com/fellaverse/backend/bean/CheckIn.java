@@ -10,9 +10,9 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Data
+@IdClass(CheckInId.class)
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
@@ -22,7 +22,6 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 public class CheckIn {
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

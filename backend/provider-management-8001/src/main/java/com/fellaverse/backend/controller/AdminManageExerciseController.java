@@ -29,7 +29,7 @@ public class AdminManageExerciseController {
     @JWTCheckToken(role = {"SuperAdmin", "WorkoutAdmin"})
     @PutMapping("")
     public Boolean editExercise(@RequestBody @Validated(value = ValidGroup.Crud.Update.class) ExerciseDTO exerciseDTO){
-        Exercise exercise = adminManageExerciseService.findExerciseByName(exerciseDTO.getExerciseName());
+        Exercise exercise = adminManageExerciseService.findExerciseById(exerciseDTO.getId());
         return adminManageExerciseService.editExercise(exerciseMapper.partialUpdate(exerciseDTO, exercise));
     }
 

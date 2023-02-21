@@ -1,5 +1,6 @@
 package com.fellaverse.backend.dto;
 
+import com.fellaverse.backend.annotation.EnumString;
 import com.fellaverse.backend.enumerator.UserStatus;
 import com.fellaverse.backend.validator.ValidGroup;
 import jakarta.validation.constraints.NotBlank;
@@ -26,5 +27,6 @@ public class UserBasicInfoDTO implements Serializable {
     @NotNull(message = "ID cannot be null")
     private final Long wallet;
     @NotNull(groups = ValidGroup.Crud.Create.class, message = "status annot be null")
+    @EnumString(value = {"normal","locked","unknown"}, groups = ValidGroup.Crud.Update.class, message="invalid status")
     private final UserStatus status;
 }

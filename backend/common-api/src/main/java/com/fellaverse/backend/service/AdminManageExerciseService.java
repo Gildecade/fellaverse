@@ -30,6 +30,6 @@ public interface AdminManageExerciseService {
      */
     Set<Exercise> findExerciseByKeyword(String keyword);
 
-    Exercise findExerciseByName(String name);
+    Exercise findExerciseById(Long id);
 
 }

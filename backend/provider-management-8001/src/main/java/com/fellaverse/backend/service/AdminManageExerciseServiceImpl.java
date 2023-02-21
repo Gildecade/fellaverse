@@ -26,7 +26,7 @@ public class AdminManageExerciseServiceImpl implements AdminManageExerciseServic
 
     @Override
     public Boolean editExercise(Exercise exercise) {
-        if (exerciseRepository.findByExerciseName(exercise.getExerciseName()) == null)
+        if (exerciseRepository.findById(exercise.getId()) == null)
             return false;
         else {
             exerciseRepository.save(exercise);
@@ -56,7 +56,7 @@ public class AdminManageExerciseServiceImpl implements AdminManageExerciseServic
     }
 
     @Override
-    public Exercise findExerciseByName(String name) {
-        return exerciseRepository.findByExerciseName(name);
+    public Exercise findExerciseById(Long id) {
+        return exerciseRepository.findById(id).orElse(null);
     }
 }
