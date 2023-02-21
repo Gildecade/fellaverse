@@ -15,5 +15,4 @@ public interface CourseManageService {
 
     Course findCourseById(Long id);
 
-    List<Course> findAdminByCondition(Course course);
 }

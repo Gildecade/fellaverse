@@ -5,4 +5,4 @@ spring:
     # create db fellaverse manually in IDEA
     url: jdbc:mysql://localhost:3306/fellaverse?serverTimeZone=UTC&useSSL=true
     username: root
-    password: shuwei1379
+    password: root
