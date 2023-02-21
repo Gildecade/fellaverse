@@ -2,6 +2,7 @@ package com.fellaverse.backend.service;
 
 import com.fellaverse.backend.bean.Admin;
 import com.fellaverse.backend.repository.AdminRepository;
+import com.fellaverse.backend.repository.AdminRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -13,6 +14,9 @@ import java.util.List;
 public class AdminManageServiceImpl implements AdminManageService{
     @Autowired
     private AdminRepository adminRepository;
+
+    @Autowired
+    private AdminRoleRepository adminRoleRepository;
 
     @Override
     public List<Admin> findAllAdmin() {
@@ -46,5 +50,21 @@ public class AdminManageServiceImpl implements AdminManageService{
                 .withIgnoreCase(true);
         Example<Admin> example = Example.of(admin, matcher);
         return adminRepository.findAll(example);
+    }
+
+    @Override
+    public List<Long> findRoleIdsByAdminId(Long id) {
+        return adminRoleRepository.findById_AdminId(id)
+                .stream().map((adminRoleInfo -> adminRoleInfo.getRole().getId())).toList();
+    }
+
+    @Override
+    public void insertRole(Long userId, Long roleId) {
+        adminRoleRepository.insert(userId, roleId);
+    }
+
+    @Override
+    public void deleteRole(Long userId, Long roleId) {
+        adminRoleRepository.delete(userId, roleId);
     }
 }
