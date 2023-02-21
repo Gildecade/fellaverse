@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Accessors(chain = true)
@@ -27,4 +28,6 @@ public class AdminDTO implements Serializable {
     @NotBlank(groups = ValidGroup.Crud.Create.class, message = "Phone number cannot be blank")
     @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$", message = "Phone number format is wrong")
     private String phoneNumber;
+
+    private List<Long> roleIds;
 }

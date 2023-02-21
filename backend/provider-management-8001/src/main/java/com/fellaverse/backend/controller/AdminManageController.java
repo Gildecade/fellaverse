@@ -7,7 +7,6 @@ import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
 import com.fellaverse.backend.jwt.service.PasswordEncryptService;
 import com.fellaverse.backend.mapper.AdminFindAllMapper;
 import com.fellaverse.backend.mapper.AdminMapper;
-import com.fellaverse.backend.repository.AdminRoleRepository;
 import com.fellaverse.backend.service.AdminManageService;
 import com.fellaverse.backend.validator.ValidGroup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +22,6 @@ import java.util.stream.Collectors;
 public class AdminManageController {
     @Autowired
     private AdminManageService adminManageService;
-    @Autowired
-    private AdminRoleRepository adminRoleRepository;
     @Autowired
     private PasswordEncryptService passwordEncryptService;
     @Autowired
@@ -49,6 +46,10 @@ public class AdminManageController {
     public String addAdmin(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) AdminDTO adminDTO) {
         adminDTO.setPassword(passwordEncryptService.getEncryptedPassword(adminDTO.getPassword()));
         adminManageService.addAdmin(adminMapper.toEntity(adminDTO));
+        Long id = adminDTO.getId();
+        for (Long roleId : adminDTO.getRoleIds()) {
+            adminManageService.insertRole(id, roleId);
+        }
         return "Add admin success!";
     }
 
@@ -79,16 +80,15 @@ public class AdminManageController {
 //        admin.getRoles().clear();
 //        admin.getRoles().addAll(roles);
 //        adminManageService.updateAdmin(admin);
-        List<Long> existingRoles = adminRoleRepository.findById_AdminId(id)
-                .stream().map((adminRoleInfo -> adminRoleInfo.getRole().getId())).toList();
+        List<Long> existingRoles = adminManageService.findRoleIdsByAdminId(id);
         for (Long roleId : roleIds) {
             if (!existingRoles.contains(roleId)) {
-                adminRoleRepository.insert(id, roleId);
+                adminManageService.insertRole(id, roleId);
             }
         }
         for (Long existingRole : existingRoles) {
             if (!roleIds.contains(existingRole)) {
-                adminRoleRepository.delete(id, existingRole);
+                adminManageService.deleteRole(id, existingRole);
             }
         }
         return "Update roles success!";
