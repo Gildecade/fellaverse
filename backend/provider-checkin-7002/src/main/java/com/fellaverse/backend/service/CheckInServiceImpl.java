@@ -3,7 +3,6 @@ package com.fellaverse.backend.service;
 import com.fellaverse.backend.bean.CheckIn;
 import com.fellaverse.backend.bean.CheckInId;
 import com.fellaverse.backend.bean.User;
-import com.fellaverse.backend.projection.CheckInInfo;
 import com.fellaverse.backend.repository.CheckInRepository;
 import com.fellaverse.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,10 @@ public class CheckInServiceImpl implements CheckInService{
 
     @Override
     public Boolean isCheckInDuplicate(CheckIn checkIn) {
-        return !checkInRepository.isOverlap(checkIn.getStartDateTime(), checkIn.getEndDateTime()).isEmpty();
+        return !checkInRepository.findByStartDateTimeBeforeAndEndDateTimeAfter(checkIn.getStartDateTime(), checkIn.getEndDateTime()).isEmpty();
+        //return !checkInRepository.isOverlap(checkIn.getStartDateTime(), checkIn.getEndDateTime()).isEmpty();
     }
+
 
     @Override
     public Boolean addCheckIn(CheckIn checkIn) {
@@ -42,19 +43,23 @@ public class CheckInServiceImpl implements CheckInService{
 
     @Override
     public Boolean editCheckIn(CheckIn checkIn) {
-        CheckInId checkInId = new CheckInId(checkIn.getId(), checkIn.getUser());
-        if (isCheckInDuplicate(checkIn) || checkInRepository.existsById(checkInId))
+        CheckInId checkInId = new CheckInId(checkIn.getId().getId(), checkIn.getId().getUserId());
+        if (isCheckInDuplicate(checkIn) || !checkInRepository.existsById(checkInId)){
+            System.out.println(isCheckInDuplicate(checkIn));
+            System.out.println(!checkInRepository.existsById(checkInId));
             return false;
+        }
         else {
-            checkInRepository.save(checkIn);
+            //checkInRepository.save(checkIn);
+            System.out.println(checkInRepository.save(checkIn));
             return true;
         }
     }
 
     @Override
     public Boolean removeCheckIn(Long id, Long userId) {
-        User user = userRepository.findById(userId).orElse(null);
-        CheckInId checkInId = new CheckInId(id, user);
+      //  User user = userRepository.findById(userId).orElse(null);
+        CheckInId checkInId = new CheckInId(id, userId);
         if (checkInRepository.existsById(checkInId)) {
             checkInRepository.deleteById(checkInId);
             return true;
@@ -70,8 +75,8 @@ public class CheckInServiceImpl implements CheckInService{
 
     @Override
     public CheckIn findById(Long id, Long userId) {
-        User user = userRepository.findById(userId).orElse(null);
-        CheckInId checkInId = new CheckInId(id, user);
+//        User user = userRepository.findById(userId).orElse(null);
+        CheckInId checkInId = new CheckInId(id, userId);
         return checkInRepository.findById(checkInId).orElse(null);
     }
 }
