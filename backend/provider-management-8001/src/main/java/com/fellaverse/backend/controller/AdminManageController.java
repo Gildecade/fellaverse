@@ -1,7 +1,6 @@
 package com.fellaverse.backend.controller;
 
 import com.fellaverse.backend.bean.Admin;
-import com.fellaverse.backend.bean.Role;
 import com.fellaverse.backend.dto.AdminDTO;
 import com.fellaverse.backend.dto.AdminFindAllDTO;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
@@ -10,7 +9,6 @@ import com.fellaverse.backend.mapper.AdminFindAllMapper;
 import com.fellaverse.backend.mapper.AdminMapper;
 import com.fellaverse.backend.repository.AdminRoleRepository;
 import com.fellaverse.backend.service.AdminManageService;
-import com.fellaverse.backend.service.RoleManageService;
 import com.fellaverse.backend.validator.ValidGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,8 +24,6 @@ public class AdminManageController {
     @Autowired
     private AdminManageService adminManageService;
     @Autowired
-    private RoleManageService roleManageService;
-    @Autowired
     private AdminRoleRepository adminRoleRepository;
     @Autowired
     private PasswordEncryptService passwordEncryptService;
@@ -39,14 +35,7 @@ public class AdminManageController {
     @JWTCheckToken(role = "SuperAdmin")
     @GetMapping("")
     public List<AdminFindAllDTO> findAllAdmin() {
-        return adminManageService.findAllAdmin().stream().map(
-                admin -> {
-                    AdminFindAllDTO dto = adminFindAllMapper.toAdminFindAllDTO(admin);
-                    List<String> roleNames = roleManageService.findRoleNameByAdminId(admin.getId());
-                    dto.setRoles(roleNames);
-                    return dto;
-                }
-        ).collect(Collectors.toList());
+        return adminManageService.findAllAdmin().stream().map(adminFindAllMapper::toAdminFindAllDTO).collect(Collectors.toList());
     }
 
     @JWTCheckToken(role = "SuperAdmin")
