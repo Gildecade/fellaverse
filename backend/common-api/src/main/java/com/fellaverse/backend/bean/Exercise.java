@@ -22,7 +22,7 @@ public class Exercise {
     private Long id;
 
     @Column(name = "exercise_name", nullable = false, length = 60)
-    private String exercise_name;
+    private String exerciseName;
 
     @ManyToMany
     @JoinTable(name = "program_exercise",

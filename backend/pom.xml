@@ -21,6 +21,8 @@
         <module>consumer-token-6002</module>
         <module>provider-management-8001</module>
         <module>consumer-manaegment-8002</module>
+        <module>provider-checkin-7002</module>
+        <module>consumer-checkin-7012</module>
     </modules>
 
     <properties>

@@ -3,7 +3,6 @@ package com.fellaverse.backend.service;
 import com.fellaverse.backend.bean.Admin;
 
 import java.util.List;
-
 public interface AdminManageService {
     List<Admin> findAllAdmin();
 
