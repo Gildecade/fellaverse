@@ -2,7 +2,7 @@ server:
   port: 7001
 spring:
   application:
-    name: provider-record
+    name: provider-workout
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -18,7 +18,7 @@ spring:
 eureka:
   instance:
     hostname: localhost
-    instance-id: provider-record-7001
+    instance-id: provider-workout-7001
   client:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${eureka.client.eureka-server-port}/eureka/
@@ -34,7 +34,7 @@ management:
       enabled: true
 # springboot actuator info
 info:
-  app.name: microservice-record
+  app.name: microservice-workout
   author: LJS
 
 fellaverse:
