@@ -23,14 +23,31 @@ public class CourseServiceImpl implements CourseManageService {
     }
 
     @Override
-    public void addCourse(Course course) { courseRepository.save(course); }
-
-    @Override
-    public void deleteCourse(Long id) { courseRepository.deleteById(id);
+    public Course addCourse(Course course) {
+        return courseRepository.save(course);
     }
 
     @Override
-    public void updateCourse(Course course) { courseRepository.save(course); }
+    public boolean deleteCourse(Long id) {
+        try {
+            courseRepository.deleteById(id);
+        }
+        catch (Exception ex) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean updateCourse(Course course) {
+        try {
+            courseRepository.save(course);
+        }
+        catch (Exception ex) {
+            return false;
+        }
+        return true;
+    }
 
     @Override
     public Course findCourseById(Long id) {
