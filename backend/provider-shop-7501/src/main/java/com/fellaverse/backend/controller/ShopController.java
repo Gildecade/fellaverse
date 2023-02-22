@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import com.fellaverse.backend.validator.ValidGroup;
 
 @RestController
-@RequestMapping("/api/shop/*")  // any requests under token will be proceeded
+@RequestMapping("/api/shop")  // any requests under token will be proceeded
 public class ShopController {
     @Autowired
     private ShopService shopService;

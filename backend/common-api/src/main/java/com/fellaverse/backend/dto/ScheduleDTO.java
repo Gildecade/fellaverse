@@ -12,14 +12,14 @@ import java.time.LocalDateTime;
  */
 @Data
 public class ScheduleDTO implements Serializable {
-    private final Long id;
+    private Long id;
     @NotBlank(groups = ValidGroup.Crud.Create.class, message = "Schedule name cannot be blank")
-    private final String schedule_name;
+    private String schedule_name;
     @NotBlank(groups = ValidGroup.Crud.Create.class, message = "Workout days cannot be blank")
-    private final Integer workout_days;
+    private Integer workout_days;
     @NotBlank(groups = ValidGroup.Crud.Create.class, message = "Start time cannot be blank")
-    private final LocalDateTime start_time;
+    private LocalDateTime start_time;
     @NotBlank(groups = ValidGroup.Crud.Create.class, message = "End cannot be blank")
-    private final LocalDateTime end_time;
-    private final Long userId;
+    private LocalDateTime end_time;
+    private Long userId;
 }

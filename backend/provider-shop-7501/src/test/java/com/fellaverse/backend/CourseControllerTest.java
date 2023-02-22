@@ -2,10 +2,9 @@ package com.fellaverse.backend;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fellaverse.backend.bean.Course;
-import com.fellaverse.backend.controller.CourseManageController;
+import com.fellaverse.backend.controller.CourseController;
 import com.fellaverse.backend.enumerator.ProductStatus;
 import com.fellaverse.backend.service.CourseManageService;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,9 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Collections;
 
@@ -32,7 +28,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(CourseManageController.class)
+@WebMvcTest(CourseController.class)
+
+//@SpringBootTest(classes = ShopServer_7501.class)
+//@WebAppConfiguration
+//@AutoConfigureMockMvc
 @ContextConfiguration(classes = CourseControllerTest.class)
 public class CourseControllerTest {
 
@@ -62,14 +62,8 @@ public class CourseControllerTest {
     @Test
     public void testGetCoursesList() throws Exception {
         when(courseService.findAllCourse()).thenReturn(Collections.singletonList(course));
-//        RequestBuilder requestBuilder = MockMvcRequestBuilders
-//                .get("/api/shop/courses")
-//                .accept(MediaType.APPLICATION_JSON);
-//
-//        MvcResult result = mockMvc.perform(requestBuilder).andDo(print()).andReturn();
-//
-//        System.out.println(result.getResponse());
-        mockMvc.perform(get("/api/shop/courses"))
+
+        mockMvc.perform(get("http://localhost:7501/api/shop/courses"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

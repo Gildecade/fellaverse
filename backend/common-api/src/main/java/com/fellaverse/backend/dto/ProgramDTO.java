@@ -16,8 +16,8 @@ import java.util.Set;
 public class ProgramDTO implements Serializable {
     @Null(groups = ValidGroup.Crud.Create.class, message = "Program ID should be null when creating")
     @NotNull(groups = {ValidGroup.Crud.Update.class, ValidGroup.Crud.Delete.class}, message = "Program ID cannot be null")
-    private final Long id;
+    private Long id;
     @NotBlank(groups = ValidGroup.Crud.Create.class, message = "Program name cannot be blank")
-    private final String program_name;
-    private final Set<Long> exerciseIds;
+    private String program_name;
+    private Set<Long> exerciseIds;
 }

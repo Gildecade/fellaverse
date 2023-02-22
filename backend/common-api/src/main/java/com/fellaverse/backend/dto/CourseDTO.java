@@ -20,18 +20,18 @@ public class CourseDTO implements Serializable {
     @NotNull(groups = com.fellaverse.backend.validator.ValidGroup.Crud.Update.class, message = "Course ID cannot be null")
     private Long id;
     @NotBlank(groups = com.fellaverse.backend.validator.ValidGroup.Crud.Create.class, message = "Product name cannot be blank")
-    private final String product_name;
-    private final String description;
+    private String product_name;
+    private String description;
     @Pattern(regexp = "^(https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})$", message = "URL format is not right")
-    private final String image_url;
+    private String image_url;
     @NotBlank(groups = com.fellaverse.backend.validator.ValidGroup.Crud.Create.class, message = "Price cannot be blank")
-    private final Float price;
-    private final LocalDateTime created_date_time;
-    private final ProductStatus productStatus;
-    private final Set<Long> userIds;
+    private Float price;
+    private LocalDateTime created_date_time;
+    private ProductStatus productStatus;
+    private Set<Long> userIds;
     @NotBlank(groups = com.fellaverse.backend.validator.ValidGroup.Crud.Create.class, message = "Video url cannot be blank")
     @Pattern(regexp = "^(https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})$", message = "URL format is not right")
-    private final String video_url;
+    private String video_url;
 
 
 }

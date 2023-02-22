@@ -1,5 +1,5 @@
 server:
-  port: 7001
+  port: 7501
 spring:
   application:
     name: provider-shop
@@ -15,7 +15,7 @@ spring:
 eureka:
   instance:
     hostname: localhost
-    instance-id: provider-shop-7001
+    instance-id: provider-shop-7501
   client:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${eureka.client.eureka-server-port}/eureka/
