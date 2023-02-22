@@ -1,7 +1,7 @@
 package com.fellaverse.backend.controller;
 
 import com.fellaverse.backend.bean.Course;
-import com.fellaverse.backend.dto.CourseDto;
+import com.fellaverse.backend.dto.CourseDTO;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
 import com.fellaverse.backend.mapper.CourseMapper;
 import com.fellaverse.backend.service.CourseManageService;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/shop/course")
+@RequestMapping("/api/shop")
 public class CourseManageController {
     private final CourseManageService courseManageService;
     private final CourseMapper courseMapper;
@@ -26,30 +26,30 @@ public class CourseManageController {
     }
 
     @JWTCheckToken(role = "ShopAdmin")
-    @GetMapping("")
+    @GetMapping("/courses")
     public List<Course> findAllCourse() {
         return courseManageService.findAllCourse();
     }
 
     @JWTCheckToken(role = "ShopAdmin")
-    @PostMapping("")
-    public String addCourse(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) CourseDto courseDTO) {
+    @PostMapping("/courses")
+    public String addCourse(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) CourseDTO courseDTO) {
         courseManageService.addCourse(courseMapper.toEntity(courseDTO));
-        return "Add course success!";
+        return "Add course succeeded!";
     }
 
     @JWTCheckToken(role = "ShopAdmin")
-    @PutMapping("")
-    public String updateCourse(@RequestBody @Validated(value = ValidGroup.Crud.Update.class) CourseDto courseDTO) {
+    @PutMapping("/courses")
+    public String updateCourse(@RequestBody @Validated(value = ValidGroup.Crud.Update.class) CourseDTO courseDTO) {
         Course course = courseManageService.findCourseById(courseDTO.getId());
         courseManageService.updateCourse(courseMapper.partialUpdate(courseDTO, course));
-        return "Update course success!";
+        return "Update course succeeded!";
     }
 
     @JWTCheckToken(role = "ShopAdmin")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/courses/{id}")
     public String deleteCourse(@PathVariable("id") Long id) {
         courseManageService.deleteCourse(id);
-        return "Delete course success!";
+        return "Delete course succeeded!";
     }
 }

@@ -1,11 +1,10 @@
 package com.fellaverse.backend;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fellaverse.backend.bean.Course;
-import com.fellaverse.backend.controller.CourseManageController;
-import com.fellaverse.backend.enumerator.ProductStatus;
-import com.fellaverse.backend.service.CourseManageService;
-import org.aspectj.lang.annotation.Before;
+import com.fellaverse.backend.bean.Schedule;
+import com.fellaverse.backend.bean.User;
+import com.fellaverse.backend.controller.ScheduleController;
+import com.fellaverse.backend.service.ScheduleService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,9 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Collections;
 
@@ -32,44 +28,51 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(CourseManageController.class)
-@ContextConfiguration(classes = CourseControllerTest.class)
-public class CourseControllerTest {
+@WebMvcTest(ScheduleController.class)
+@ContextConfiguration(classes = ScheduleControllerTest.class)
+public class ScheduleControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private CourseManageService courseService;
+    private ScheduleService scheduleService;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private Course course;
+    private Schedule schedule;
+    private User user;
 
     @BeforeEach
     public void setup(){
-        course = new Course();
-        course.setId(1L);
-        course.setProduct_name("p1");
-        course.setDescription("d1");
-        course.setImage_url("https://azure.storage.com");
-        course.setPrice(4.2f);
-        course.setCreated_date_time(LocalDateTime.now());
-        course.setProductStatus(ProductStatus.ACTIVE);
-        course.setVideo_url("https://azure.storage.com");
+        schedule = new Schedule();
+        schedule.setId(1L);
+        schedule.setSchedule_name("p1");
+        schedule.setEnd_time(LocalDateTime.MAX);
+        schedule.setStart_time(LocalDateTime.now());
+        schedule.setWorkout_days(12345);
+
+        user = new User();
+        user.setId(1L);
+        user.setEmail("test@fellaverse.com");
+        user.setUsername("test1");
+        user.setPassword("hello");
+        user.setPhoneNumber("5965965966");
+
+        schedule.setUser(user);
     }
 
     @Test
-    public void testGetCoursesList() throws Exception {
-        when(courseService.findAllCourse()).thenReturn(Collections.singletonList(course));
+    public void testGetSchedulesList() throws Exception {
+        when(scheduleService.findAllSchedule(1L)).thenReturn(Collections.singletonList(schedule));
 //        RequestBuilder requestBuilder = MockMvcRequestBuilders
-//                .get("/api/shop/courses")
+//                .get("/api/shop/schedules")
 //                .accept(MediaType.APPLICATION_JSON);
 //
 //        MvcResult result = mockMvc.perform(requestBuilder).andDo(print()).andReturn();
 //
 //        System.out.println(result.getResponse());
-        mockMvc.perform(get("/api/shop/courses"))
+        mockMvc.perform(get("/api/schedule"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -79,11 +82,11 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void testAddCourse() throws Exception {
-        when(courseService.addCourse(course)).thenReturn(course);
+    public void testAddSchedule() throws Exception {
+        when(scheduleService.setSchedule(schedule)).thenReturn(schedule);
         mockMvc.perform(
-                        post("/api/shop/course")
-                                .content(objectMapper.writeValueAsString(course))
+                        post("/api/schedule")
+                                .content(objectMapper.writeValueAsString(schedule))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print())
@@ -95,12 +98,12 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void testDeleteCourse() throws Exception {
-        Course course = new Course();
-        course.setId(1L);
+    public void testDeleteSchedule() throws Exception {
+        Schedule schedule = new Schedule();
+        schedule.setId(1L);
 
-        when(courseService.deleteCourse(course.getId())).thenReturn(true);
-        mockMvc.perform(delete("/api/orders/" + course.getId()))
+        when(scheduleService.deleteSchedule(schedule.getId())).thenReturn(true);
+        mockMvc.perform(delete("/api/schedule/" + schedule.getId()))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
