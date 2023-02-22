@@ -25,7 +25,7 @@ public class AdminManageServiceImpl implements AdminManageService{
 
     @Override
     public void addAdmin(Admin admin) {
-        adminRepository.save(admin);
+        adminRepository.saveAndFlush(admin);
     }
 
     @Override
