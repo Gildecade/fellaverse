@@ -1,6 +1,7 @@
 package com.fellaverse.backend.controller;
 
 import com.fellaverse.backend.bean.Admin;
+import com.fellaverse.backend.bean.Role;
 import com.fellaverse.backend.dto.AdminDTO;
 import com.fellaverse.backend.dto.AdminFindAllDTO;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
@@ -8,13 +9,16 @@ import com.fellaverse.backend.jwt.service.PasswordEncryptService;
 import com.fellaverse.backend.mapper.AdminFindAllMapper;
 import com.fellaverse.backend.mapper.AdminMapper;
 import com.fellaverse.backend.service.AdminManageService;
+import com.fellaverse.backend.service.RoleManageService;
 import com.fellaverse.backend.validator.ValidGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -22,6 +26,8 @@ import java.util.stream.Collectors;
 public class AdminManageController {
     @Autowired
     private AdminManageService adminManageService;
+    @Autowired
+    private RoleManageService roleManageService;
     @Autowired
     private PasswordEncryptService passwordEncryptService;
     @Autowired
@@ -45,11 +51,10 @@ public class AdminManageController {
     @PostMapping("")
     public String addAdmin(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) AdminDTO adminDTO) {
         adminDTO.setPassword(passwordEncryptService.getEncryptedPassword(adminDTO.getPassword()));
-        adminManageService.addAdmin(adminMapper.toEntity(adminDTO));
-        Long id = adminDTO.getId();
-        for (Long roleId : adminDTO.getRoleIds()) {
-            adminManageService.insertRole(id, roleId);
-        }
+        Set<Role> roles = new HashSet<>(roleManageService.findRoleByIds(adminDTO.getRoleIds()));
+        Admin admin = adminMapper.toEntity(adminDTO);
+        admin.setRoles(roles);
+        adminManageService.addAdmin(admin);
         return "Add admin success!";
     }
 
@@ -75,22 +80,11 @@ public class AdminManageController {
     @PutMapping("/{id}")
     @Transactional
     public String updateRoles(@PathVariable("id") Long id, @RequestBody List<Long> roleIds) {
-//        List<Role> roles = roleManageService.findRoleByIds(roleIds);
-//        Admin admin = adminManageService.findAdminById(id);
-//        admin.getRoles().clear();
-//        admin.getRoles().addAll(roles);
-//        adminManageService.updateAdmin(admin);
-        List<Long> existingRoles = adminManageService.findRoleIdsByAdminId(id);
-        for (Long roleId : roleIds) {
-            if (!existingRoles.contains(roleId)) {
-                adminManageService.insertRole(id, roleId);
-            }
-        }
-        for (Long existingRole : existingRoles) {
-            if (!roleIds.contains(existingRole)) {
-                adminManageService.deleteRole(id, existingRole);
-            }
-        }
+        List<Role> roles = roleManageService.findRoleByIds(roleIds);
+        Admin admin = adminManageService.findAdminById(id);
+        admin.getRoles().clear();
+        admin.getRoles().addAll(roles);
+        adminManageService.updateAdmin(admin);
         return "Update roles success!";
     }
 }
