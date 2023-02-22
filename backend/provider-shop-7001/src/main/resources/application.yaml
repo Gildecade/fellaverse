@@ -1,0 +1,48 @@
+server:
+  port: 7001
+spring:
+  application:
+    name: provider-shop
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  profiles:
+    include:
+      - dev
+# register this microservice to eureka server
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: provider-shop-7001
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.client.eureka-server-port}/eureka/
+    eureka-server-port: 8761
+# enable eureka status, then we can access to port/actuator/info
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+# springboot actuator info
+info:
+  app.name: microservice-management
+  author: GCH
+
+fellaverse:
+  security:
+    config:
+      jwt:
+        sign: fellaverse
+        issuer: fellas
+        secret: www.fellaverse.com/gch/darren/chiu/jingshuo
+        expire: 3600
+      password:
+        encrypt:
+          repeat: 5
+          salt: www.fellaverse.com
