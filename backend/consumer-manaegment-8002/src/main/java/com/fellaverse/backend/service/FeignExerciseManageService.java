@@ -12,7 +12,7 @@ import java.util.Set;
 @Component
 @FeignClient(value = "provider-gateway", contextId = "adminManageExercise", path = "/api/management/exercise",
         configuration = {FeignBasicAuthRequestInterceptor.class, ConsumerErrorDecoder.class})
-public interface FeignAdminManageExerciseService {
+public interface FeignExerciseManageService {
     @PostMapping("")
     Boolean addExercise(ExerciseDTO exerciseDTO);
 

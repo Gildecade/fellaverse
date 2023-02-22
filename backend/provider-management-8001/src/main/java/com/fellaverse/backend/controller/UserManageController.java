@@ -5,7 +5,7 @@ import com.fellaverse.backend.dto.UserBalanceStatusDTO;
 import com.fellaverse.backend.dto.UserBasicInfoDTO;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
 import com.fellaverse.backend.mapper.UserBasicInfoMapper;
-import com.fellaverse.backend.service.AdminManageUserInfoService;
+import com.fellaverse.backend.service.UserManageService;
 import com.fellaverse.backend.validator.ValidGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -17,21 +17,21 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/management/user")
-public class AdminManageUserInfoController {
+public class UserManageController {
     @Autowired
-    private AdminManageUserInfoService adminManageUserInfoService;
+    private UserManageService userManageService;
     @Autowired
     private UserBasicInfoMapper userBasicInfoMapper;
     @JWTCheckToken(role = {"SuperAdmin", "UserAdmin"})
     @PutMapping("")
     public Boolean editUserBalanceStatus(@RequestBody @Validated(value = ValidGroup.Crud.Update.class) UserBalanceStatusDTO userBalanceStatusDTO){
-        return adminManageUserInfoService.updateUserBalanceStatus(userBalanceStatusDTO);
+        return userManageService.updateUserBalanceStatus(userBalanceStatusDTO);
     }
     @JWTCheckToken(role = {"SuperAdmin", "UserAdmin"})
     @GetMapping("/{userNameOrEmail}")
     public Set<UserBasicInfoDTO> findUser(@PathVariable("userNameOrEmail") String userNameOrEmail) {
-        Set<User> usersFromEmail = new HashSet<>(adminManageUserInfoService.findUserByEmail(userNameOrEmail));
-        Set<User> usersFromName = new HashSet<>(adminManageUserInfoService.findUserByUsername(userNameOrEmail));
+        Set<User> usersFromEmail = new HashSet<>(userManageService.findUserByEmail(userNameOrEmail));
+        Set<User> usersFromName = new HashSet<>(userManageService.findUserByUsername(userNameOrEmail));
         Set<User> usersFound = new HashSet<>(usersFromEmail);
         usersFound.addAll(usersFromName);
 
@@ -41,6 +41,6 @@ public class AdminManageUserInfoController {
     @JWTCheckToken(role = {"SuperAdmin", "UserAdmin"})
     @GetMapping("")
     public Set<UserBasicInfoDTO> findAllUser() {
-        return adminManageUserInfoService.findAllUser().stream().map(userBasicInfoMapper::toDto).collect(Collectors.toSet());
+        return userManageService.findAllUser().stream().map(userBasicInfoMapper::toDto).collect(Collectors.toSet());
     }
 }

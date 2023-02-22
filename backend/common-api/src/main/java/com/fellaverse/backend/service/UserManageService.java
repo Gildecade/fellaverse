@@ -6,7 +6,7 @@ import com.fellaverse.backend.dto.UserBalanceStatusDTO;
 
 import java.util.Set;
 
-public interface AdminManageUserInfoService {
+public interface UserManageService {
     /**
      * return true for successful update a certain user's balance or status
      */

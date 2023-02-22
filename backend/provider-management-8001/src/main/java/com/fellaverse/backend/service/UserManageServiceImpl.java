@@ -1,12 +1,10 @@
 package com.fellaverse.backend.service;
 
-import com.fellaverse.backend.bean.Exercise;
 import com.fellaverse.backend.bean.Function;
 import com.fellaverse.backend.bean.User;
 import com.fellaverse.backend.dto.UserBalanceStatusDTO;
 import com.fellaverse.backend.mapper.UserBalanceStatusMapper;
 import com.fellaverse.backend.repository.UserRepository;
-import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class AdminManageUserInfoServiceImpl implements AdminManageUserInfoService{
+public class UserManageServiceImpl implements UserManageService {
 
     @Autowired
     private UserRepository userRepository;

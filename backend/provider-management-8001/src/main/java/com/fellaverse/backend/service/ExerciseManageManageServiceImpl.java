@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class AdminManageExerciseServiceImpl implements AdminManageExerciseService
+public class ExerciseManageManageServiceImpl implements ExerciseManageService
 {
     @Autowired
     private ExerciseRepository exerciseRepository;

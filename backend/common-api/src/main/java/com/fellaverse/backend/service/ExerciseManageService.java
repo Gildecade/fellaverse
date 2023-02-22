@@ -4,7 +4,7 @@ import com.fellaverse.backend.bean.Exercise;
 
 import java.util.Set;
 
-public interface AdminManageExerciseService {
+public interface ExerciseManageService {
     /**
      * return true for successfully adding a new exercise
      */

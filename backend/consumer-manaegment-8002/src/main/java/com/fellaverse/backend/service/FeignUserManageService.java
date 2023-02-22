@@ -13,7 +13,7 @@ import java.util.Set;
 @Component
 @FeignClient(value = "provider-gateway", contextId = "adminManageUserInfo", path = "/api/management/user",
         configuration = {FeignBasicAuthRequestInterceptor.class, ConsumerErrorDecoder.class})
-public interface FeignAdminManageUserInfoService {
+public interface FeignUserManageService {
     @PutMapping("")
     Boolean editUserBalanceStatus(UserBalanceStatusDTO userBalanceStatusDTO);
     @GetMapping("/{userNameOrEmail}")
