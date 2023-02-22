@@ -4,16 +4,17 @@ import com.fellaverse.backend.bean.Course;
 import com.fellaverse.backend.bean.Order;
 import com.fellaverse.backend.dto.CourseBuyDTO;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
-import com.fellaverse.backend.mapper.CourseBuyMapper;
-import com.fellaverse.backend.mapper.OrderMapper;
 import com.fellaverse.backend.service.*;
+import com.fellaverse.backend.validator.ValidGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import com.fellaverse.backend.validator.ValidGroup;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/shop/*")  // any requests under token will be proceeded
+@RequestMapping("/api/shop")  // any requests under token will be proceeded
 public class ShopController {
     @Autowired
     private ShopService shopService;
