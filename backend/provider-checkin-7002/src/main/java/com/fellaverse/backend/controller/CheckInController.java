@@ -45,8 +45,8 @@ public class CheckInController {
     }
 
     @JWTCheckToken(function = {"update checkIn", "add checkIn", "delete checkIn"})
-    @GetMapping("")
-    public Set<CheckInDTO> findAllCheckIn() {
-        return checkInService.findAllCheckIn().stream().map(checkInMapper::toDto).collect(Collectors.toSet());
+    @GetMapping("{id}")
+    public Set<CheckInDTO> findAllCheckIn(@PathVariable("id") Long id) {
+        return checkInService.findAllCheckIn(id).stream().map(checkInMapper::toDto).collect(Collectors.toSet());
     }
 }

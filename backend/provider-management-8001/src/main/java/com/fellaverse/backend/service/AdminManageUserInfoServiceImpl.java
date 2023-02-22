@@ -1,6 +1,7 @@
 package com.fellaverse.backend.service;
 
 import com.fellaverse.backend.bean.Exercise;
+import com.fellaverse.backend.bean.Function;
 import com.fellaverse.backend.bean.User;
 import com.fellaverse.backend.dto.UserBalanceStatusDTO;
 import com.fellaverse.backend.mapper.UserBalanceStatusMapper;
@@ -47,4 +48,8 @@ public class AdminManageUserInfoServiceImpl implements AdminManageUserInfoServic
         return userSet;
     }
 
+    @Override
+    public Boolean updateUserFunction(Long userId, Set<Function> functions) {
+        return null;
+    }
 }

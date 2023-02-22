@@ -1,0 +1,30 @@
+server:
+  port: 7012
+
+spring:
+  application:
+    name: consumer-checkin
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: consumer-checkin-7012
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    eureka-server-port: 8761
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.client.eureka-server-port}/eureka/
+
+# enable eureka status, then we can access to port/actuator/info
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+# springboot actuator info
+info:
+  app.name: microservice-management-consumer
+  author: GCH

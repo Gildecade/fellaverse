@@ -14,6 +14,8 @@ import java.util.Set;
 
 @Repository
 public interface CheckInRepository extends JpaRepository<CheckIn, CheckInId> {
+    List<CheckIn> findByStartDateTimeBeforeAndEndDateTimeAfterAndId_UserId(Instant startDateTime, Instant endDateTime, Long userId);
+    List<CheckIn> findById_UserId(Long userId);
     Set<CheckIn> findByStartDateTimeBeforeAndEndDateTimeAfter(Instant startDateTime, Instant endDateTime);
     List<CheckIn> findByUser_Id(Long id);
 

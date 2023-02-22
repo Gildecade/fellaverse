@@ -26,7 +26,8 @@ public class CheckInServiceImpl implements CheckInService{
 
     @Override
     public Boolean isCheckInDuplicate(CheckIn checkIn) {
-        return !checkInRepository.findByStartDateTimeBeforeAndEndDateTimeAfter(checkIn.getStartDateTime(), checkIn.getEndDateTime()).isEmpty();
+        //return !checkInRepository.findByStartDateTimeBeforeAndEndDateTimeAfter(checkIn.getStartDateTime(), checkIn.getEndDateTime()).isEmpty();
+        return !checkInRepository.findByStartDateTimeBeforeAndEndDateTimeAfterAndId_UserId(checkIn.getStartDateTime(), checkIn.getEndDateTime(), checkIn.getId().getUserId()).isEmpty();
         //return !checkInRepository.isOverlap(checkIn.getStartDateTime(), checkIn.getEndDateTime()).isEmpty();
     }
 
@@ -45,13 +46,11 @@ public class CheckInServiceImpl implements CheckInService{
     public Boolean editCheckIn(CheckIn checkIn) {
         CheckInId checkInId = new CheckInId(checkIn.getId().getId(), checkIn.getId().getUserId());
         if (isCheckInDuplicate(checkIn) || !checkInRepository.existsById(checkInId)){
-            System.out.println(isCheckInDuplicate(checkIn));
-            System.out.println(!checkInRepository.existsById(checkInId));
             return false;
         }
         else {
             //checkInRepository.save(checkIn);
-            System.out.println(checkInRepository.save(checkIn));
+            checkInRepository.save(checkIn);
             return true;
         }
     }
@@ -69,8 +68,8 @@ public class CheckInServiceImpl implements CheckInService{
     }
 
     @Override
-    public Set<CheckIn> findAllCheckIn() {
-        return new HashSet<>(checkInRepository.findAll());
+    public Set<CheckIn> findAllCheckIn(Long userId) {
+        return new HashSet<>(checkInRepository.findById_UserId(userId));
     }
 
     @Override

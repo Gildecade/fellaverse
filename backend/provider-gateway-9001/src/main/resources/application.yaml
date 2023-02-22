@@ -62,6 +62,10 @@ spring:
         - id: provider-checkin
           uri: lb://provider-checkin
           predicates:
+            - Path=/api/checkin/**
+        - id: consumer-checkin
+          uri: lb://consumer-checkin
+          predicates:
             - Path=/checkin/**
 
 fellaverse:

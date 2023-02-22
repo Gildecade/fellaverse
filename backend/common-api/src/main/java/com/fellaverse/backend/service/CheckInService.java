@@ -31,7 +31,7 @@ public interface CheckInService {
     /**
      * return all check-in.
      */
-    Set<CheckIn> findAllCheckIn();
+    Set<CheckIn> findAllCheckIn(Long userId);
 
     CheckIn findById(Long id, Long userId);
 

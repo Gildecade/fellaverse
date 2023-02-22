@@ -17,6 +17,7 @@ import java.time.Instant;
 @NoArgsConstructor
 public class CheckInDTO implements Serializable {
     private CheckInId id;
+    @NotNull
     private UserIdDTO user;
     @NotNull
     private Instant startDateTime;
