@@ -1,15 +1,15 @@
 package com.fellaverse.backend.mapper;
 
 import com.fellaverse.backend.bean.Course;
-import com.fellaverse.backend.dto.CourseDTO;
+import com.fellaverse.backend.dto.CourseBuyDTO;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
-public interface CourseMapper {
-    Course toEntity(CourseDTO courseDto);
+public interface CourseBuyMapper {
+    Course toEntity(CourseBuyDTO courseBuyDTO);
 
-    CourseDTO toDto(Course course);
+    CourseBuyDTO toDto(Course course);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Course partialUpdate(CourseDTO courseDto, @MappingTarget Course course);
+    Course partialUpdate(CourseBuyDTO courseBuyDTO, @MappingTarget Course course);
 }

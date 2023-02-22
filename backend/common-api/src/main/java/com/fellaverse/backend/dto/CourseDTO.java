@@ -15,7 +15,7 @@ import java.util.Set;
  * A DTO for the {@link com.fellaverse.backend.bean.Course} entity
  */
 @Data
-public class CourseDto implements Serializable {
+public class CourseDTO implements Serializable {
     @Null(groups = com.fellaverse.backend.validator.ValidGroup.Crud.Create.class, message = "Course ID should be null when creating")
     @NotNull(groups = com.fellaverse.backend.validator.ValidGroup.Crud.Update.class, message = "Course ID cannot be null")
     private Long id;

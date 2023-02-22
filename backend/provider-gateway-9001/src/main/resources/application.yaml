@@ -59,6 +59,14 @@ spring:
           uri: lb://consumer-management
           predicates:
             - Path=/management/**
+        - id: provider-record
+          uri: lb://provider-record
+          predicates:
+            - Path=/api/record/**
+        - id: consumer-record
+          uri: lb://consumer-record
+          predicates:
+            - Path=/record/**
 
 fellaverse:
   security:
