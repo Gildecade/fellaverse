@@ -12,10 +12,11 @@ import java.nio.charset.StandardCharsets;
 public class ConsumerErrorDecoder implements ErrorDecoder {
     @Override
     public Exception decode(String s, Response response) {
+        log.error("Feign client error,response is {}:",response);
         Exception exception;
         try {
             String json = Util.toString(response.body().asReader(StandardCharsets.UTF_8));
-            System.out.println(response.body());
+            log.info("Response body: "+ json);
             // DIY exception
             exception = new RuntimeException(json);
         } catch (IOException ex) {

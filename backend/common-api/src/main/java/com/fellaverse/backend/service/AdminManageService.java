@@ -15,4 +15,10 @@ public interface AdminManageService {
     Admin findAdminById(Long id);
 
     List<Admin> findAdminByCondition(Admin admin);
+
+    List<Long> findRoleIdsByAdminId(Long id);
+
+    void insertRole(Long userId, Long roleId);
+
+    void deleteRole(Long userId, Long roleId);
 }
