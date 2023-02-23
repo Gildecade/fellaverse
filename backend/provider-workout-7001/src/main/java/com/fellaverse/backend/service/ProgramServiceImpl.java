@@ -17,6 +17,11 @@ public class ProgramServiceImpl implements ProgramService {
     }
 
     @Override
+    public List<Program> findAllPrograms(Long user_id) {
+        return programRepository.findByUser_Id(user_id);
+    }
+
+    @Override
     public Program addProgram (Program program) {
         return programRepository.save(program);
     }

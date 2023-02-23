@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fellaverse.backend.bean.Course;
 import com.fellaverse.backend.controller.CourseController;
 import com.fellaverse.backend.enumerator.ProductStatus;
+import com.fellaverse.backend.jwt.service.JWTTokenService;
+import com.fellaverse.backend.jwt.util.JWTMemberDataService;
+import com.fellaverse.backend.mapper.CourseMapper;
 import com.fellaverse.backend.service.CourseManageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,16 +32,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(CourseController.class)
-
-//@SpringBootTest(classes = ShopServer_7501.class)
-//@WebAppConfiguration
-//@AutoConfigureMockMvc
-@ContextConfiguration(classes = CourseControllerTest.class)
+@ContextConfiguration(classes = ShopServer_7501.class)
 public class CourseControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
+    @MockBean
+    private JWTTokenService jwtTokenService;
+    @MockBean
+    private JWTMemberDataService jwtMemberDataService;
+    @MockBean
+    private CourseMapper courseMapper;
     @MockBean
     private CourseManageService courseService;
 
@@ -63,7 +68,7 @@ public class CourseControllerTest {
     public void testGetCoursesList() throws Exception {
         when(courseService.findAllCourse()).thenReturn(Collections.singletonList(course));
 
-        mockMvc.perform(get("http://localhost:7501/api/shop/courses"))
+        mockMvc.perform(get("http://localhost:7501/api/shop/course"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

@@ -28,14 +28,14 @@ public class CourseController {
     }
 
     @JWTCheckToken(function = "add course")
-    @PostMapping("/courses")
+    @PostMapping("")
     public String addCourse(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) CourseDTO courseDTO) {
         courseManageService.addCourse(courseMapper.toEntity(courseDTO));
         return "Add course succeeded!";
     }
 
     @JWTCheckToken(function = "update course")
-    @PutMapping("/courses")
+    @PutMapping("")
     public String updateCourse(@RequestBody @Validated(value = ValidGroup.Crud.Update.class) CourseDTO courseDTO) {
         Course course = courseManageService.findCourseById(courseDTO.getId());
         courseManageService.updateCourse(courseMapper.partialUpdate(courseDTO, course));
@@ -43,7 +43,7 @@ public class CourseController {
     }
 
     @JWTCheckToken(function = "delete course")
-    @DeleteMapping("/courses/{id}")
+    @DeleteMapping("/{id}")
     public String deleteCourse(@PathVariable("id") Long id) {
         courseManageService.deleteCourse(id);
         return "Delete course succeeded!";

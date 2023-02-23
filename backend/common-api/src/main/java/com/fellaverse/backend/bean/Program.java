@@ -29,6 +29,10 @@ public class Program {
     @ManyToMany(mappedBy = "programs")
     private Set<Exercise> exercises = new LinkedHashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
