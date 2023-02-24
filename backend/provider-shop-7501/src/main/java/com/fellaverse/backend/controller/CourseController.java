@@ -2,6 +2,7 @@ package com.fellaverse.backend.controller;
 
 import com.fellaverse.backend.bean.Course;
 import com.fellaverse.backend.dto.CourseDTO;
+import com.fellaverse.backend.dto.CourseView;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
 import com.fellaverse.backend.mapper.CourseMapper;
 import com.fellaverse.backend.service.CourseManageService;
@@ -25,7 +26,7 @@ public class CourseController {
     }
 
     @GetMapping("")
-    public List<Course> findAllCourse() {
+    public List<CourseView> findAllCourse() {
         return courseManageService.findAllCourse();
     }
 

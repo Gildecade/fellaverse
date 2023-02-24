@@ -4,9 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fellaverse.backend.bean.Course;
+import com.fellaverse.backend.bean.User;
 import com.fellaverse.backend.controller.CourseController;
 import com.fellaverse.backend.dto.CourseDTO;
+import com.fellaverse.backend.dto.CourseView;
 import com.fellaverse.backend.enumerator.ProductStatus;
+import com.fellaverse.backend.enumerator.UserStatus;
 import com.fellaverse.backend.jwt.service.JWTTokenService;
 import com.fellaverse.backend.jwt.util.JWTMemberDataService;
 import com.fellaverse.backend.mapper.CourseMapper;
@@ -55,6 +58,8 @@ public class CourseControllerTest {
 
     private Course course;
     private CourseDTO courseDTO;
+    private CourseView courseView;
+
     private String token;
 
     @BeforeEach
@@ -69,6 +74,16 @@ public class CourseControllerTest {
         course.setProductStatus(ProductStatus.ACTIVE);
         course.setVideo_url("https://azure.storage.com");
 
+        User user = new User();
+        user.setId(1L);
+        user.setPhoneNumber("5195195199");
+        user.setUsername("test1");
+        user.setEmail("test@fellaverse.com");
+        user.setWallet(100L);
+        user.setStatus(UserStatus.NORMAL);
+
+        course.setUser(user);
+
         courseDTO = new CourseDTO();
         courseDTO.setProduct_name("p1");
         courseDTO.setDescription("d1");
@@ -78,6 +93,9 @@ public class CourseControllerTest {
         courseDTO.setProductStatus(ProductStatus.ACTIVE);
         courseDTO.setVideo_url("https://azure.storage.com");
 
+        courseView = new CourseViewImpl();
+
+
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
@@ -85,7 +103,7 @@ public class CourseControllerTest {
 
     @Test
     public void testGetCoursesList() throws Exception {
-        when(courseService.findAllCourse()).thenReturn(Collections.singletonList(course));
+        when(courseService.findAllCourse()).thenReturn(Collections.singletonList(courseView));
 
         mockMvc.perform(get("/api/shop/course"))
                 .andDo(print())
