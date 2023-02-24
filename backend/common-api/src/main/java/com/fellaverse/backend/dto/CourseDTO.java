@@ -1,10 +1,7 @@
 package com.fellaverse.backend.dto;
 
 import com.fellaverse.backend.enumerator.ProductStatus;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -24,7 +21,7 @@ public class CourseDTO implements Serializable {
     private String description;
     @Pattern(regexp = "^(https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})$", message = "URL format is not right")
     private String image_url;
-    @NotBlank(groups = com.fellaverse.backend.validator.ValidGroup.Crud.Create.class, message = "Price cannot be blank")
+    @NotNull(groups = com.fellaverse.backend.validator.ValidGroup.Crud.Create.class, message = "Price cannot be blank")
     private Float price;
     private LocalDateTime created_date_time;
     private ProductStatus productStatus;

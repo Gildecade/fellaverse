@@ -6,6 +6,8 @@ import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
 import com.fellaverse.backend.mapper.CourseMapper;
 import com.fellaverse.backend.service.CourseManageService;
 import com.fellaverse.backend.validator.ValidGroup;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,9 +31,9 @@ public class CourseController {
 
     @JWTCheckToken(function = "add course")
     @PostMapping("")
-    public String addCourse(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) CourseDTO courseDTO) {
+    public ResponseEntity<String> addCourse(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) CourseDTO courseDTO) {
         courseManageService.addCourse(courseMapper.toEntity(courseDTO));
-        return "Add course succeeded!";
+        return new ResponseEntity<>("Add course succeeded!", HttpStatus.CREATED);
     }
 
     @JWTCheckToken(function = "update course")
@@ -44,8 +46,8 @@ public class CourseController {
 
     @JWTCheckToken(function = "delete course")
     @DeleteMapping("/{id}")
-    public String deleteCourse(@PathVariable("id") Long id) {
+    public ResponseEntity<String> deleteCourse(@PathVariable("id") Long id) {
         courseManageService.deleteCourse(id);
-        return "Delete course succeeded!";
+        return new ResponseEntity<>("Delete course succeeded!", HttpStatus.NO_CONTENT);
     }
 }

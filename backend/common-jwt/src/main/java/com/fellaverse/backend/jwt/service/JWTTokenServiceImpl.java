@@ -6,14 +6,16 @@ import com.fellaverse.backend.jwt.config.JWTConfig;
 import io.jsonwebtoken.*;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
+@Service
 public class JWTTokenServiceImpl implements JWTTokenService{
 
     @Autowired
