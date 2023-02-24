@@ -9,7 +9,7 @@ spring:
       hibernate:
         format_sql: true
     hibernate:
-      ddl-auto: update  # if table is not sure, switch to create-drop
+      ddl-auto: create  # if table is not sure, switch to create-drop
   profiles:
     include:
       - dev
