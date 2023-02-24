@@ -28,8 +28,8 @@ public class RecordDTOformer implements Serializable {
     @NotNull(groups = {ValidGroup.Crud.Create.class}, message = "exercise cannot be null")
     private final ExerciseDTO exercise;
 
-    @NotNull(groups = {ValidGroup.Crud.Create.class}, message = "createTateTime cannot be null")
-    private final LocalDateTime createTateTime;
+    @NotNull(groups = {ValidGroup.Crud.Create.class}, message = "createDateTime cannot be null")
+    private final LocalDateTime createDateTime;
 
     @NotNull(groups = {ValidGroup.Crud.Create.class}, message = "weights cannot be null")
     private final Float weights;

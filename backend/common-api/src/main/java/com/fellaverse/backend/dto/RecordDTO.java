@@ -20,7 +20,7 @@ public class RecordDTO implements Serializable {
     @NotNull(groups = ValidGroup.Crud.Update.class, message = "User ID cannot be null")
     private UserDTO user;
     @NotNull(groups = ValidGroup.Crud.Create.class, message = "Username cannot be blank")
-    private LocalDate createTateTime;
+    private LocalDate createDateTime;
     @NotNull(groups = ValidGroup.Crud.Create.class, message = "Username cannot be blank")
     private Float weights;
     @NotNull(groups = ValidGroup.Crud.Create.class, message = "Username cannot be blank")
