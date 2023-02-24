@@ -1,6 +1,7 @@
 package com.fellaverse.backend.handler;
 
 import com.fellaverse.backend.code.ReturnCode;
+import com.fellaverse.backend.exception.ConsumerException;
 import com.fellaverse.backend.pojo.ResultData;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -29,6 +30,7 @@ public class RestExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResultData<String> exception(Exception e) {
         log.error("Global exception: " + e.getMessage());
+        log.error("Exception type: " + e.getClass().getName());
         return ResultData.fail(ReturnCode.INTERNAL_SERVER_ERROR.getCode(),e.getMessage());
     }
 
@@ -36,25 +38,22 @@ public class RestExceptionHandler {
     public ResponseEntity<ResultData<String>> handleValidatedException(Exception e) {
         ResultData<String> resp = null;
 
-        if (e instanceof MethodArgumentNotValidException) {
+        if (e instanceof MethodArgumentNotValidException ex) {
             // BeanValidation exception
-            MethodArgumentNotValidException ex = (MethodArgumentNotValidException) e;
             resp = ResultData.fail(HttpStatus.BAD_REQUEST.value(),
                     ex.getBindingResult().getAllErrors().stream()
                             .map(ObjectError::getDefaultMessage)
                             .collect(Collectors.joining("; "))
             );
-        } else if (e instanceof ConstraintViolationException) {
+        } else if (e instanceof ConstraintViolationException ex) {
             // BeanValidation GET simple param
-            ConstraintViolationException ex = (ConstraintViolationException) e;
             resp = ResultData.fail(HttpStatus.BAD_REQUEST.value(),
                     ex.getConstraintViolations().stream()
                             .map(ConstraintViolation::getMessage)
                             .collect(Collectors.joining("; "))
             );
-        } else if (e instanceof BindException) {
+        } else if (e instanceof BindException ex) {
             // BeanValidation GET object param
-            BindException ex = (BindException) e;
             resp = ResultData.fail(HttpStatus.BAD_REQUEST.value(),
                     ex.getAllErrors().stream()
                             .map(ObjectError::getDefaultMessage)
@@ -69,5 +68,12 @@ public class RestExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResultData<String> exception(IllegalArgumentException e) {
         return ResultData.fail(ReturnCode.ILLEGAL_ARGUMENT.getCode(),e.getMessage());
+    }
+
+    @ExceptionHandler(ConsumerException.class)
+    public ResponseEntity<ResultData<String>> consumerException(ConsumerException e) {
+        log.error("Consumer exception: " + e.getMessage());
+        log.error("Exception type: " + e.getClass().getName());
+        return new ResponseEntity<>(ResultData.fail(e.getCode(),e.getMessage()), null, e.getCode());
     }
 }
