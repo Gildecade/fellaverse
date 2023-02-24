@@ -1,28 +1,27 @@
 package com.fellaverse.backend.dto;
 
-import com.fellaverse.backend.validator.ValidGroup;
-import jakarta.validation.constraints.*;
+import com.fellaverse.backend.bean.CheckInId;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
+/**
+ * A DTO for the {@link com.fellaverse.backend.bean.CheckIn} entity
+ */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CheckInDTO implements Serializable {
-    @Null(groups = ValidGroup.Crud.Create.class, message = "CheckIn ID should be null when creating")
-    @NotNull(groups = {ValidGroup.Crud.Update.class, ValidGroup.Crud.Delete.class}, message = "CheckIn ID cannot be null")
-    private Long id;
-
-    @NotNull(groups = {ValidGroup.Crud.Create.class, ValidGroup.Crud.Update.class, ValidGroup.Crud.Delete.class}, message = "User ID cannot be null")
-    private Long userId;
-
-    @NotNull(groups = {ValidGroup.Crud.Create.class, ValidGroup.Crud.Update.class}, message = "Start date time cannot be null")
-    private LocalDateTime startDateTime;
-
-    @NotNull(groups = {ValidGroup.Crud.Create.class, ValidGroup.Crud.Update.class}, message = "End date time cannot be null")
-    private LocalDateTime endDateTime;
-
+    private CheckInId id;
+    @NotNull
+    private UserIdDTO user;
+    @NotNull
+    private Instant startDateTime;
+    @NotNull
+    private Instant endDateTime;
     private Float weight;
-
 }
-

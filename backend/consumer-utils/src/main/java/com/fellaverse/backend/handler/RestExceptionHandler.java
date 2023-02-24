@@ -5,6 +5,7 @@ import com.fellaverse.backend.pojo.ResultData;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
+@Slf4j
 public class RestExceptionHandler {
     /**
      * Default global exception handler
@@ -26,7 +28,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResultData<String> exception(Exception e) {
-        System.out.println("Global exception: " + e.getMessage());
+        log.error("Global exception: " + e.getMessage());
         return ResultData.fail(ReturnCode.INTERNAL_SERVER_ERROR.getCode(),e.getMessage());
     }
 

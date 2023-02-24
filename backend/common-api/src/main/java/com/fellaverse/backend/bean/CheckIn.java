@@ -2,42 +2,71 @@ package com.fellaverse.backend.bean;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
-import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
-import java.util.Set;
+import java.time.Instant;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Accessors(chain = true)
 @Entity
 @Table(name = "check_in")
-@DynamicUpdate
-@EntityListeners(AuditingEntityListener.class)
+@Data
 public class CheckIn {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private CheckInId id;
 
+    @MapsId("userId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @NotNull
     @Column(name = "start_date_time", nullable = false)
-    private LocalDateTime startDateTime;
+    private Instant startDateTime;
 
+    @NotNull
     @Column(name = "end_date_time", nullable = false)
-    private LocalDateTime endDateTime;
+    private Instant endDateTime;
 
     @Column(name = "weight")
     private Float weight;
 
-    @Id
-    @ManyToOne(optional = false)
-    @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName="id")
-    private User user;
+    public CheckInId getId() {
+        return id;
+    }
+
+    public void setId(CheckInId id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Instant getStartDateTime() {
+        return startDateTime;
+    }
+
+    public void setStartDateTime(Instant startDateTime) {
+        this.startDateTime = startDateTime;
+    }
+
+    public Instant getEndDateTime() {
+        return endDateTime;
+    }
+
+    public void setEndDateTime(Instant endDateTime) {
+        this.endDateTime = endDateTime;
+    }
+
+    public Float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Float weight) {
+        this.weight = weight;
+    }
 
 }

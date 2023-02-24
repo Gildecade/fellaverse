@@ -1,9 +1,13 @@
 package com.fellaverse.backend.bean;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "user_function")
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserFunction {
     @EmbeddedId
     private UserFunctionId id;

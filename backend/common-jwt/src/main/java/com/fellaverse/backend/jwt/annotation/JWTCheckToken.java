@@ -11,7 +11,7 @@ public @interface JWTCheckToken {
     // whether to enable?
     boolean required() default true;
     // check role
-    String role() default "";
+    String[] role() default {};
     // check function
-    String function() default  "";
+    String[] function() default {};
 }
