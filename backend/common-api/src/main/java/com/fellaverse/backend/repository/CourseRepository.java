@@ -1,7 +1,7 @@
 package com.fellaverse.backend.repository;
 
 import com.fellaverse.backend.bean.Course;
-import com.fellaverse.backend.dto.CourseView;
+import com.fellaverse.backend.projection.CourseInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Collections;
@@ -13,6 +13,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Override
     Optional<Course> findById(Long aLong);
 
-    List<CourseView> findByProduct_nameNotNull();
+    List<CourseInfo> findByProductNameNotNull();
+
 
 }

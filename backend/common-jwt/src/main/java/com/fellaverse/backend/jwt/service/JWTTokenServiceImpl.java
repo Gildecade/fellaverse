@@ -15,7 +15,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-@Service
+
 public class JWTTokenServiceImpl implements JWTTokenService{
 
     @Autowired

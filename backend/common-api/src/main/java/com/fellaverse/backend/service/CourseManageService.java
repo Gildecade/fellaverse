@@ -1,12 +1,12 @@
 package com.fellaverse.backend.service;
 
 import com.fellaverse.backend.bean.Course;
-import com.fellaverse.backend.dto.CourseView;
+import com.fellaverse.backend.projection.CourseInfo;
 
 import java.util.List;
 
 public interface CourseManageService {
-    List<CourseView> findAllCourse();
+    List<CourseInfo> findAllCourse();
 
     Course addCourse(Course course);
 

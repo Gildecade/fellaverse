@@ -1,6 +1,7 @@
 package com.fellaverse.backend.service;
 
 import com.fellaverse.backend.bean.Course;
+import com.fellaverse.backend.projection.CourseInfo;
 import com.fellaverse.backend.repository.CourseRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,8 @@ public class CourseServiceImpl implements CourseManageService {
     }
 
     @Override
-    public List<Course> findAllCourse() {
-        return courseRepository.findAll();
+    public List<CourseInfo> findAllCourse() {
+        return courseRepository.findByProductNameNotNull();
     }
 
     @Override

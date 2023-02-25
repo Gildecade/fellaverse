@@ -4,6 +4,7 @@ import com.fellaverse.backend.bean.Course;
 import com.fellaverse.backend.dto.CourseDTO;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
 import com.fellaverse.backend.mapper.CourseMapper;
+import com.fellaverse.backend.projection.CourseInfo;
 import com.fellaverse.backend.service.CourseManageService;
 import com.fellaverse.backend.validator.ValidGroup;
 import org.springframework.validation.annotation.Validated;
@@ -24,7 +25,7 @@ public class CourseManageController {
 
     @JWTCheckToken(role = "ShopAdmin")
     @GetMapping("")
-    public List<Course> findAllCourse() {
+    public List<CourseInfo> findAllCourse() {
         return courseManageService.findAllCourse();
     }
 

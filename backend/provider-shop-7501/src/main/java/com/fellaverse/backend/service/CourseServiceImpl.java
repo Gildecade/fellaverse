@@ -1,7 +1,7 @@
 package com.fellaverse.backend.service;
 
 import com.fellaverse.backend.bean.Course;
-import com.fellaverse.backend.dto.CourseView;
+import com.fellaverse.backend.projection.CourseInfo;
 import com.fellaverse.backend.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -19,8 +19,8 @@ public class CourseServiceImpl implements CourseManageService {
     }
 
     @Override
-    public List<CourseView> findAllCourse() {
-        return courseRepository.findByProduct_nameNotNull();
+    public List<CourseInfo> findAllCourse() {
+        return courseRepository.findByProductNameNotNull();
     }
 
     @Override
