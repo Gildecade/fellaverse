@@ -1,5 +1,6 @@
 package com.fellaverse.backend.dto;
 
+import com.fellaverse.backend.bean.Product;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,9 @@ public class OrderDTO implements Serializable {
     private Long id;
     @NotNull(groups = ValidGroup.Crud.Update.class, message = " cannot be null")
     private UserDTO user;
+    @NotNull(groups = ValidGroup.Crud.Update.class, message = " cannot be null")
+    private CourseDTO product;
+
     @NotNull(groups = ValidGroup.Crud.Update.class, message = " cannot be null")
     private Integer quantity;
     @NotNull(groups = ValidGroup.Crud.Update.class, message = " cannot be null")
