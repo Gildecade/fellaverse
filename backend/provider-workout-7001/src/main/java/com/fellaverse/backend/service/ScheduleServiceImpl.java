@@ -1,6 +1,7 @@
 package com.fellaverse.backend.service;
 
 import com.fellaverse.backend.bean.*;
+import com.fellaverse.backend.projection.ScheduleInfo;
 import com.fellaverse.backend.repository.ProgramRepository;
 import com.fellaverse.backend.repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
@@ -46,8 +47,8 @@ public class ScheduleServiceImpl implements ScheduleService{
     }
 
     @Override
-    public List<Schedule> findAllSchedule(Long id) {
-        return scheduleRepository.findByUser_Id(id);
+    public List<ScheduleInfo> findAllSchedule(Long userId) {
+        return scheduleRepository.findByUser_Id(userId);
     }
 
     @Override

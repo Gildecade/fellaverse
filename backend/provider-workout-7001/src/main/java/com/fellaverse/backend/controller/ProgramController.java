@@ -4,8 +4,11 @@ import com.fellaverse.backend.bean.Program;
 import com.fellaverse.backend.dto.ProgramDTO;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
 import com.fellaverse.backend.mapper.ProgramMapper;
+import com.fellaverse.backend.projection.ProgramInfo;
 import com.fellaverse.backend.service.ProgramService;
 import com.fellaverse.backend.validator.ValidGroup;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,9 +30,9 @@ public class ProgramController {
 
     @JWTCheckToken(function = "add program")
     @PostMapping("")
-    public String addProgram(@RequestBody @Validated(value = ValidGroup.Crud.Create.class)ProgramDTO programDTO) {
+    public ResponseEntity<String> addProgram(@RequestBody @Validated(value = ValidGroup.Crud.Create.class)ProgramDTO programDTO) {
         programService.addProgram(programMapper.toEntity(programDTO));
-        return "Add program succeeded!";
+        return new ResponseEntity<>("Add program succeeded!", HttpStatus.CREATED);
     }
 
 
@@ -37,18 +40,18 @@ public class ProgramController {
     @PutMapping("")
     public String updateProgram(@RequestBody @Validated(value = ValidGroup.Crud.Create.class)ProgramDTO programDTO) {
         programService.updateProgram(programMapper.toEntity(programDTO));
-        return "Add program succeeded!";
+        return "Update program succeeded!";
     }
 
     @JWTCheckToken(function = "delete program")
     @DeleteMapping("/{id}")
-    public String deleteProgram(@PathVariable("id") Long id) {
+    public ResponseEntity<String> deleteProgram(@PathVariable("id") Long id) {
         programService.deleteProgram(id);
-        return "Delete program succeeded!";
+        return new ResponseEntity<>("Delete program succeeded!", HttpStatus.NO_CONTENT);
     }
-    @JWTCheckToken(function = "delete program")
-    @DeleteMapping("/{id}")
-    public List<Program> findAllProgram(@PathVariable("id") Long user_id) {
+    @JWTCheckToken(function = "select program")
+    @DeleteMapping("/{userId}")
+    public List<ProgramInfo> findAllProgram(@PathVariable("userId") Long user_id) {
         return programService.findAllPrograms(user_id);
     }
 

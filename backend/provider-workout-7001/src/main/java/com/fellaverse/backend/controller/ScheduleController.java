@@ -5,9 +5,12 @@ import com.fellaverse.backend.dto.ScheduleDTO;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
 import com.fellaverse.backend.mapper.ProgramMapper;
 import com.fellaverse.backend.mapper.ScheduleMapper;
+import com.fellaverse.backend.projection.ScheduleInfo;
 import com.fellaverse.backend.service.ProgramService;
 import com.fellaverse.backend.service.ScheduleService;
 import com.fellaverse.backend.validator.ValidGroup;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,9 +32,9 @@ public class ScheduleController {
 
     @JWTCheckToken(function = "add schedule")
     @PostMapping("")
-    public String addSchedule(@RequestBody @Validated(value = ValidGroup.Crud.Create.class)ScheduleDTO scheduleDTO) {
+    public ResponseEntity<String> addSchedule(@RequestBody @Validated(value = ValidGroup.Crud.Create.class)ScheduleDTO scheduleDTO) {
         scheduleService.setSchedule(scheduleMapper.toEntity(scheduleDTO));
-        return "Add schedule succeeded!";
+        return new ResponseEntity<>("Add schedule succeeded!", HttpStatus.CREATED);
     }
 
 
@@ -44,15 +47,15 @@ public class ScheduleController {
 
     @JWTCheckToken(function = "delete schedule")
     @DeleteMapping("/{id}")
-    public String deleteSchedule(@PathVariable("id") Long id) {
+    public ResponseEntity<String> deleteSchedule(@PathVariable("id") Long id) {
         scheduleService.deleteSchedule(id);
-        return "Delete schedule succeeded!";
+        return new ResponseEntity<>("Delete schedule succeeded!", HttpStatus.NO_CONTENT);
     }
 
     @JWTCheckToken(function = "select schedule")
     @GetMapping("/{userId}")
-    public List<ScheduleDTO> findRecordByUserId(@PathVariable("userId") Long userId) {
-        return scheduleService.findAllSchedule(userId).stream().map(scheduleMapper::toDto).collect(Collectors.toList());
+    public List<ScheduleInfo> findScheduleByUserId(@PathVariable("userId") Long userId) {
+        return scheduleService.findAllSchedule(userId);
     }
 
 }

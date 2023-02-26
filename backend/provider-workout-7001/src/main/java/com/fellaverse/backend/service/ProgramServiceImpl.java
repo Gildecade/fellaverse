@@ -1,6 +1,7 @@
 package com.fellaverse.backend.service;
 
 import com.fellaverse.backend.bean.Program;
+import com.fellaverse.backend.projection.ProgramInfo;
 import com.fellaverse.backend.repository.ProgramRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class ProgramServiceImpl implements ProgramService {
     }
 
     @Override
-    public List<Program> findAllPrograms(Long user_id) {
+    public List<ProgramInfo> findAllPrograms(Long user_id) {
         return programRepository.findByUser_Id(user_id);
     }
 
