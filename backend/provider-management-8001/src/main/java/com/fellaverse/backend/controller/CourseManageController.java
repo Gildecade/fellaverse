@@ -7,13 +7,15 @@ import com.fellaverse.backend.mapper.CourseMapper;
 import com.fellaverse.backend.projection.CourseInfo;
 import com.fellaverse.backend.service.CourseManageService;
 import com.fellaverse.backend.validator.ValidGroup;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/management/shop")
+@RequestMapping("/api/management/shop/course")
 public class CourseManageController {
     private final CourseManageService courseManageService;
     private final CourseMapper courseMapper;
@@ -23,7 +25,6 @@ public class CourseManageController {
         this.courseMapper = courseMapper;
     }
 
-    @JWTCheckToken(role = "ShopAdmin")
     @GetMapping("")
     public List<CourseInfo> findAllCourse() {
         return courseManageService.findAllCourse();
@@ -31,9 +32,9 @@ public class CourseManageController {
 
     @JWTCheckToken(role = "ShopAdmin")
     @PostMapping("")
-    public String addCourse(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) CourseDTO courseDTO) {
+    public ResponseEntity<String> addCourse(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) CourseDTO courseDTO) {
         courseManageService.addCourse(courseMapper.toEntity(courseDTO));
-        return "Add course succeeded!";
+        return new ResponseEntity<>("Add course succeeded!", HttpStatus.CREATED);
     }
 
     @JWTCheckToken(role = "ShopAdmin")
@@ -45,9 +46,9 @@ public class CourseManageController {
     }
 
     @JWTCheckToken(role = "ShopAdmin")
-    @DeleteMapping("/courses/{id}")
-    public String deleteCourse(@PathVariable("id") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCourse(@PathVariable("id") Long id) {
         courseManageService.deleteCourse(id);
-        return "Delete course succeeded!";
+        return new ResponseEntity<>("Delete course succeeded!", HttpStatus.NO_CONTENT);
     }
 }
