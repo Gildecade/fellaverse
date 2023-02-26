@@ -25,7 +25,7 @@ const AdminManagement = () => {
       const result = await axios.delete(`${domain}management/admin/` + key);
       message.success("Delete successfully.");
       const data = result.data.data;
-      console.log(data);
+      // console.log(data);
       const title = data;
       const subTitle = "Delete admin info success!";
       navigate(`/admin/success/${title}/${subTitle}`);
@@ -218,7 +218,7 @@ const AdminManagement = () => {
           {tags.map((tag) => {
             let color = getExtract(colors)[0];
             colorDict[tag] = color;
-            console.log(colorDict);
+            // console.log(colorDict);
             return (
               <Tag color={colorDict[tag]} key={tag}>
                 {tag}

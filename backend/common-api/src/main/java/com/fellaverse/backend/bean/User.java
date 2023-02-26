@@ -47,7 +47,7 @@ public class User {
     // create a enum in package enumerator
     private UserStatus status;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "user")
     private Set<CheckIn> checkIns;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)

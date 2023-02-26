@@ -12,6 +12,8 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.Set;
 
 public class JWTAuthorizeInterceptor implements HandlerInterceptor {
     // a name for receiving token, token passed by rewriting address or header
@@ -55,9 +57,10 @@ public class JWTAuthorizeInterceptor implements HandlerInterceptor {
                         response.getWriter().print(JWTResponseCode.TOKEN_EXPIRED.getMessage());
                     } else {
                         // role verification needed
-                        if (!(checkToken.role() == null || "".equals(checkToken.role()))) {
+                        if (!(checkToken.role() == null || checkToken.role().length == 0)) {
                             // parse all roles from token, then check roles meet annotation requirement
-                            if (this.memberDataService.roles(token).contains(checkToken.role())) {
+                            // if no common element, return true; if exists element in common, return false
+                            if (!Collections.disjoint(this.memberDataService.roles(token), Set.of(checkToken.role()))) {
                                 allowed = true;
                             } else {
                                 // role verification fail
@@ -65,9 +68,9 @@ public class JWTAuthorizeInterceptor implements HandlerInterceptor {
                                 response.setStatus(JWTResponseCode.TOKEN_UNAUTHORIZED.getCode());
                                 response.getWriter().print(JWTResponseCode.TOKEN_UNAUTHORIZED);
                             }
-                        } else if (!(checkToken.function() == null || "".equals(checkToken.function()))) {
+                        } else if (!(checkToken.function() == null || checkToken.function().length == 0)) {
                             // parse all roles from token, then check roles meet annotation requirement
-                            if (this.memberDataService.functions(token).contains(checkToken.function())) {
+                            if (!Collections.disjoint(this.memberDataService.functions(token), Set.of(checkToken.function()))) {
                                 allowed = true;
                             } else {
                                 // role verification fail

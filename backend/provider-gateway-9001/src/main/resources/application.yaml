@@ -59,6 +59,14 @@ spring:
           uri: lb://consumer-management
           predicates:
             - Path=/management/**
+        - id: provider-checkin
+          uri: lb://provider-checkin
+          predicates:
+            - Path=/api/checkin/**
+        - id: consumer-checkin
+          uri: lb://consumer-checkin
+          predicates:
+            - Path=/checkin/**
         - id: provider-record
           uri: lb://provider-record
           predicates:
@@ -67,6 +75,14 @@ spring:
           uri: lb://consumer-record
           predicates:
             - Path=/record/**
+        - id: provider-shop
+          uri: lb://provider-shop
+          predicates:
+            - Path=/api/shop/**
+        - id: consumer-shop
+          uri: lb://consumer-shop
+          predicates:
+            - Path=/shop/**
 
 fellaverse:
   security:

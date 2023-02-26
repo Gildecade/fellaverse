@@ -17,8 +17,8 @@ public class Record {
     private User user;
 
     @NotNull
-    @Column(name = "create_tate_time", nullable = false)
-    private LocalDate createTateTime;
+    @Column(name = "create_date_time", nullable = false)
+    private LocalDate createDateTime;
 
     @NotNull
     @Column(name = "weights", nullable = false)
@@ -53,12 +53,12 @@ public class Record {
         this.user = user;
     }
 
-    public LocalDate getCreateTateTime() {
-        return createTateTime;
+    public LocalDate getCreateDateTime() {
+        return createDateTime;
     }
 
-    public void setCreateTateTime(LocalDate createTateTime) {
-        this.createTateTime = createTateTime;
+    public void setCreateDateTime(LocalDate createDateTime) {
+        this.createDateTime = createDateTime;
     }
 
     public Float getWeights() {
