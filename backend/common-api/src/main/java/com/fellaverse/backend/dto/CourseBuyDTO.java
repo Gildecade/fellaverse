@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 /**
@@ -26,5 +27,5 @@ public class CourseBuyDTO implements Serializable {
     @NotNull
     private Float amount;
     @NotNull
-    private LocalDateTime purchaseDateTime;
+    private Instant purchaseDateTime;
 }
