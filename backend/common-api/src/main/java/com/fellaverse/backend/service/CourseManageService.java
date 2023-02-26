@@ -1,17 +1,18 @@
 package com.fellaverse.backend.service;
 
 import com.fellaverse.backend.bean.Course;
+import com.fellaverse.backend.projection.CourseInfo;
 
 import java.util.List;
 
 public interface CourseManageService {
-    List<Course> findAllCourse();
+    List<CourseInfo> findAllCourse();
 
-    void addCourse(Course course);
+    Course addCourse(Course course);
 
-    void deleteCourse(Long id);
+    boolean deleteCourse(Long id);
 
-    void updateCourse(Course course);
+    boolean updateCourse(Course course);
 
     Course findCourseById(Long id);
 

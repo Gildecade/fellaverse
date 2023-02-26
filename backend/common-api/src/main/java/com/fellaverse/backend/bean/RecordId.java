@@ -2,6 +2,8 @@ package com.fellaverse.backend.bean;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.Hibernate;
 
@@ -13,6 +15,8 @@ public class RecordId implements Serializable {
     private static final long serialVersionUID = 1726692112059983460L;
     @NotNull
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id;
 
     @NotNull

@@ -8,6 +8,6 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public String purchase(Course course) {
-        return course.getVideo_url();
+        return course.getVideoUrl();
     }
 }

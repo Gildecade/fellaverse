@@ -27,19 +27,19 @@ public class Product {
     private Long id;
 
     @Column(name = "product_name", nullable = false, length = 60)
-    private String product_name;
+    private String productName;
 
     @Column(name = "description")
     private String description;
 
     @Column(name = "image_url")
-    private String image_url;
+    private String imageUrl;
 
     @Column(name = "price", nullable = false)
     private Float price;
 
     @Column(name = "created_date_time", nullable = false)
-    private LocalDateTime created_date_time;
+    private LocalDateTime createdDateTime;
 
     @Enumerated
     @Column(name = "product_status", nullable = false)
