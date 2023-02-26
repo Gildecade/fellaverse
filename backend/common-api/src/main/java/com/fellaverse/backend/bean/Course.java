@@ -14,8 +14,11 @@ public class Course extends Product {
     @Column(name = "video_url", nullable = false)
     private String videoUrl;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
+
+    @Column(name = "user_id")
+    private Long userId;
 
 }

@@ -48,7 +48,3 @@ fellaverse:
           repeat: 5
           salt: www.fellaverse.com
 
-logging:
-  level:
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type: TRACE
