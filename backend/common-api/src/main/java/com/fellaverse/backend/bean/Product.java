@@ -46,7 +46,7 @@ public class Product {
     @Column(name = "product_status", nullable = false)
     private ProductStatus productStatus;
 
-    @OneToOne(mappedBy = "id")
+    @OneToOne(mappedBy = "product")
     private Course course;
 
     @OneToMany(mappedBy = "product")
