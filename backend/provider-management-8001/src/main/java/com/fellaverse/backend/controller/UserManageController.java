@@ -70,7 +70,8 @@ public class UserManageController {
     @PutMapping("func/{id}")
     @Transactional
     public boolean updateFunctions(@PathVariable("id") Long id, @RequestBody List<Long> functionIds) {
-        List<Long> existingFunctions = userFunctionRepository.findById_UserId(id).stream().map(userFunction -> userFunction.getFunction().getId()).toList();
+        //List<Long> existingFunctions = userFunctionRepository.findById_UserId(id).stream().map(userFunction -> userFunction.getFunction().getId()).toList();
+        List<Long> existingFunctions = functionRepository.findByUserId(id).stream().map(Function::getId).toList();
 
         for (Long functionId : functionIds) {
             if (!existingFunctions.contains(functionId)) {
