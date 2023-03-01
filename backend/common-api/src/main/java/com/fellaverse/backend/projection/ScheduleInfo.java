@@ -6,13 +6,13 @@ import java.time.LocalDateTime;
  * A Projection for the {@link com.fellaverse.backend.bean.Schedule} entity
  */
 public interface ScheduleInfo {
-    String getSchedule_name();
+    String getScheduleName();
 
-    Integer getWorkout_days();
+    Integer getWorkoutDays();
 
-    LocalDateTime getStart_time();
+    LocalDateTime getStartTime();
 
-    LocalDateTime getEnd_time();
+    LocalDateTime getEndTime();
 
     UserInfo getUser();
 

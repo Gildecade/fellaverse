@@ -23,16 +23,16 @@ public class Schedule {
     private Long id;
 
     @Column(name = "schedule_name", nullable = false, length = 60)
-    private String schedule_name;
+    private String scheduleName;
 
     @Column(name = "workout_days", nullable = false)
-    private Integer workout_days;
+    private Integer workoutDays;
 
     @Column(name = "start_time", nullable = false)
-    private LocalDateTime start_time;
+    private LocalDateTime startTime;
 
     @Column(name = "end_time", nullable = false)
-    private LocalDateTime end_time;
+    private LocalDateTime endTime;
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
