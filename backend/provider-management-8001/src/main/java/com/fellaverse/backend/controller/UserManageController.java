@@ -64,22 +64,14 @@ public class UserManageController {
     @JWTCheckToken(role = {"SuperAdmin", "UserAdmin"})
     @GetMapping("func/{id}")
     public List<FunctionIdNameDTO> findFunctions(@PathVariable("id") Long id) {
-        HashMap<Long, String > map = new HashMap<>();
-        //List<Long> existingFunctions = userFunctionRepository.findById_UserId(id)
-        //        .stream().map((userFunctionInfo -> userFunctionInfo.getFunction().getId())).toList();
         return functionRepository.findByUserId(id).stream().map(functionMapper::toDto).collect(Collectors.toList());
     }
     @JWTCheckToken(role = {"SuperAdmin", "UserAdmin"})
     @PutMapping("func/{id}")
     @Transactional
     public boolean updateFunctions(@PathVariable("id") Long id, @RequestBody List<Long> functionIds) {
-//        List<Role> roles = roleManageService.findRoleByIds(roleIds);
-//        Admin admin = adminManageService.findAdminById(id);
-//        admin.getRoles().clear();
-//        admin.getRoles().addAll(roles);
-//        adminManageService.updateAdmin(admin);
-        List<Long> existingFunctions = userFunctionRepository.findById_UserId(id)
-                .stream().map((userFunctionInfo -> userFunctionInfo.getFunction().getId())).toList();
+        List<Long> existingFunctions = userFunctionRepository.findById_UserId(id).stream().map(userFunction -> userFunction.getFunction().getId()).toList();
+
         for (Long functionId : functionIds) {
             if (!existingFunctions.contains(functionId)) {
                 userFunctionRepository.insert(id, functionId);
