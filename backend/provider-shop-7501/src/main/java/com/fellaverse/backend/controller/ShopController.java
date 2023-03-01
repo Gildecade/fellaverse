@@ -27,7 +27,7 @@ public class ShopController {
     private CourseManageService courseManageService;
 
     @Autowired
-    private AdminManageUserInfoService adminManageUserInfoService;
+    private UserManageService adminManageUserInfoService;
 
     @JWTCheckToken(function = "buy")
     @PostMapping("/course")

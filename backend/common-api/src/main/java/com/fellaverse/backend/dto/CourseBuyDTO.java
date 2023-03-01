@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * A DTO for the {@link com.fellaverse.backend.bean.Course} entity
@@ -26,5 +26,5 @@ public class CourseBuyDTO implements Serializable {
     @NotNull
     private Float amount;
     @NotNull
-    private LocalDateTime purchaseDateTime;
+    private Instant purchaseDateTime;
 }

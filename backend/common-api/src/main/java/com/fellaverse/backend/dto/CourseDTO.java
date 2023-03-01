@@ -1,7 +1,10 @@
 package com.fellaverse.backend.dto;
 
 import com.fellaverse.backend.enumerator.ProductStatus;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 import java.io.Serializable;
