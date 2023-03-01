@@ -47,12 +47,12 @@ public class ProgramController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProgram(@PathVariable("id") Long id) {
         programService.deleteProgram(id);
-        return new ResponseEntity<>("Delete program succeeded!", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("Delete program succeeded!", HttpStatus.OK);
     }
     @JWTCheckToken(function = "select program")
-    @DeleteMapping("/{userId}")
-    public List<ProgramInfo> findAllProgram(@PathVariable("userId") Long user_id) {
-        return programService.findAllPrograms(user_id);
+    @GetMapping("/{scheduleId}")
+    public List<ProgramInfo> findAllProgram(@PathVariable("scheduleId") Long scheduleId) {
+        return programService.findAllPrograms(scheduleId);
     }
 
 }
