@@ -58,11 +58,17 @@ const AddAdmin = () => {
     } catch (error) {
       setLoading(false);
       console.log(error);
-      if (error.response) {
-        let msg = error.response.data.data.message;
-        message.error(msg);
+      let msg = null;
+      if (error.response.data.data) {
+        msg = error.response.data.data.message;
+      } else if (error.response.data.message) {
+        msg = error.response.data.message;
+      } else if (error.response) {
+        msg = error.response.data;
       } else {
-        message.error("Add failed. Internal server error.");}
+        msg = "Add failed. Internal server error.";
+      }
+      message.error(msg);
     }
   };
   const prefixSelector = (

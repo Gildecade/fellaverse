@@ -1,13 +1,12 @@
 package com.fellaverse.backend.service;
 
 import com.fellaverse.backend.bean.Admin;
+import com.fellaverse.backend.bean.Role;
 import com.fellaverse.backend.bean.User;
 import com.fellaverse.backend.dto.UserLoginDTO;
 import com.fellaverse.backend.projection.FunctionInfo;
-import com.fellaverse.backend.projection.RoleInfo;
 import com.fellaverse.backend.repository.AdminRepository;
 import com.fellaverse.backend.repository.FunctionRepository;
-import com.fellaverse.backend.repository.RoleRepository;
 import com.fellaverse.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +22,6 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     private AdminRepository adminRepository;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private RoleRepository roleRepository;
     @Autowired
     private FunctionRepository functionRepository;
     @Override
@@ -48,8 +45,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                 result.put("id", user.getId());
                 Map<String, Object> resource = new HashMap<>();
                 resource.put("username", user.getUsername());
-                List<String> functionIds = this.functionRepository.findByUsers_Id(user.getId()).stream().map(FunctionInfo::getFunctionName).collect(Collectors.toList());;
-                resource.put("functions", functionIds);
+                List<String> functions = this.functionRepository.findByUsers_Id(user.getId()).stream().map(FunctionInfo::getFunctionName).collect(Collectors.toList());
+                resource.put("functions", functions);
                 result.put("resource", resource);
             }
         } else {
@@ -59,7 +56,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
             result.put("id", admin.getId());
             Map<String, Object> resource = new HashMap<>();
             resource.put("username", admin.getUsername());
-            List<String> roleNames = this.roleRepository.findByAdmins_Id(admin.getId()).stream().map(RoleInfo::getRoleName).collect(Collectors.toList());
+            List<String> roleNames = admin.getRoles().stream().map(Role::getRoleName).collect(Collectors.toList());
             resource.put("roles", roleNames);
             result.put("resource", resource);
         }

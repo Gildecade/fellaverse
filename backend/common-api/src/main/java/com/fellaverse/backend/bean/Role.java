@@ -8,8 +8,6 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.Set;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,7 +27,4 @@ public class Role {
 
     @Column(name = "description", unique = true, nullable = false)
     private String description;
-
-    @ManyToMany(mappedBy = "roles")
-    private Set<Admin> admins;
 }
