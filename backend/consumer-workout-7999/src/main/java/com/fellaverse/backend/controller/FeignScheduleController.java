@@ -32,7 +32,7 @@ public class FeignScheduleController {
     }
 
     @PutMapping("")
-    public String updateSchedule(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) ScheduleDTO scheduleDTO){
+    public String updateSchedule(@RequestBody @Validated(value = ValidGroup.Crud.Update.class) ScheduleDTO scheduleDTO){
         String result = feignScheduleService.updateSchedule(scheduleDTO);
         Assert.isTrue(result.equals("Update Schedule succeeded!"), "Update schedule failed!");
         return result;

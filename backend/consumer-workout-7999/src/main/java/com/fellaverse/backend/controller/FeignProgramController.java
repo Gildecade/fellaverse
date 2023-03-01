@@ -32,7 +32,7 @@ public class FeignProgramController {
     }
 
     @PutMapping("")
-    public String updateProgram(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) ProgramDTO programDTO){
+    public String updateProgram(@RequestBody @Validated(value = ValidGroup.Crud.Update.class) ProgramDTO programDTO){
         String result = feignProgramService.updateProgram(programDTO);
         Assert.isTrue(result.equals("Update Program succeeded!"), "Update program failed!");
         return result;

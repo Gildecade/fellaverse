@@ -67,22 +67,46 @@ spring:
           uri: lb://consumer-checkin
           predicates:
             - Path=/checkin/**
-        - id: provider-record
-          uri: lb://provider-record
+        - id: provider-workout
+          uri: lb://provider-workout
           predicates:
             - Path=/api/record/**
-        - id: consumer-record
-          uri: lb://consumer-record
+        - id: provider-workout
+          uri: lb://provider-workout
+          predicates:
+            - Path=/api/program/**
+        - id: provider-workout
+          uri: lb://provider-workout
+          predicates:
+            - Path=/api/schedule/**
+        - id: consumer-workout
+          uri: lb://consumer-workout
           predicates:
             - Path=/record/**
+        - id: consumer-workout
+          uri: lb://consumer-workout
+          predicates:
+            - Path=/schedule/**
+        - id: consumer-workout
+          uri: lb://consumer-workout
+          predicates:
+            - Path=/program/**
         - id: provider-shop
           uri: lb://provider-shop
           predicates:
             - Path=/api/shop/**
+        - id: provider-shop
+          uri: lb://provider-shop
+          predicates:
+            - Path=/api/coach/course/**
         - id: consumer-shop
           uri: lb://consumer-shop
           predicates:
             - Path=/shop/**
+        - id: consumer-shop
+          uri: lb://consumer-shop
+          predicates:
+            - Path=/coach/course/**
 
 fellaverse:
   security:

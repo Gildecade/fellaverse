@@ -151,12 +151,12 @@ insert into user_function (function_id, user_id) values (20, 5);
 
 
 -- product
-insert into product (product_name, description, image_url, price, created_date_time, product_status) values ("p1", "d1", "https://storage.com", 4.2, curdate(), 1);
-insert into product (product_name, description, image_url, price, created_date_time, product_status) values ("p2", "d2", "https://storage.com", 14.2, curdate(), 1);
-insert into product (product_name, description, image_url, price, created_date_time, product_status) values ("p3", "d3", "https://storage.com", 42.2, curdate(), 1);
+insert into product (product_name, description, image_url, price, created_date_time, product_status) values ('p1, 'd1'', 'https://storage.com', 4.2, curdate(), 1);
+insert into product (product_name, description, image_url, price, created_date_time, product_status) values ('p2', 'd2', 'https://storage.com', 14.2, curdate(), 1);
+insert into product (product_name, description, image_url, price, created_date_time, product_status) values ('p3', 'd3', 'https://storage.com', 42.2, curdate(), 1);
 
-insert into course (video_url, id, user_id) values ("https://video.com", 1, 1);
-insert into course (video_url, id, user_id) values ("https://video.com", 2, 1);
+insert into course (video_url, id, user_id) values ('https://video.com', 1, 1);
+insert into course (video_url, id, user_id) values ('https://video.com', 2, 1);
 
 -- exercise
 insert into exercise (exercise_name) values ('push up');

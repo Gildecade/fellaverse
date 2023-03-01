@@ -38,7 +38,7 @@ public class ProgramController {
 
     @JWTCheckToken(function = "update program")
     @PutMapping("")
-    public String updateProgram(@RequestBody @Validated(value = ValidGroup.Crud.Create.class)ProgramDTO programDTO) {
+    public String updateProgram(@RequestBody @Validated(value = ValidGroup.Crud.Update.class)ProgramDTO programDTO) {
         programService.updateProgram(programMapper.toEntity(programDTO));
         return "Update program succeeded!";
     }

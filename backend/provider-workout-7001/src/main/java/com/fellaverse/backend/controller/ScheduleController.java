@@ -40,7 +40,7 @@ public class ScheduleController {
 
     @JWTCheckToken(function = "update schedule")
     @PutMapping("")
-    public String updateSchedule(@RequestBody @Validated(value = ValidGroup.Crud.Create.class)ScheduleDTO scheduleDTO) {
+    public String updateSchedule(@RequestBody @Validated(value = ValidGroup.Crud.Update.class)ScheduleDTO scheduleDTO) {
         scheduleService.updateSchedule(scheduleMapper.toEntity(scheduleDTO));
         return "Add schedule succeeded!";
     }
