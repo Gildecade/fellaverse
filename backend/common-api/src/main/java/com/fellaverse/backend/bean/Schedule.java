@@ -41,7 +41,6 @@ public class Schedule {
     @Column(name = "user_id")
     private Long userId;
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

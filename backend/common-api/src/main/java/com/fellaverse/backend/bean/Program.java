@@ -29,13 +29,12 @@ public class Program {
     @ManyToMany(mappedBy = "programs")
     private Set<Exercise> exercises = new LinkedHashSet<>();
 
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private User user;
+    @OneToOne(optional = false, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "schedule_id", nullable = false, insertable = false, updatable = false)
+    private Schedule schedule;
 
-    @Column(name = "user_id")
-    private Long userId;
-
+    @Column(name = "schedule_id")
+    private Long scheduleId;
 
     @Override
     public boolean equals(Object o) {
