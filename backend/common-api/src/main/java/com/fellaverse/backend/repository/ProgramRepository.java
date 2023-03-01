@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ProgramRepository extends JpaRepository<Program, Long> {
-    List<ProgramInfo> findByUser_Id(Long id);
+    List<ProgramInfo> findByScheduleId(Long scheduleId);
 }

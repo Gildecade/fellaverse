@@ -18,8 +18,8 @@ public class ProgramServiceImpl implements ProgramService {
     }
 
     @Override
-    public List<ProgramInfo> findAllPrograms(Long user_id) {
-        return programRepository.findByUser_Id(user_id);
+    public List<ProgramInfo> findAllPrograms(Long scheduleId) {
+        return programRepository.findByScheduleId(scheduleId);
     }
 
     @Override

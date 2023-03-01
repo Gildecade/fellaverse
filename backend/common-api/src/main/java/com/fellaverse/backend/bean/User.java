@@ -68,7 +68,5 @@ public class User {
     @ManyToMany(mappedBy = "users")
     private Set<Function> functions;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private Set<Program> programs = new LinkedHashSet<>();
 
 }
