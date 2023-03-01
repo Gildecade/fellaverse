@@ -1,0 +1,30 @@
+server:
+  port: 7999
+
+spring:
+  application:
+    name: consumer-workout
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: consumer-workout-7999
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    eureka-server-port: 8761
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.client.eureka-server-port}/eureka/
+
+# enable eureka status, then we can access to port/actuator/info
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+# springboot actuator info
+info:
+  app.name: microservice-workout-consumer
+  author: LJS

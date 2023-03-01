@@ -21,8 +21,12 @@
         <module>consumer-token-6002</module>
         <module>provider-management-8001</module>
         <module>consumer-manaegment-8002</module>
+        <module>provider-workout-7001</module>
+        <module>consumer-workout-7999</module>
         <module>provider-checkin-7002</module>
         <module>consumer-checkin-7012</module>
+        <module>provider-shop-7501</module>
+        <module>consumer-shop-7701</module>
     </modules>
 
     <properties>
@@ -194,6 +198,12 @@
                 <groupId>org.hibernate.common</groupId>
                 <artifactId>hibernate-commons-annotations</artifactId>
                 <version>6.0.2.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>4.8.1</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

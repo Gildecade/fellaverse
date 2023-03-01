@@ -1,60 +1,64 @@
 package com.fellaverse.backend.bean;
 
 import jakarta.persistence.*;
-import org.hibernate.Hibernate;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
+import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "record")
 public class Record {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @EmbeddedId
+    private RecordId id;
 
-    @Id
-    @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
+    @MapsId("userId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
+    @NotNull
+    @Column(name = "create_date_time", nullable = false)
+    private LocalDate createDateTime;
+
+    @NotNull
+    @Column(name = "weights", nullable = false)
+    private Float weights;
+
+    @NotNull
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
+
+    @NotNull
+    @Column(name = "num_of_sets", nullable = false)
+    private Integer numOfSets;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "exercise_id", nullable = false)
     private Exercise exercise;
 
-    @Column(name = "create_tate_time", nullable = false)
-    @JdbcTypeCode(SqlTypes.DATE)
-    private LocalDateTime createTateTime;
-
-    @Column(name = "weights", nullable = false)
-    @JdbcTypeCode(SqlTypes.FLOAT)
-    private Float weights;
-
-    @Column(name = "quantity", nullable = false)
-    @JdbcTypeCode(SqlTypes.INTEGER)
-    private Integer quantity;
-
-    @Column(name = "num_of_sets", nullable = false)
-    @JdbcTypeCode(SqlTypes.INTEGER)
-    private Integer numOfSets;
-
-    public Integer getNumOfSets() {
-        return numOfSets;
+    public RecordId getId() {
+        return id;
     }
 
-    public void setNumOfSets(Integer numOfSets) {
-        this.numOfSets = numOfSets;
+    public void setId(RecordId id) {
+        this.id = id;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public User getUser() {
+        return user;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public LocalDate getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(LocalDate createDateTime) {
+        this.createDateTime = createDateTime;
     }
 
     public Float getWeights() {
@@ -65,8 +69,20 @@ public class Record {
         this.weights = weights;
     }
 
-    public LocalDateTime getCreateTateTime() {
-        return createTateTime;
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Integer getNumOfSets() {
+        return numOfSets;
+    }
+
+    public void setNumOfSets(Integer numOfSets) {
+        this.numOfSets = numOfSets;
     }
 
     public Exercise getExercise() {
@@ -77,33 +93,4 @@ public class Record {
         this.exercise = exercise;
     }
 
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Record record = (Record) o;
-        return id != null && Objects.equals(id, record.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

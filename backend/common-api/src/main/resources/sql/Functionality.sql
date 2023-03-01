@@ -36,3 +36,5 @@ insert into functionality (function_name, description)
 values ('update course', 'Modify shop courses');
 insert into functionality (function_name, description)
 values ('delete course', 'Delete shop courses');
+insert into functionality (function_name, description)
+values ('buy', 'Buy something, at first only course');
