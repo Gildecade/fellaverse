@@ -6,7 +6,7 @@ import java.util.Set;
  * A Projection for the {@link com.fellaverse.backend.bean.Program} entity
  */
 public interface ProgramInfo {
-    String getProgram_name();
+    String getProgramName();
 
     Set<ExerciseInfo> getExercises();
 
@@ -16,7 +16,7 @@ public interface ProgramInfo {
      * A Projection for the {@link com.fellaverse.backend.bean.Exercise} entity
      */
     interface ExerciseInfo {
-        String getExercise_name();
+        String getExerciseName();
     }
 
     /**

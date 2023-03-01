@@ -18,6 +18,6 @@ public class ProgramDTO implements Serializable {
     @NotNull(groups = {ValidGroup.Crud.Update.class, ValidGroup.Crud.Delete.class}, message = "Program ID cannot be null")
     private Long id;
     @NotBlank(groups = ValidGroup.Crud.Create.class, message = "Program name cannot be blank")
-    private String program_name;
+    private String programName;
     private Set<Long> exerciseIds;
 }

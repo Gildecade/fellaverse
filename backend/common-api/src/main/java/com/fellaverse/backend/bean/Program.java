@@ -24,7 +24,7 @@ public class Program {
     private Long id;
 
     @Column(name = "program_name", nullable = false, length = 60)
-    private String program_name;
+    private String programName;
 
     @ManyToMany(mappedBy = "programs")
     private Set<Exercise> exercises = new LinkedHashSet<>();
