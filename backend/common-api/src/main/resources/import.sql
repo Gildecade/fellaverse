@@ -164,6 +164,21 @@ insert into exercise (exercise_name) values ('push down');
 insert into exercise (exercise_name) values ('push left');
 insert into exercise (exercise_name) values ('push right');
 
+-- schedule
+insert into schedule (schedule_name, workout_days, start_time, end_time, user_id) values ('s1',134,'2023-01-01', '2023-04-30', 1);
+insert into schedule (schedule_name, workout_days, start_time, end_time, user_id) values ('s2',157,'2023-01-01', '2023-04-30', 1);
+insert into schedule (schedule_name, workout_days, start_time, end_time, user_id) values ('s3',1234567,'2023-01-01', '2023-04-30', 1);
+
+-- program
+insert into program (program_name, schedule_id) values ('p1', 1);
+insert into program (program_name, schedule_id) values ('p2', 2);
+insert into program (program_name, schedule_id) values ('p3', 3);
+
+-- program exercise
+
+insert into program_exercise (exercise_id, program_id) values (1, 1);
+insert into program_exercise (exercise_id, program_id) values (1, 2);
+insert into program_exercise (exercise_id, program_id) values (2, 3);
 
 -- record
 # insert into record (create_tate_time, weights, quantity, num_of_sets, user_id, exercise_id) values ('2023-02-01',12,20,2,2,2);

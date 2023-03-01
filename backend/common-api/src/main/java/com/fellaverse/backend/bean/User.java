@@ -67,6 +67,4 @@ public class User {
 
     @ManyToMany(mappedBy = "users")
     private Set<Function> functions;
-
-
 }
