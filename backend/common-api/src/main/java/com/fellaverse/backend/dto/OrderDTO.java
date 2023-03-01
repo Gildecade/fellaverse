@@ -1,16 +1,14 @@
 package com.fellaverse.backend.dto;
 
-import com.fellaverse.backend.bean.Product;
+import com.fellaverse.backend.validator.ValidGroup;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.fellaverse.backend.validator.ValidGroup;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 /**
  * A DTO for the {@link com.fellaverse.backend.bean.Order} entity
@@ -20,7 +18,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class OrderDTO implements Serializable {
 
-    // neglect product
     @Null(groups = ValidGroup.Crud.Create.class, message = "should be null when creating")
     @NotNull(groups = ValidGroup.Crud.Update.class, message = " cannot be null")
     private Long id;

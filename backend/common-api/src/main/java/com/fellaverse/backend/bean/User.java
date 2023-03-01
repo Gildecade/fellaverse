@@ -11,18 +11,19 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
 @Entity
-@Table(name = "user")  // edit to your table name
 @DynamicUpdate
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "user")
 public class User {
-    @Id  // declare it is primary key
-    @Column(name = "id")  // column name in db table
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // autoincrement
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "username", unique = true, nullable = false, length = 60)
@@ -47,28 +48,25 @@ public class User {
     // create a enum in package enumerator
     private UserStatus status;
 
-    @OneToMany(mappedBy = "user")
-    private Set<CheckIn> checkIns;
-
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private Set<Schedule> schedules = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private Set<Course> courses = new LinkedHashSet<>();
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Set<Record> records = new LinkedHashSet<>();
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "Orders",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private Set<Product> product = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private Set<Course> courses = new LinkedHashSet<>();
 
     @ManyToMany(mappedBy = "users")
     private Set<Function> functions;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private Set<Program> programs = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<Order> orders = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private Set<Schedule> schedules = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<CheckIn> checkIns = new LinkedHashSet<>();
 
 }
