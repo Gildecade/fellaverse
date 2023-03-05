@@ -26,7 +26,8 @@ public class Program {
     @Column(name = "program_name", nullable = false, length = 60)
     private String programName;
 
-    @ManyToMany(mappedBy = "programs")
+    @ManyToMany(mappedBy = "programs", fetch = FetchType.LAZY,
+            cascade = CascadeType.PERSIST)
     private Set<Exercise> exercises = new LinkedHashSet<>();
 
     @OneToOne(optional = false, orphanRemoval = true, fetch = FetchType.EAGER)
