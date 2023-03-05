@@ -26,4 +26,15 @@ public class ScheduleDTO implements Serializable {
     @NotNull(groups = ValidGroup.Crud.Create.class, message = "End time cannot be null")
     private LocalDateTime endTime;
     private Long userId;
+
+    private ScheduleDTO.UserViewDTO user;
+
+    /**
+     * A DTO for the {@link com.fellaverse.backend.bean.User} entity
+     */
+    @Data
+    public static class UserViewDTO implements Serializable {
+        private String username;
+        private String email;
+    }
 }

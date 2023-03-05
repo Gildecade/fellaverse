@@ -20,7 +20,7 @@ public class FeignScheduleController {
     private FeignScheduleService feignScheduleService;
 
     @GetMapping("/{userId}")
-    public List<ScheduleInfo> findScheduleByUserId(@PathVariable("userId") Long userId){
+    public List<ScheduleDTO> findScheduleByUserId(@PathVariable("userId") Long userId){
         return feignScheduleService.findScheduleByUserId(userId);
     }
 
@@ -34,14 +34,14 @@ public class FeignScheduleController {
     @PutMapping("")
     public String updateSchedule(@RequestBody @Validated(value = ValidGroup.Crud.Update.class) ScheduleDTO scheduleDTO){
         String result = feignScheduleService.updateSchedule(scheduleDTO);
-        Assert.isTrue(result.equals("Update Schedule succeeded!"), "Update schedule failed!");
+        Assert.isTrue(result.equals("Update schedule succeeded!"), "Update schedule failed!");
         return result;
     }
 
     @DeleteMapping("/{id}")
     public String deleteSchedule(@PathVariable("id") Long id){
         ResponseEntity<String> result = feignScheduleService.deleteSchedule(id);
-        Assert.isTrue(result.getStatusCode() == HttpStatus.NO_CONTENT, "Delete schedule failed!");
+        Assert.isTrue(result.getStatusCode() == HttpStatus.OK, "Delete schedule failed!");
         return result.getBody();
     }
 
