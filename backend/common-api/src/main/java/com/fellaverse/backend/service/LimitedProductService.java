@@ -7,6 +7,4 @@ import java.util.List;
 public interface LimitedProductService {
     List<LimitedProduct> findAll();
     LimitedProduct findById(Long id);
-    List<LimitedProduct> findByKeywords(String keyword);
-    List<LimitedProduct> findByConditions(LimitedProduct LimitedProduct);
 }

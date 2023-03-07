@@ -7,17 +7,15 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
+import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Redis工具类*/
+@Component
 public class RedisUtils {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
@@ -386,11 +384,11 @@ public class RedisUtils {
         return redisTemplate.opsForHash().multiGet(key, fields);
     }
 
-    public void hPut(String key, String hashKey, String value) {
+    public void hPut(String key, String hashKey, Object value) {
         redisTemplate.opsForHash().put(key, hashKey, value);
     }
 
-    public void hPutAll(String key, Map<String, String> maps) {
+    public void hPutAll(String key, Map<String, Object> maps) {
         redisTemplate.opsForHash().putAll(key, maps);
     }
 

@@ -31,7 +31,7 @@ class LimitedProductManageServiceImplTest {
     @Test
     void addLimitedProduct() {
         LimitedProduct product = new LimitedProduct();
-        product.setQuantity(100).setProductName("Protein").setPrice(99f)
+        product.setQuantity(100).setProductName("Juice").setPrice(99f)
                 .setDescription("Protein powder").setImageUrl("www.aaa.com").setProductStatus(ProductStatus.ACTIVE)
                 .setCreatedDateTime(LocalDateTime.now());
         limitedProductManageService.addLimitedProduct(product);
@@ -39,12 +39,12 @@ class LimitedProductManageServiceImplTest {
 
     @Test
     void deleteLimitedProduct() {
-        limitedProductManageService.deleteLimitedProduct(2L);
+        limitedProductManageService.deleteLimitedProduct(6L);
     }
 
     @Test
     void updateLimitedProduct() {
-        LimitedProduct product = limitedProductManageService.findById(2L);
+        LimitedProduct product = limitedProductManageService.findById(3L);
         product.setQuantity(product.getQuantity() - 1);
         limitedProductManageService.updateLimitedProduct(product);
     }
@@ -60,13 +60,5 @@ class LimitedProductManageServiceImplTest {
         System.out.println(limitedProductManageService.findById(2L));
         System.out.println(limitedProductManageService.findById(3L));
         System.out.println(limitedProductManageService.findById(4L));
-    }
-
-    @Test
-    void findByKeywords() {
-    }
-
-    @Test
-    void findByConditions() {
     }
 }
