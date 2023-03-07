@@ -9,9 +9,18 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
-  profiles:
-    include:
-      - dev
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # create db fellaverse manually in IDEA
+    url: jdbc:mysql://localhost:3306/fellaverse?serverTimeZone=UTC&useSSL=true
+    username: root
+    password: root
+  data:
+    redis:
+      host: 192.168.37.128
+      port: 6379
+      password: yootk
 # register this microservice to eureka server
 eureka:
   instance:

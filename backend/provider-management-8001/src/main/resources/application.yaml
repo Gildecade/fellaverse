@@ -14,6 +14,11 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  data:
+    redis:
+      host: 192.168.37.128
+      port: 6379
+      password: yootk
 # register this microservice to eureka server
 eureka:
   instance:
