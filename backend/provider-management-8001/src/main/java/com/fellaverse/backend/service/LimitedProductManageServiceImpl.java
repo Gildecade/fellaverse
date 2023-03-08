@@ -6,10 +6,7 @@ import com.fellaverse.backend.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -22,26 +19,27 @@ public class LimitedProductManageServiceImpl implements LimitedProductManageServ
 
     @Override
     public void addLimitedProduct(LimitedProduct limitedProduct) {
-        redisUtils.delete("LimitedProduct");
         limitedProductRepository.save(limitedProduct);
+        redisUtils.delete("LimitedProduct");
     }
 
     @Override
     public void deleteLimitedProduct(Long id) {
+        limitedProductRepository.deleteById(id);
         LimitedProduct product = (LimitedProduct) redisUtils.hGet("LimitedProduct", id.toString());
         if (product != null) {
             redisUtils.hDelete("LimitedProduct", id.toString());
         }
-        limitedProductRepository.deleteById(id);
     }
 
     @Override
-    public LimitedProduct updateLimitedProduct(LimitedProduct limitedProduct) {
-        LimitedProduct product = (LimitedProduct) redisUtils.hGet("LimitedProduct", limitedProduct.getId().toString());
+    public void updateLimitedProduct(LimitedProduct limitedProduct) {
+        limitedProductRepository.save(limitedProduct);
+        String id = limitedProduct.getId().toString();
+        LimitedProduct product = (LimitedProduct) redisUtils.hGet("LimitedProduct", id);
         if (product != null) {
-            redisUtils.hPut("LimitedProduct", limitedProduct.getId().toString(), limitedProduct);
+            redisUtils.hPut("LimitedProduct", id, limitedProduct);
         }
-        return limitedProductRepository.save(limitedProduct);
     }
 
     @Override
@@ -60,7 +58,7 @@ public class LimitedProductManageServiceImpl implements LimitedProductManageServ
             map.put(limitedProduct.getId().toString(), limitedProduct);
         }
         redisUtils.hPutAll("LimitedProduct", map);
-        redisUtils.expire("LimitedProduct", 30, TimeUnit.MINUTES);
+        redisUtils.expire("LimitedProduct", 30, TimeUnit.SECONDS);
         return productList;
     }
 
@@ -70,8 +68,6 @@ public class LimitedProductManageServiceImpl implements LimitedProductManageServ
         if (product != null) {
             return product;
         }
-        LimitedProduct limitedProduct = limitedProductRepository.findById(id).orElse(null);
-        redisUtils.hPut("LimitedProduct", id.toString(), limitedProduct);
-        return limitedProduct;
+        return limitedProductRepository.findById(id).orElse(null);
     }
 }
