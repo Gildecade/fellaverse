@@ -71,10 +71,15 @@ public class LimitedProductServiceImpl implements LimitedProductShopService {
         if (quantity < purchaseQuantity) {
             return false;
         }
-        LimitedProduct product = limitedProductRepository.findById(id).orElse(null);
-        limitedProductRepository.save(product.setQuantity(quantity - purchaseQuantity));
-        redisUtils.set("Quantity: " + id, quantity - purchaseQuantity);
-        redisUtils.delete("LimitedProduct");
+        redisUtils.watch("Quantity: " + id);
+        redisUtils.multi();
+        redisUtils.incrBy("Quantity: " + id, - purchaseQuantity);
+        List<Object> exec = redisUtils.exec();
+        if (exec!=null && !exec.isEmpty()) {
+            LimitedProduct product = limitedProductRepository.findById(id).orElse(null);
+            limitedProductRepository.save(product.setQuantity(quantity - purchaseQuantity));
+            redisUtils.delete("LimitedProduct");
+        }
         return true;
     }
 }

@@ -1,8 +1,8 @@
 server:
-  port: 7501
+  port: 7502
 spring:
   application:
-    name: provider-shop
+    name: provider-flashsale
   jpa:
     show-sql: true
     properties:
@@ -16,11 +16,16 @@ spring:
     url: jdbc:mysql://localhost:3306/fellaverse?serverTimeZone=UTC&useSSL=true
     username: root
     password: root
+  data:
+    redis:
+      host: 192.168.37.128
+      port: 6379
+      password: yootk
 # register this microservice to eureka server
 eureka:
   instance:
     hostname: localhost
-    instance-id: provider-shop-7501
+    instance-id: provider-flashsale-7502
   client:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${eureka.client.eureka-server-port}/eureka/
@@ -36,7 +41,7 @@ management:
       enabled: true
 # springboot actuator info
 info:
-  app.name: microservice-management
+  app.name: microservice-flashsale
   author: GCH
 
 fellaverse:

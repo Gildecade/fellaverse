@@ -36,8 +36,10 @@ public class LimitedProductDTO implements Serializable {
     private String imageUrl;
     @NotNull(groups = ValidGroup.Crud.Create.class, message = "Price cannot be null")
     private Float price;
-    @NotNull(groups = ValidGroup.Crud.Create.class, message = "Created Date Time cannot be null")
+    @NotNull(groups = ValidGroup.Crud.Create.class, message = "Created date time cannot be null")
     private LocalDateTime createdDateTime;
+    @NotNull(groups = ValidGroup.Crud.Create.class, message = "On sale date time cannot be null")
+    private LocalDateTime saleDateTime;
     @NotNull(groups = ValidGroup.Crud.Create.class, message = "Product status cannot be null")
     private ProductStatus productStatus;
 }

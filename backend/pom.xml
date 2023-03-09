@@ -28,6 +28,8 @@
         <module>provider-shop-7501</module>
         <module>consumer-shop-7701</module>
         <module>redis-config</module>
+        <module>provider-flashsale-7502</module>
+        <module>consumer-flashsale-7702</module>
     </modules>
 
     <properties>

@@ -49,6 +49,11 @@ public class LimitedProduct {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdDateTime;
 
+    @Column(name = "sale_date_time", nullable = false)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime saleDateTime;
+
     @Column(name = "product_status", nullable = false)
     private ProductStatus productStatus;
 

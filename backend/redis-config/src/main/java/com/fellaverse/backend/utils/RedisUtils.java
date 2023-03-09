@@ -23,6 +23,26 @@ public class RedisUtils {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    public void watch(String key) {
+        redisTemplate.watch(key);
+    }
+
+    public void unwatch() {
+        redisTemplate.unwatch();
+    }
+
+    public void multi() {
+        redisTemplate.multi();
+    }
+
+    public List<Object> exec() {
+        return redisTemplate.exec();
+    }
+
+    public void discard() {
+        redisTemplate.discard();
+    }
+
     /** -------------------key相关操作--------------------- */
 
     /**
