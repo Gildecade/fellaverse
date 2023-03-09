@@ -24,6 +24,11 @@
         </dependency>
         <dependency>
             <groupId>com.fellaverse</groupId>
+            <artifactId>redis-config</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fellaverse</groupId>
             <artifactId>common-jwt</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

@@ -185,7 +185,7 @@ public class RedisUtils {
      * @param key
      * @param value
      */
-    public void set(String key, String value) {
+    public void set(String key, Object value) {
         redisTemplate.opsForValue().set(key, value);
     }
 

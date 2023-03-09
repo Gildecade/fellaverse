@@ -1,46 +1,25 @@
 package com.fellaverse.backend.service;
 
 import com.fellaverse.backend.bean.LimitedProduct;
+import com.fellaverse.backend.enumerator.ProductStatus;
 import com.fellaverse.backend.repository.LimitedProductRepository;
 import com.fellaverse.backend.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class LimitedProductManageServiceImpl implements LimitedProductManageService{
+public class LimitedProductServiceImpl implements LimitedProductShopService {
     @Autowired
     private LimitedProductRepository limitedProductRepository;
 
     @Autowired
     private RedisUtils redisUtils;
-
-    @Override
-    public void addLimitedProduct(LimitedProduct limitedProduct) {
-        limitedProductRepository.save(limitedProduct);
-        redisUtils.delete("LimitedProduct");
-    }
-
-    @Override
-    public void deleteLimitedProduct(Long id) {
-        limitedProductRepository.deleteById(id);
-        LimitedProduct product = (LimitedProduct) redisUtils.hGet("LimitedProduct", id.toString());
-        if (product != null) {
-            redisUtils.hDelete("LimitedProduct", id.toString());
-        }
-    }
-
-    @Override
-    public void updateLimitedProduct(LimitedProduct limitedProduct) {
-        limitedProductRepository.save(limitedProduct);
-        String id = limitedProduct.getId().toString();
-        LimitedProduct product = (LimitedProduct) redisUtils.hGet("LimitedProduct", id);
-        if (product != null) {
-            redisUtils.hPut("LimitedProduct", id, limitedProduct);
-        }
-    }
 
     @Override
     public List<LimitedProduct> findAll() {
@@ -52,13 +31,16 @@ public class LimitedProductManageServiceImpl implements LimitedProductManageServ
             }
             return productListRedis;
         }
-        List<LimitedProduct> productList = limitedProductRepository.findAll();
+        List<ProductStatus> status = new ArrayList<>();
+        status.add(ProductStatus.ACTIVE);
+        status.add(ProductStatus.UNAVAILABLE);
+        List<LimitedProduct> productList = limitedProductRepository.findByProductStatusIn(status);
         Map<String, Object> map = new HashMap<>();
         for (LimitedProduct limitedProduct : productList) {
             map.put(limitedProduct.getId().toString(), limitedProduct);
         }
         redisUtils.hPutAll("LimitedProduct", map);
-        redisUtils.expire("LimitedProduct", 2, TimeUnit.MINUTES);
+        redisUtils.expire("LimitedProduct", 5, TimeUnit.MINUTES);
         return productList;
     }
 
@@ -69,5 +51,30 @@ public class LimitedProductManageServiceImpl implements LimitedProductManageServ
             return product;
         }
         return limitedProductRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Integer cacheQuantityById(Long id) {
+        String str = redisUtils.get("Quantity: " + id);
+        if (str != null) {
+            return Integer.valueOf(str);
+        }
+        LimitedProduct product = limitedProductRepository.findById(id).orElse(null);
+        Integer quantity = product.getQuantity();
+        redisUtils.set("Quantity: " + id, quantity);
+        return quantity;
+    }
+
+    @Override
+    public Boolean purchase(Long id, Integer purchaseQuantity) {
+        Integer quantity = cacheQuantityById(id);
+        if (quantity < purchaseQuantity) {
+            return false;
+        }
+        LimitedProduct product = limitedProductRepository.findById(id).orElse(null);
+        limitedProductRepository.save(product.setQuantity(quantity - purchaseQuantity));
+        redisUtils.set("Quantity: " + id, quantity - purchaseQuantity);
+        redisUtils.delete("LimitedProduct");
+        return true;
     }
 }
