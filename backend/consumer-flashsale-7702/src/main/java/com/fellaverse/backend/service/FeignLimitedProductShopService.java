@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 @Component
-@FeignClient(value = "provider-gateway", contextId = "shop-limitedProduct", path = "/api/shop/limitedProduct",
+@FeignClient(value = "provider-gateway", contextId = "shop-limitedProduct", path = "/api/limitedProduct",
         configuration = {FeignBasicAuthRequestInterceptor.class, ConsumerErrorDecoder.class})
 public interface FeignLimitedProductShopService {
     @GetMapping("")

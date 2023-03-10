@@ -8,5 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 public interface LimitedProductRepository extends JpaRepository<LimitedProduct, Long> {
+    LimitedProduct findByIdAndQuantity(Long id, Integer quantity);
+    LimitedProduct findByIdAndQuantityGreaterThan(Long id, Integer quantity);
     List<LimitedProduct> findByProductStatusIn(Collection<ProductStatus> productStatuses);
 }

@@ -83,6 +83,14 @@ spring:
           uri: lb://consumer-shop
           predicates:
             - Path=/shop/**
+        - id: provider-flashsale
+          uri: lb://provider-flashsale
+          predicates:
+            - Path=/api/limitedProduct/**
+        - id: consumer-flashsale
+          uri: lb://consumer-flashsale
+          predicates:
+            - Path=/limitedProduct/**
 
 fellaverse:
   security:

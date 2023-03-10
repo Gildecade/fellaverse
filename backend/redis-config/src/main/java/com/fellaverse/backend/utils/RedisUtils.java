@@ -295,8 +295,12 @@ public class RedisUtils {
      * @param value
      * @return 之前已经存在返回false,不存在返回true
      */
-    public Boolean setIfAbsent(String key, String value) {
+    public Boolean setIfAbsent(String key, Object value) {
         return redisTemplate.opsForValue().setIfAbsent(key, value);
+    }
+
+    public Boolean setIfAbsent(String key, Object value, long timeout, TimeUnit unit) {
+        return redisTemplate.opsForValue().setIfAbsent(key, value, timeout, unit);
     }
 
     /**
@@ -348,6 +352,10 @@ public class RedisUtils {
      */
     public Long incrBy(String key, long increment) {
         return redisTemplate.opsForValue().increment(key, increment);
+    }
+
+    public Long decrBy(String key, long decrement) {
+        return redisTemplate.opsForValue().decrement(key, decrement);
     }
 
     /**

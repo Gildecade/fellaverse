@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/shop/limitedProduct")
+@RequestMapping("/limitedProduct")
 public class FeignLimitedProductController {
     @Autowired
     private FeignLimitedProductShopService feignLimitedProductShopService;

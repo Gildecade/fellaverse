@@ -168,4 +168,6 @@ insert into exercise (exercise_name) values ('push down');
 insert into exercise (exercise_name) values ('push left');
 insert into exercise (exercise_name) values ('push right');
 
+-- limitedProduct
+insert into limited_product (product_name, description, quantity, image_url, price, created_date_time, sale_date_time, product_status) VALUES ('Protein', 'Protein powder', 100, 'www.aaa.com', 60, curtime(), curtime(), 0), ('Tea', 'Tea for fellaverse only', 100, 'www.aaa.com', 60, curtime(), curtime(), 0), ('Cake', 'Cake for fellaverse only', 100, 'www.aaa.com', 2, curtime(), curtime(), 0);
 

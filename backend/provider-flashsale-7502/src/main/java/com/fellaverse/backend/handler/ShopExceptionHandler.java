@@ -1,7 +1,7 @@
 package com.fellaverse.backend.handler;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @Slf4j
 public class ShopExceptionHandler {
-    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ExceptionHandler(DataAccessException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String exception(DataIntegrityViolationException e) {
+    public String exception(DataAccessException e) {
         log.error("SQL exception: " + e.getMessage());
         log.error("Exception type: " + e.getClass().getName());
         return e.getMessage();
