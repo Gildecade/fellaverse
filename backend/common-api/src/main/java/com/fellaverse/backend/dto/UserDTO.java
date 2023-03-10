@@ -36,7 +36,7 @@ public class UserDTO implements Serializable {
 
     @Null(groups = ValidGroup.Crud.Create.class, message = "Wallet should be null when registering")
     @NotNull(groups = ValidGroup.Crud.Update.class, message = "Wallet cannot be null")
-    private Long wallet;
+    private Float wallet;
 
     @Null(groups = ValidGroup.Crud.Create.class, message = "Status should be null when registering")
     @NotNull(groups = ValidGroup.Crud.Update.class, message = "Status cannot be null")
