@@ -113,6 +113,8 @@ gateway:  # DIY config
         - /auth/login
         - /auth/register
         - /auth/resetPassword
+        - /limitedProduct
         - /api/auth/login
         - /api/auth/register
         - /api/auth/resetPassword
+        - /api/limitedProduct
