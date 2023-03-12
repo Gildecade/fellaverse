@@ -5,11 +5,12 @@ import com.fellaverse.backend.dto.LimitedProductDTO;
 import com.fellaverse.backend.dto.LimitedProductPurchaseDTO;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
 import com.fellaverse.backend.mapper.LimitedProductMapper;
-import com.fellaverse.backend.service.BalanceService;
 import com.fellaverse.backend.service.LimitedProductShopService;
+import com.fellaverse.backend.util.SnowflakeIdWorker;
 import io.jsonwebtoken.lang.Assert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,9 +24,6 @@ public class LimitedProductController {
     private LimitedProductShopService limitedProductShopService;
 
     @Autowired
-    private BalanceService balanceService;
-
-    @Autowired
     private LimitedProductMapper mapper;
 
     @GetMapping("")
@@ -34,28 +32,24 @@ public class LimitedProductController {
     }
 
     @GetMapping("/{id}")
-    public LimitedProductDTO detail(@PathVariable("id") @ExistingProduct Long id) {
-        return mapper.toDto(limitedProductShopService.findById(id));
+    public void detail(@PathVariable("id") @ExistingProduct Long id) {
+        limitedProductShopService.cacheQuantityById(id);
     }
 
     @JWTCheckToken(function = "buy")
     @PostMapping("/purchase")
-    public String purchase(@RequestBody LimitedProductPurchaseDTO purchaseDTO) {
-        float amount = limitedProductShopService.findById(purchaseDTO.getId()).getPrice() * purchaseDTO.getQuantity();
-//        Assert.isTrue(balanceService.checkBalance(purchaseDTO.getUserId(), amount), "Insufficient balance!");
-        // reduce stock quantity
+    public String purchase(@RequestBody @Validated LimitedProductPurchaseDTO purchaseDTO) {
+        // reduce stock quantity in Redis, reduce MySQL only after paid
         Assert.isTrue(limitedProductShopService.purchase(purchaseDTO.getId(), purchaseDTO.getQuantity()), "Insufficient stock!");
-        try {
-            // update user account, note that price should be negative
-            if (balanceService.updateBalance(purchaseDTO.getUserId(), -1 * amount)) {
-                return "Purchase succeeded!";
-            } else {
-                throw new IllegalArgumentException("Insufficient balance!");
-            }
-        } catch (Exception e) {
-            log.error("Balance Error: Update user balance failed!");
-            limitedProductShopService.rollBack(purchaseDTO.getId(), purchaseDTO.getQuantity());
-            throw e;
-        }
+        Long orderId = SnowflakeIdWorker.generateId();
+        limitedProductShopService.placeOrder(purchaseDTO, orderId);
+        return orderId.toString();
+    }
+
+    @JWTCheckToken(function = "buy")
+    @PostMapping("/pay/{orderId}")
+    public String pay(@PathVariable("orderId") Long orderId) {
+        limitedProductShopService.pay(orderId);
+        return "Pay successfully!";
     }
 }

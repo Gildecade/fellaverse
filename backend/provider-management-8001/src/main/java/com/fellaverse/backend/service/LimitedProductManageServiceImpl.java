@@ -2,7 +2,7 @@ package com.fellaverse.backend.service;
 
 import com.fellaverse.backend.bean.LimitedProduct;
 import com.fellaverse.backend.repository.LimitedProductRepository;
-import com.fellaverse.backend.utils.RedisUtils;
+import com.fellaverse.backend.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

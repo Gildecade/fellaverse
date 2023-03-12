@@ -9,10 +9,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
 @FeignClient(value = "provider-gateway", contextId = "adminManageUserInfo", path = "/api/management/user",

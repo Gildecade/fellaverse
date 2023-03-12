@@ -21,7 +21,7 @@ public interface FeignLimitedProductShopService {
     List<LimitedProductDTO> findAll();
 
     @GetMapping("/{id}")
-    LimitedProductDTO detail(@PathVariable("id") Long id);
+    void detail(@PathVariable("id") Long id);
 
     @PostMapping("/purchase")
     String purchase(@RequestBody LimitedProductPurchaseDTO purchaseDTO);

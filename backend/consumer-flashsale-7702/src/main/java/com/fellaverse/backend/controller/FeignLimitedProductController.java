@@ -20,8 +20,8 @@ public class FeignLimitedProductController {
     }
 
     @GetMapping("/{id}")
-    public LimitedProductDTO detail(@PathVariable("id") Long id) {
-        return feignLimitedProductShopService.detail(id);
+    public void detail(@PathVariable("id") Long id) {
+        feignLimitedProductShopService.detail(id);
     }
 
     @PostMapping("/purchase")
