@@ -22,6 +22,7 @@ import Success from '../result/Success';
 import NotFound from '../result/404';
 // TODO: import your components here
 import AdminManagement from './admin/listAdmin';
+import UserManagement from './admin/listUser';
 import AddAdmin from './admin/addAdmin';
 import EditAdmin from './admin/editAdmin';
 import RoleManagement from './role/listRole';
@@ -64,11 +65,12 @@ const AdminApp = () => {
     if (roles.indexOf("SuperAdmin") != -1) {
       items.push(getItem(<Link to='/admin/admin'>Admin Management</Link>, '2', <ContactsOutlined />));
       items.push(getItem(<Link to='/admin/role'>Role Management</Link>, '3', <ApartmentOutlined />));
+      items.push(getItem(<Link to='/admin/user'>User Management</Link>, '4', <ContactsOutlined />));
     }
     if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
       items.push(getItem("Shop Management", 'sub1', <ShopOutlined />, [
-        getItem(<Link to='/admin'>Product</Link>, '4', <ShoppingOutlined />),
-        getItem(<Link to='/admin'>Order</Link>, '5', <ShoppingCartOutlined />),
+        getItem(<Link to='/admin'>Product</Link>, '5', <ShoppingOutlined />),
+        getItem(<Link to='/admin'>Order</Link>, '6', <ShoppingCartOutlined />),
       ]));
     }
     setItems(items);
@@ -139,6 +141,7 @@ const AdminApp = () => {
                 <Route path="/role" element={<RoleManagement/>} />
                 <Route path="/role/add" element={<AddRole/>} />
                 <Route path="/role/edit/:id" element={<EditRole/>} />
+                <Route path="/user" element={<UserManagement/>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
