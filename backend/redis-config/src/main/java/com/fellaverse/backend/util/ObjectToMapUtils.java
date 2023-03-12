@@ -1,4 +1,4 @@
-package com.fellaverse.backend.utils;
+package com.fellaverse.backend.util;
 
 import com.fellaverse.backend.enumerator.ProductStatus;
 

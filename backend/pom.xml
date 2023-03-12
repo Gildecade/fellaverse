@@ -20,7 +20,7 @@
         <module>common-api</module>
         <module>consumer-token-6002</module>
         <module>provider-management-8001</module>
-        <module>consumer-manaegment-8002</module>
+        <module>consumer-management-8002</module>
         <module>provider-workout-7001</module>
         <module>consumer-workout-7999</module>
         <module>provider-checkin-7002</module>
@@ -221,6 +221,12 @@
                 <artifactId>mockito-core</artifactId>
                 <version>4.8.1</version>
                 <scope>test</scope>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.12.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
