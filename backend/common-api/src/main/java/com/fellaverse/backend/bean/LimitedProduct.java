@@ -1,5 +1,6 @@
 package com.fellaverse.backend.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
 @Table(name = "limited_product")
 @DynamicUpdate
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class LimitedProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -11,11 +11,13 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LimitedProductPurchaseDTO implements Serializable {
+public class LimitedProductPayDTO implements Serializable {
     @NotNull
     private Long id;
     @NotNull
     private Long userId;
+    @NotNull
+    private Long orderId;
     @NotNull
     private Integer quantity;
     @NotNull
