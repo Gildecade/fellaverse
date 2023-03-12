@@ -24,10 +24,18 @@ public class Program {
     private Long id;
 
     @Column(name = "program_name", nullable = false, length = 60)
-    private String program_name;
+    private String programName;
 
     @ManyToMany(mappedBy = "programs")
     private Set<Exercise> exercises = new LinkedHashSet<>();
+
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
+
+    @Column(name = "user_id")
+    private Long userId;
+
 
     @Override
     public boolean equals(Object o) {

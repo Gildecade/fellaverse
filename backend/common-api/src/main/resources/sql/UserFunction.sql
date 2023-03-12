@@ -36,6 +36,8 @@ insert into user_function (function_id, user_id)
 values (18, 1);
 insert into user_function (function_id, user_id)
 values (19, 1);
+insert into user_function (function_id, user_id)
+values (20, 1);
 
 insert into user_function (function_id, user_id)
 values (1, 2);
@@ -75,6 +77,8 @@ insert into user_function (function_id, user_id)
 values (18, 2);
 insert into user_function (function_id, user_id)
 values (19, 2);
+insert into user_function (function_id, user_id)
+values (20, 2);
 
 insert into user_function (function_id, user_id)
 values (1, 3);
@@ -114,6 +118,8 @@ insert into user_function (function_id, user_id)
 values (18, 3);
 insert into user_function (function_id, user_id)
 values (19, 3);
+insert into user_function (function_id, user_id)
+values (20, 3);
 
 insert into user_function (function_id, user_id)
 values (1, 4);
@@ -153,6 +159,8 @@ insert into user_function (function_id, user_id)
 values (18, 4);
 insert into user_function (function_id, user_id)
 values (19, 4);
+insert into user_function (function_id, user_id)
+values (20, 4);
 
 insert into user_function (function_id, user_id)
 values (1, 5);
@@ -192,3 +200,5 @@ insert into user_function (function_id, user_id)
 values (18, 5);
 insert into user_function (function_id, user_id)
 values (19, 5);
+insert into user_function (function_id, user_id)
+values (20, 5);
