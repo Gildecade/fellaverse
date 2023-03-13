@@ -20,7 +20,7 @@ public class FeignProgramController {
     private FeignProgramService feignProgramService;
 
     @GetMapping("/{userId}")
-    public List<ProgramInfo> findProgramByUserId(@PathVariable("userId") Long userId){
+    public List<ProgramDTO> findProgramByUserId(@PathVariable("userId") Long userId){
         return feignProgramService.findProgramByUserId(userId);
     }
 
@@ -32,16 +32,16 @@ public class FeignProgramController {
     }
 
     @PutMapping("")
-    public String updateProgram(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) ProgramDTO programDTO){
+    public String updateProgram(@RequestBody @Validated(value = ValidGroup.Crud.Update.class) ProgramDTO programDTO){
         String result = feignProgramService.updateProgram(programDTO);
-        Assert.isTrue(result.equals("Update Program succeeded!"), "Update program failed!");
+        Assert.isTrue(result.equals("Update program succeeded!"), "Update program failed!");
         return result;
     }
 
     @DeleteMapping("/{id}")
     public String deleteProgram(@PathVariable("id") Long id){
         ResponseEntity<String> result = feignProgramService.deleteProgram(id);
-        Assert.isTrue(result.getStatusCode() == HttpStatus.NO_CONTENT, "Delete program failed!");
+        Assert.isTrue(result.getStatusCode() == HttpStatus.OK, "Delete program failed!");
         return result.getBody();
     }
 
