@@ -55,7 +55,7 @@ public class DelayQueueManager implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         log.info("Initialized delay queue");
-        Executors.newSingleThreadScheduledExecutor().execute(new Thread(this::executeThread));
+        Executors.newScheduledThreadPool(50).execute(new Thread(this::executeThread));
     }
 
     /**
