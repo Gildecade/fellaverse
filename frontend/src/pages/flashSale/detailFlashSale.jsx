@@ -9,11 +9,12 @@ import moment from 'moment/moment';
 const { Meta } = Card;
 
 const DetailFlashSale = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const productId = useParams().id;
   const parameters = useLocation();
+  const navigate = useNavigate();
   const product = parameters.state;
   // console.log(product);
   const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -21,24 +22,47 @@ const DetailFlashSale = () => {
   const buy = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
       const userId = localStorage.getItem('userId') ? localStorage.getItem('userId') : sessionStorage.getItem('userId');
-      axios.defaults.headers.common['Fellaverse-token'] = token;
       const values = {id: productId, userId: userId, quantity: quantity, purchaseDateTime: moment()};
       const result = await axios.post(`${domain}limitedProduct/purchase`, values);
+      // console.log(result);
+      // console.log(values.purchaseDateTime.valueOf());
+      const title = "Place order successfully!";
+      const subTitle = "Your order number is: " + result.data.data;
+      message.success(title);
       await delay(1000);
+      navigate(`/flash-sale/${title}/${subTitle}`, {state:{quantity: quantity, productName:product.productName, orderId: result.data.data, price:product.price, imageUrl: product.imageUrl, time: values.purchaseDateTime.valueOf()}});
     } catch (error) {
       setLoading(false);
       console.log(error);
-      if (error.response) {
-        let msg = error.response.data.message;
-        message.error(msg);
-      } else {
-        message.error("Purchase failed. Internal server error.");}
+      let msg = "Purchase failed. Internal server error.";
+      if (error.response.data.message) {
+        msg = error.response.data.message;
+      } else if (error.response.data) {
+        msg = error.response.data;
+      }
+      message.error(msg);
     }
   };
 
   useEffect(() => {
+    const initialize = async () => {
+      try {
+        const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
+        axios.defaults.headers.common['Fellaverse-token'] = token;
+        await axios.get(`${domain}limitedProduct/${product.id}`);
+      } catch (error) {
+        console.log(error);
+        let msg = "Internal server error.";
+        if (error.response.data.message) {
+          msg = error.response.data.message;
+        } else if (error.response.data) {
+          msg = error.response.data;
+        }
+        message.error(msg);
+      }
+    }
+    initialize();
     var now = moment();
     if (now.isBefore(product.saleDateTime)) {
       setDisabled(true);
@@ -73,7 +97,7 @@ const DetailFlashSale = () => {
               <Row>
                 <Space>
                   <InputNumber min={1} max={10} defaultValue={quantity} onChange={setQuantity}/>
-                  <Button type="primary" size={'large'} disabled={disabled} onClick={buy}>
+                  <Button type="primary" size={'large'} disabled={disabled} onClick={buy} loading={loading}>
                     Purchase
                   </Button>
                 </Space>

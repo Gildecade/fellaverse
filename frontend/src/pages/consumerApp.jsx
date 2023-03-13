@@ -25,6 +25,7 @@ import Success from './result/Success';
 import ForgotPasswordForm from './authentication/forgotPassword';
 import FlashSale from './flashSale/listFlashSale';
 import DetailFlashSale from './flashSale/detailFlashSale';
+import OrderSuccess from './flashSale/orderSuccess';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -151,6 +152,7 @@ const ConsumerApp = () => {
               <Route path="/" element={<Index />} />
               <Route path='/flash-sale' element={<FlashSale />}></Route>
               <Route path='/flash-sale/:id' element={<DetailFlashSale />} />
+              <Route path='/flash-sale/:title/:subTitle' element={<OrderSuccess />}></Route>
               <Route path='/success/:title/:subTitle' element={<Success />} />
               <Route path='/forgotPassword' element={<ForgotPasswordForm />} />
               <Route path="*" element={<NotFound />} />

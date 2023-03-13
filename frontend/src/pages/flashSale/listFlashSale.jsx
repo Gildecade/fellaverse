@@ -20,7 +20,7 @@ const FlashSale = () => {
         const productList = result.data.data;
         setProducts(productList);
         setLoading(false);
-        console.log(productList);
+        // console.log(productList);
       } catch (error) {
         console.log(error);
         message.error(error.response.data.message);
@@ -42,8 +42,8 @@ const FlashSale = () => {
                 width: 240,
               }}
               loading={loading}
-              cover={<img alt={product.productName} src={GGko}></img>}
-              // cover={<img alt="example" src={product.imageUrl}></img>}
+              // cover={<img alt={product.productName} src={GGko}></img>}
+              cover={<img alt="example" src={product.imageUrl} height='250px' width='250px'></img>}
             >
               <Meta title={product.productName} />
               <Space size={'middle'} align='baseline' style={{marginTop:'-15px', marginBottom:'-50px'}}>
