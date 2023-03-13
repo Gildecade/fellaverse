@@ -22,9 +22,10 @@ import Success from '../result/Success';
 import NotFound from '../result/404';
 // TODO: import your components here
 import AdminManagement from './admin/listAdmin';
-import UserManagement from './admin/listUser';
 import AddAdmin from './admin/addAdmin';
 import EditAdmin from './admin/editAdmin';
+import UserManagement from './user/listUser';
+import EditUserFunction from './user/editUserFunction';
 import RoleManagement from './role/listRole';
 import AddRole from './role/addRole';
 import EditRole from './role/editRole';
@@ -142,6 +143,7 @@ const AdminApp = () => {
                 <Route path="/role/add" element={<AddRole/>} />
                 <Route path="/role/edit/:id" element={<EditRole/>} />
                 <Route path="/user" element={<UserManagement/>} />
+                <Route path="/user/edit/:id" element={<EditUserFunction/>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
