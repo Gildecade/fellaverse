@@ -1,5 +1,7 @@
 package com.fellaverse.backend.dto;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,12 +14,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LimitedProductPurchaseDTO implements Serializable {
-    @NotNull
+    @NotNull(message = "Limited product ID cannot be null!")
     private Long id;
-    @NotNull
+    @NotNull(message = "User ID cannot be null!")
     private Long userId;
-    @NotNull
+    @NotNull(message = "Quantity cannot be null!")
+    @Min(value = 0, message = "Quantity cannot be negative")
+    @Max(value = 10, message = "Quantity cannot be greater than 10")
     private Integer quantity;
-    @NotNull
+    @NotNull(message = "Purchase date time cannot be null!")
     private LocalDateTime purchaseDateTime;
 }

@@ -11,7 +11,7 @@ public interface LimitedProductShopService extends LimitedProductService{
 
     void placeOrder(LimitedProductPurchaseDTO purchaseDTO, Long orderId);
 
-    void pay(Long orderId);
+    void pay(Long orderId, Long userId);
 
     void expire(Long orderId);
 }

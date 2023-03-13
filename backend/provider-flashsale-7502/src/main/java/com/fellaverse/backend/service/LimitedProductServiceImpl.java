@@ -19,10 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -115,7 +112,9 @@ public class LimitedProductServiceImpl implements LimitedProductShopService {
 
     @Override
     public void rollBack(Long id, Integer purchaseQuantity) {
-        redisUtils.incrBy("Quantity: " + id, purchaseQuantity);
+        if (redisUtils.get("Quantity: " + id) != null) {
+            redisUtils.incrBy("Quantity: " + id, purchaseQuantity);
+        }
         if (redisUtils.get("SoldOut: " + id) != null) {
             redisUtils.delete("SoldOut: " + id);
             findAll();
@@ -154,16 +153,16 @@ public class LimitedProductServiceImpl implements LimitedProductShopService {
                 .setUser(userRepository.findById(userId).orElse(null))
                 .setLimitedProduct(limitedProductRepository.findById(purchaseDTO.getId()).orElse(null));
         flashSaleOrderRepository.save(order);
-        delayQueueManager.put(new DelayTask(new OrderTask("Flash sale order " + orderId + " expired.", orderId), 1000 * 30));
+        delayQueueManager.put(new DelayTask(new OrderTask("Flash sale order " + orderId + " expired.", orderId), 1000 * 60 * 3));
     }
 
     @Override
     @Transactional
-    public void pay(Long orderId) {
+    public void pay(Long orderId, Long userId) {
         FlashSaleOrder order = flashSaleOrderRepository.findById(orderId).orElse(null);
         Assert.notNull(order, "Error when finding your order, please try again!");
         Assert.isTrue(order.getOrderStatus().equals(OrderStatus.ACTIVE), "Order cannot be paid!");
-        Long userId = order.getUser().getId();
+        Assert.isTrue(Objects.equals(userId, order.getUser().getId()), "Cannot pay for others' bills!");
         Float wallet = userRepository.lockUserWallet(userId);
         Long productId = order.getLimitedProduct().getId();
         Integer quantity = order.getQuantity();

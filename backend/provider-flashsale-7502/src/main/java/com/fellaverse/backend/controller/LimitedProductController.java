@@ -2,6 +2,7 @@ package com.fellaverse.backend.controller;
 
 import com.fellaverse.backend.annotation.ExistingProduct;
 import com.fellaverse.backend.dto.LimitedProductDTO;
+import com.fellaverse.backend.dto.LimitedProductPayDTO;
 import com.fellaverse.backend.dto.LimitedProductPurchaseDTO;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
 import com.fellaverse.backend.mapper.LimitedProductMapper;
@@ -47,9 +48,9 @@ public class LimitedProductController {
     }
 
     @JWTCheckToken(function = "buy")
-    @PostMapping("/pay/{orderId}")
-    public String pay(@PathVariable("orderId") Long orderId) {
-        limitedProductShopService.pay(orderId);
+    @PostMapping("/pay")
+    public String pay(@RequestBody @Validated LimitedProductPayDTO limitedProductPayDTO) {
+        limitedProductShopService.pay(limitedProductPayDTO.getOrderId(), limitedProductPayDTO.getUserId());
         return "Pay successfully!";
     }
 }

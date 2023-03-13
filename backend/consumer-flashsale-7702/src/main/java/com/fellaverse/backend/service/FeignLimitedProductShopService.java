@@ -3,6 +3,7 @@ package com.fellaverse.backend.service;
 import com.fellaverse.backend.config.ConsumerErrorDecoder;
 import com.fellaverse.backend.config.FeignBasicAuthRequestInterceptor;
 import com.fellaverse.backend.dto.LimitedProductDTO;
+import com.fellaverse.backend.dto.LimitedProductPayDTO;
 import com.fellaverse.backend.dto.LimitedProductPurchaseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -25,4 +26,7 @@ public interface FeignLimitedProductShopService {
 
     @PostMapping("/purchase")
     String purchase(@RequestBody LimitedProductPurchaseDTO purchaseDTO);
+
+    @PostMapping("/pay")
+    String pay(@RequestBody LimitedProductPayDTO limitedProductPayDTO);
 }
