@@ -12,6 +12,10 @@ insert into role (role_name, description) values ('WorkoutAdmin', 'Administrator
 insert into role (role_name, description) values ('TweetAdmin', 'Administrators for tweet module. Able to crud all tweets and comments.');
 
 -- admin role
+insert into admin_role (admin_id, role_id) values (1, 1);
+insert into admin_role (admin_id, role_id) values (2, 2);
+insert into admin_role (admin_id, role_id) values (3, 3);
+insert into admin_role (admin_id, role_id) values (4, 4);
 
 -- functionality
 insert into functionality (function_name, description) values ('select record', 'View workout records');
@@ -191,4 +195,7 @@ insert into fellaverse.record (create_date_time, weights, quantity, num_of_sets,
 # insert into record (create_tate_time, weights, quantity, num_of_sets, user_id, exercise_id) values ('2023-02-03',14,21,2,2,3);
 # insert into record (create_tate_time, weights, quantity, num_of_sets, user_id, exercise_id) values ('2023-02-04',15,22,2,2,4);
 # insert into record (create_tate_time, weights, quantity, num_of_sets, user_id, exercise_id) values ('2023-02-05',16,23,2,1,1);
+
+-- limitedProduct
+insert into limited_product (product_name, description, quantity, image_url, price, created_date_time, sale_date_time, product_status) VALUES ('Protein', 'Protein powder', 100, 'www.aaa.com', 60, curtime(), curtime(), 0), ('Tea', 'Tea for fellaverse only', 100, 'www.aaa.com', 60, curtime(), curtime(), 0), ('Cake', 'Cake for fellaverse only', 100, 'www.aaa.com', 2, curtime(), curtime(), 0);
 

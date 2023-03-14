@@ -19,8 +19,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.concurrent.TimeUnit;
-
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @SpringBootTest(classes = TokenServer_6001.class)
@@ -45,7 +43,7 @@ class UserInfoModifyServiceImplTest {
     void register() {
         User user = new User();
         user.setUsername("User07").setPassword(passwordEncryptService.getEncryptedPassword("hello"))
-                .setEmail("user07@user.com").setPhoneNumber("1234567890").setWallet(1000L)
+                .setEmail("user07@user.com").setPhoneNumber("1234567890").setWallet(1000F)
                 .setStatus(UserStatus.valueOf("NORMAL"));
         Assertions.assertEquals(user, userInfoModifyService.register(user));
     }
@@ -70,7 +68,7 @@ class UserInfoModifyServiceImplTest {
     void forgetPassword() {
         User user = new User();
         user.setId(6L).setUsername("User06").setPassword(passwordEncryptService.getEncryptedPassword("helloooo"))
-                .setEmail("user06@user.com").setPhoneNumber("1234567890").setWallet(1000L)
+                .setEmail("user06@user.com").setPhoneNumber("1234567890").setWallet(1000F)
                 .setStatus(UserStatus.valueOf("NORMAL"));
         userInfoModifyService.forgetPassword(user);
         Assertions.assertEquals("ZJFpuUtdozARIm/KfCn0FA==", userRepository.findByUsername("User06").getPassword());

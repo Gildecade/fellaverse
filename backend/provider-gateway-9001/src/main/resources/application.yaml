@@ -107,6 +107,14 @@ spring:
           uri: lb://consumer-shop
           predicates:
             - Path=/coach/course/**
+        - id: provider-flashsale
+          uri: lb://provider-flashsale
+          predicates:
+            - Path=/api/limitedProduct/**
+        - id: consumer-flashsale
+          uri: lb://consumer-flashsale
+          predicates:
+            - Path=/limitedProduct/**
 
 fellaverse:
   security:
@@ -129,6 +137,8 @@ gateway:  # DIY config
         - /auth/login
         - /auth/register
         - /auth/resetPassword
+        - /limitedProduct
         - /api/auth/login
         - /api/auth/register
         - /api/auth/resetPassword
+        - /api/limitedProduct

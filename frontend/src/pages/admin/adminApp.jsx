@@ -27,11 +27,11 @@ import NotFound from '../result/404';
 import AdminManagement from './admin/listAdmin';
 import AddAdmin from './admin/addAdmin';
 import EditAdmin from './admin/editAdmin';
-import UserManagement from './user/listUser';
-import EditUserFunction from './user/editUserFunction';
 import RoleManagement from './role/listRole';
 import AddRole from './role/addRole';
 import EditRole from './role/editRole';
+import LimitedProductManagement from './limitedProduct/listLimitedProduct';
+import AddLimitedProduct from './limitedProduct/addLimitedProduct';
 // user
 import FunctionManagement from './function/listFunction';
 import AddFunction from './function/addFunction';
@@ -59,7 +59,6 @@ const AdminApp = () => {
   const [username, setUsername] = useState(null);
   const [roles, setRoles] = useState(null);
   const [collapsed, setCollapsed] = useState(false);
-  const [prevPage, setPrevpage] = useState(0);
   var [items, setItems] = useState([]);
   const {
     token: { colorBgContainer },
@@ -75,7 +74,7 @@ const AdminApp = () => {
       getItem(<Link to='/admin'>{homePage}</Link>, '1', <HomeOutlined />),
     ];
     // TODO: modify sider contents here
-    if (roles.indexOf("SuperAdmin") != -1) {    
+    if (roles.indexOf("SuperAdmin") != -1) {
       items.push(getItem(<Link to='/admin/admin'>Admin Management</Link>, '2', <ContactsOutlined />));
       items.push(getItem(<Link to='/admin/role'>Role Management</Link>, '3', <ApartmentOutlined />));
       items.push(getItem(<Link to='/admin/user'>User Management</Link>, '4', <UserOutlined />));
@@ -86,6 +85,12 @@ const AdminApp = () => {
       items.push(getItem("Shop Management", 'sub1', <ShopOutlined />, [
         getItem(<Link to='/admin'>Product</Link>, '5', <ShoppingOutlined />),
         getItem(<Link to='/admin'>Order</Link>, '6', <ShoppingCartOutlined />),
+      ]));
+    }
+    if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
+      items.push(getItem("Sale Management", 'sub2', <ShopOutlined />, [
+        getItem(<Link to='/admin/limitedProduct'>Product</Link>, '6', <ShoppingCartOutlined />),
+        getItem(<Link to='/admin/saleOrder'>Order</Link>, '7', <ShoppingCartOutlined />),
       ]));
     }
     setItems(items);
@@ -106,7 +111,6 @@ const AdminApp = () => {
               background: 'rgba(255, 255, 255, 0.2)',
             }}
           />
-          {/* need to handle previous page to correct the side bar */}
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
         </Sider>
         <Layout className="site-layout">
@@ -157,6 +161,8 @@ const AdminApp = () => {
                 <Route path="/role" element={<RoleManagement/>} />
                 <Route path="/role/add" element={<AddRole/>} />
                 <Route path="/role/edit/:id" element={<EditRole/>} />
+                <Route path="/limitedProduct" element={<LimitedProductManagement/>} />
+                <Route path="/limitedProduct/add" element={<AddLimitedProduct/>} />
                 <Route path="/user" element={<UserManagement/>} />
                 <Route path="/user/edit/:id" element={<EditUserFunction/>} />
                 <Route path="/function" element={<FunctionManagement/>} />

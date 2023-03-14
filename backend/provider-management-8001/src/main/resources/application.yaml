@@ -3,17 +3,20 @@ server:
 spring:
   application:
     name: provider-management
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/fellaverse?serverTimeZone=UTC&useSSL=true
-    username: root
-    password: root
+  profiles:
+    include:
+      - dev
   jpa:
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+  data:
+    redis:
+      host: fellaverse.redis.cache.windows.net
+      port: 6380
+      password: ClAgCgTJVCGKGIPcDLYlACy4BEOrWsm5rAzCaF7FPvw=
+      ssl: true
 # register this microservice to eureka server
 eureka:
   instance:

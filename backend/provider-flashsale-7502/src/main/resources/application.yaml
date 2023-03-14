@@ -1,0 +1,60 @@
+server:
+  port: 7502
+spring:
+  application:
+    name: provider-flashsale
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # create db fellaverse manually in IDEA
+    url: jdbc:mysql://localhost:3306/fellaverse?serverTimeZone=UTC&useSSL=true
+    username: root
+    password: root
+  data:
+    redis:
+      host: fellaverse.redis.cache.windows.net
+      port: 6380
+      password: ClAgCgTJVCGKGIPcDLYlACy4BEOrWsm5rAzCaF7FPvw=
+      ssl: true
+# register this microservice to eureka server
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: provider-flashsale-7502
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.client.eureka-server-port}/eureka/
+    eureka-server-port: 8761
+# enable eureka status, then we can access to port/actuator/info
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+# springboot actuator info
+info:
+  app.name: microservice-flashsale
+  author: GCH
+
+fellaverse:
+  security:
+    config:
+      jwt:
+        sign: fellaverse
+        issuer: fellas
+        secret: www.fellaverse.com/gch/darren/chiu/jingshuo
+        expire: 3600
+      password:
+        encrypt:
+          repeat: 5
+          salt: www.fellaverse.com
+

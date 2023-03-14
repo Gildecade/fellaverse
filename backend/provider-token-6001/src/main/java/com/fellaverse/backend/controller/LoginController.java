@@ -34,6 +34,7 @@ public class LoginController {
         if ((Boolean)result.get("status")) {
             Map<String, Object> resource = (Map<String, Object>) result.get("resource");
             return new LoginTokenDTO(this.jwtTokenService.createToken(result.get("id").toString(), resource),
+                    (Long) result.get("id"),
                     (String) resource.get("username"),
                     (List<String>) resource.get("roles"),
                     (List<String>) resource.get("functions"));
