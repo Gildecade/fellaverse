@@ -33,6 +33,9 @@ import EditRole from './role/editRole';
 import LimitedProductManagement from './limitedProduct/listLimitedProduct';
 import AddLimitedProduct from './limitedProduct/addLimitedProduct';
 // user
+import UserManagement from './user/listUser';
+import EditUserFunction from '../admin copy/user/editUserFunction';
+// function
 import FunctionManagement from './function/listFunction';
 import AddFunction from './function/addFunction';
 import EditFunction from './function/editFunction';
@@ -83,14 +86,14 @@ const AdminApp = () => {
     }
     if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
       items.push(getItem("Shop Management", 'sub1', <ShopOutlined />, [
-        getItem(<Link to='/admin'>Product</Link>, '5', <ShoppingOutlined />),
-        getItem(<Link to='/admin'>Order</Link>, '6', <ShoppingCartOutlined />),
+        getItem(<Link to='/admin'>Product</Link>, '7', <ShoppingOutlined />),
+        getItem(<Link to='/admin'>Order</Link>, '8', <ShoppingCartOutlined />),
       ]));
     }
     if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
       items.push(getItem("Sale Management", 'sub2', <ShopOutlined />, [
-        getItem(<Link to='/admin/limitedProduct'>Product</Link>, '6', <ShoppingCartOutlined />),
-        getItem(<Link to='/admin/saleOrder'>Order</Link>, '7', <ShoppingCartOutlined />),
+        getItem(<Link to='/admin/limitedProduct'>Product</Link>, '9', <ShoppingCartOutlined />),
+        getItem(<Link to='/admin/saleOrder'>Order</Link>, '10', <ShoppingCartOutlined />),
       ]));
     }
     setItems(items);

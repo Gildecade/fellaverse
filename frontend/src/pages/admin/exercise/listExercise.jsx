@@ -12,12 +12,14 @@ const ExerciseManagement = () => {
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
   const navigate = useNavigate();
+  const delay = ms => new Promise(res => setTimeout(res, ms));
   const handleDelete = async (key) => {
     try {
       const result = await axios.delete(`${domain}management/exercise/` + key);
       message.success("Delete successfully.");
       const data = result.data.data;
       console.log(data);
+      await delay(500);
       const title = data;
       const subTitle = "Delete exercise info success!";
       //navigate(`/admin/success/${title}/${subTitle}`);
