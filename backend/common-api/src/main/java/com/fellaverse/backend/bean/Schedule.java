@@ -41,6 +41,8 @@ public class Schedule {
     @Column(name = "user_id")
     private Long userId;
 
+//    @OneToOne(mappedBy = "schedule")
+//    private Schedule schedule;
 
     @Override
     public boolean equals(Object o) {

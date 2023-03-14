@@ -48,7 +48,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     @Override
     public List<ScheduleInfo> findAllSchedule(Long userId) {
-        return scheduleRepository.findByUser_Id(userId);
+        return scheduleRepository.findByUserId(userId);
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.fellaverse.backend.bean;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "record")
@@ -18,7 +18,7 @@ public class Record {
 
     @NotNull
     @Column(name = "create_date_time", nullable = false)
-    private LocalDate createDateTime;
+    private LocalDateTime createDateTime;
 
     @NotNull
     @Column(name = "weights", nullable = false)
@@ -53,11 +53,11 @@ public class Record {
         this.user = user;
     }
 
-    public LocalDate getCreateDateTime() {
+    public LocalDateTime getCreateDateTime() {
         return createDateTime;
     }
 
-    public void setCreateDateTime(LocalDate createDateTime) {
+    public void setCreateDateTime(LocalDateTime createDateTime) {
         this.createDateTime = createDateTime;
     }
 

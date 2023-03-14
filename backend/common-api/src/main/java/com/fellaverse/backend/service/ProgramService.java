@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ProgramService {
 
-    List<ProgramInfo> findAllPrograms(Long user_id);
+    List<ProgramInfo> findAllPrograms(Long scheduleId);
 
     Program addProgram(Program program);
 

@@ -168,6 +168,34 @@ insert into exercise (exercise_name) values ('push down');
 insert into exercise (exercise_name) values ('push left');
 insert into exercise (exercise_name) values ('push right');
 
+-- schedule
+insert into schedule (schedule_name, workout_days, start_time, end_time, user_id) values ('s1',134,'2023-01-01', '2023-04-30', 1);
+insert into schedule (schedule_name, workout_days, start_time, end_time, user_id) values ('s2',157,'2023-01-01', '2023-04-30', 1);
+insert into schedule (schedule_name, workout_days, start_time, end_time, user_id) values ('s3',1234567,'2023-01-01', '2023-04-30', 1);
+
+-- program
+insert into program (program_name, schedule_id) values ('p1', 1);
+insert into program (program_name, schedule_id) values ('p2', 2);
+insert into program (program_name, schedule_id) values ('p3', 3);
+
+-- program exercise
+
+insert into program_exercise (exercise_id, program_id) values (1, 1);
+insert into program_exercise (exercise_id, program_id) values (1, 2);
+insert into program_exercise (exercise_id, program_id) values (2, 3);
+
+-- record
+insert into fellaverse.record (create_date_time, weights, quantity, num_of_sets, user_id, exercise_id) values ('2023-02-01',12,20,2,2,2);
+insert into fellaverse.record (create_date_time, weights, quantity, num_of_sets, user_id, exercise_id) values ('2023-02-02',13,24,2,3,2);
+insert into fellaverse.record (create_date_time, weights, quantity, num_of_sets, user_id, exercise_id) values ('2023-02-03',14,21,2,2,3);
+insert into fellaverse.record (create_date_time, weights, quantity, num_of_sets, user_id, exercise_id) values ('2023-02-04',15,22,2,2,4);
+insert into fellaverse.record (create_date_time, weights, quantity, num_of_sets, user_id, exercise_id) values ('2023-02-05',16,23,2,1,1);
+# insert into record (create_tate_time, weights, quantity, num_of_sets, user_id, exercise_id) values ('2023-02-01',12,20,2,2,2);
+# insert into record (create_tate_time, weights, quantity, num_of_sets, user_id, exercise_id) values ('2023-02-02',13,24,2,3,2);
+# insert into record (create_tate_time, weights, quantity, num_of_sets, user_id, exercise_id) values ('2023-02-03',14,21,2,2,3);
+# insert into record (create_tate_time, weights, quantity, num_of_sets, user_id, exercise_id) values ('2023-02-04',15,22,2,2,4);
+# insert into record (create_tate_time, weights, quantity, num_of_sets, user_id, exercise_id) values ('2023-02-05',16,23,2,1,1);
+
 -- limitedProduct
 insert into limited_product (product_name, description, quantity, image_url, price, created_date_time, sale_date_time, product_status) VALUES ('Protein', 'Protein powder', 100, 'www.aaa.com', 60, curtime(), curtime(), 0), ('Tea', 'Tea for fellaverse only', 100, 'www.aaa.com', 60, curtime(), curtime(), 0), ('Cake', 'Cake for fellaverse only', 100, 'www.aaa.com', 2, curtime(), curtime(), 0);
 

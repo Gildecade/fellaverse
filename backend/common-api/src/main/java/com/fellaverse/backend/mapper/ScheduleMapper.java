@@ -12,4 +12,5 @@ public interface ScheduleMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Schedule partialUpdate(ScheduleDTO scheduleDTO, @MappingTarget Schedule schedule);
+
 }

@@ -40,16 +40,16 @@ public class ScheduleController {
 
     @JWTCheckToken(function = "update schedule")
     @PutMapping("")
-    public String updateSchedule(@RequestBody @Validated(value = ValidGroup.Crud.Create.class)ScheduleDTO scheduleDTO) {
+    public String updateSchedule(@RequestBody @Validated(value = ValidGroup.Crud.Update.class)ScheduleDTO scheduleDTO) {
         scheduleService.updateSchedule(scheduleMapper.toEntity(scheduleDTO));
-        return "Add schedule succeeded!";
+        return "Update schedule succeeded!";
     }
 
     @JWTCheckToken(function = "delete schedule")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteSchedule(@PathVariable("id") Long id) {
         scheduleService.deleteSchedule(id);
-        return new ResponseEntity<>("Delete schedule succeeded!", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("Delete schedule succeeded!", HttpStatus.OK);
     }
 
     @JWTCheckToken(function = "select schedule")
