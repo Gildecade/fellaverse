@@ -2,6 +2,7 @@ package com.fellaverse.backend.controller;
 
 import com.fellaverse.backend.bean.LimitedProduct;
 import com.fellaverse.backend.dto.LimitedProductDTO;
+import com.fellaverse.backend.enumerator.ProductStatus;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
 import com.fellaverse.backend.mapper.LimitedProductMapper;
 import com.fellaverse.backend.service.LimitedProductManageService;
@@ -53,5 +54,11 @@ public class LimitedProductManageController {
     public String deleteLimitedProduct(@PathVariable("id") Long id) {
         limitedProductManageService.deleteLimitedProduct(id);
         return "Delete limited product success!";
+    }
+
+    @JWTCheckToken(role = {"SuperAdmin", "ShopAdmin"})
+    @GetMapping("/status")
+    public ProductStatus[] findAllStatus() {
+        return ProductStatus.class.getEnumConstants();
     }
 }

@@ -1,6 +1,7 @@
 package com.fellaverse.backend.controller;
 
 import com.fellaverse.backend.dto.LimitedProductDTO;
+import com.fellaverse.backend.enumerator.ProductStatus;
 import com.fellaverse.backend.service.FeignLimitedProductManageService;
 import com.fellaverse.backend.validator.ValidGroup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,10 @@ public class FeignLimitedProductManageController {
     @DeleteMapping("/{id}")
     public String deleteLimitedProduct(@PathVariable("id") Long id) {
         return feignLimitedProductManageService.deleteLimitedProduct(id);
+    }
+
+    @GetMapping("/status")
+    public ProductStatus[] findAllStatus() {
+        return feignLimitedProductManageService.findAllStatus();
     }
 }

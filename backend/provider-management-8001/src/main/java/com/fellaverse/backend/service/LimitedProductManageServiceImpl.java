@@ -39,27 +39,13 @@ public class LimitedProductManageServiceImpl implements LimitedProductManageServ
         LimitedProduct product = (LimitedProduct) redisUtils.hGet("LimitedProduct", id);
         if (product != null) {
             redisUtils.hPut("LimitedProduct", id, limitedProduct);
+            redisUtils.expire("LimitedProduct", 2, TimeUnit.MINUTES);
         }
     }
 
     @Override
     public List<LimitedProduct> findAll() {
-        Map<Object, Object> products = redisUtils.hGetAll("LimitedProduct");
-        if (!products.isEmpty()) {
-            List<LimitedProduct> productListRedis = new ArrayList<>();
-            for (Map.Entry<Object, Object> entry : products.entrySet()) {
-                productListRedis.add((LimitedProduct) entry.getValue());
-            }
-            return productListRedis;
-        }
-        List<LimitedProduct> productList = limitedProductRepository.findAll();
-        Map<String, Object> map = new HashMap<>();
-        for (LimitedProduct limitedProduct : productList) {
-            map.put(limitedProduct.getId().toString(), limitedProduct);
-        }
-        redisUtils.hPutAll("LimitedProduct", map);
-        redisUtils.expire("LimitedProduct", 2, TimeUnit.MINUTES);
-        return productList;
+        return limitedProductRepository.findAll();
     }
 
     @Override
