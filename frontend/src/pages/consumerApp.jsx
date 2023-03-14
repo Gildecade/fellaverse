@@ -77,7 +77,7 @@ const ConsumerApp = () => {
             margin: 16
           }}
         >
-          <img src="./title.png" alt="title" style={{width:170,height:32}} />
+        <img src="./title.png" alt="title" style={{width:170,height:32}} />
         </div>
         <Menu theme="light" defaultSelectedKeys={['1']} mode="inline" items={items} />
       </Sider>

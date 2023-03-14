@@ -49,6 +49,6 @@ public class CourseManageController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable("id") Long id) {
         courseManageService.deleteCourse(id);
-        return new ResponseEntity<>("Delete course succeeded!", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("Delete course succeeded!", HttpStatus.OK);
     }
 }

@@ -67,7 +67,7 @@ const AdminApp = () => {
     }
     if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
       items.push(getItem("Shop Management", 'sub1', <ShopOutlined />, [
-        getItem(<Link to='/admin'>Product</Link>, '4', <ShoppingOutlined />),
+        getItem(<Link to='/admin/shop'>Course</Link>, '4', <ShoppingOutlined />),
         getItem(<Link to='/admin'>Order</Link>, '5', <ShoppingCartOutlined />),
       ]));
     }
@@ -81,15 +81,16 @@ const AdminApp = () => {
           minHeight: '100vh',
         }}
       >
-        <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} width={"220"}>
+        <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} width={"220"} theme="light">
           <div
             style={{
               height: 32,
-              margin: 16,
-              background: 'rgba(255, 255, 255, 0.2)',
+              margin: 16
             }}
-          />
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+          >
+          <img src="./title.png" alt="title" style={{width:170,height:32}} />
+          </div>
+          <Menu defaultSelectedKeys={['1']} mode="inline" items={items} />
         </Sider>
         <Layout className="site-layout">
           <Header style={{
@@ -139,6 +140,10 @@ const AdminApp = () => {
                 <Route path="/role" element={<RoleManagement/>} />
                 <Route path="/role/add" element={<AddRole/>} />
                 <Route path="/role/edit/:id" element={<EditRole/>} />
+                <Route path="/admin/shop/course" element={<ListCourse />} />
+                <Route path="*" element={<NotFound />} />
+                <Route path="*" element={<NotFound />} />
+                <Route path="*" element={<NotFound />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
