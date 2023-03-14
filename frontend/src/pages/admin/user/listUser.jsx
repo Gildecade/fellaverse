@@ -169,7 +169,7 @@ const UserManagement = () => {
 
 const columns = [
     {
-      title: 'Userame',
+      title: 'Username',
       dataIndex: 'username',
       key: 'username',
       ...getColumnSearchProps('username'),
@@ -299,13 +299,18 @@ const columns = [
             setIsModalOpen(false);
           };
           let buttonStyle = {
-            backgroundColor: 'green',
-            color: 'white',
+            backgroundColor: 'RGB(232, 251, 232)',
+            color: 'green',
+            border: '1px solid RGB(132, 201, 132)',
           };
           if (status == "LOCKED") {
-            buttonStyle.backgroundColor = 'red';
+            buttonStyle.backgroundColor = 'RGB(255, 222, 223)';
+            buttonStyle.color = 'red';
+            buttonStyle.border = '1px solid RGB(255, 132, 133)';
           } else if (status == "UNKNOWN") {
-            buttonStyle.backgroundColor = 'magenta';
+            buttonStyle.backgroundColor = 'RGB(255, 224, 255)';
+            buttonStyle.color = 'magenta';
+            buttonStyle.border = '1px solid RGB(255, 134, 205)';
           }
           const onChange = (e) => {
             console.log('radio checked', e.target.value);

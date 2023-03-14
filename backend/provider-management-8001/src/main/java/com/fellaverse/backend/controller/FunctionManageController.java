@@ -28,14 +28,14 @@ public class FunctionManageController {
 
     @JWTCheckToken(role = {"SuperAdmin", "WorkoutAdmin"})
     @PutMapping("")
-    public Boolean editExercise(@RequestBody @Validated(value = ValidGroup.Crud.Update.class) FunctionDTO functionDTO){
+    public Boolean editFunction(@RequestBody @Validated(value = ValidGroup.Crud.Update.class) FunctionDTO functionDTO){
         Function function = functionManageService.findFunctionById(functionDTO.getId());
         return functionManageService.updateFunction(functionDTOMapper.partialUpdate(functionDTO, function));
     }
 
     @JWTCheckToken(role = {"SuperAdmin", "WorkoutAdmin"})
     @DeleteMapping("/{id}")
-    public Boolean deleteExercise(@PathVariable Long id){
+    public Boolean deleteFunction(@PathVariable Long id){
         return functionManageService.deleteFunction(id);
     }
 

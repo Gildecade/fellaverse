@@ -12,6 +12,9 @@ import {
   ShoppingOutlined,
   ShoppingCartOutlined,
   ApartmentOutlined,
+  UserOutlined,
+  UngroupOutlined,
+  SubnodeOutlined
 } from '@ant-design/icons';
 import { domain } from '../../config';
 import axios from 'axios';
@@ -29,9 +32,14 @@ import EditUserFunction from './user/editUserFunction';
 import RoleManagement from './role/listRole';
 import AddRole from './role/addRole';
 import EditRole from './role/editRole';
+// user
 import FunctionManagement from './function/listFunction';
 import AddFunction from './function/addFunction';
 import EditFunction from './function/editFunction';
+// exercise
+import ExerciseManagement from './exercise/listExercise';
+import AddExercise from './exercise/addExercise';
+import EditExercise from './exercise/editExercise';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -51,6 +59,7 @@ const AdminApp = () => {
   const [username, setUsername] = useState(null);
   const [roles, setRoles] = useState(null);
   const [collapsed, setCollapsed] = useState(false);
+  const [prevPage, setPrevpage] = useState(0);
   var [items, setItems] = useState([]);
   const {
     token: { colorBgContainer },
@@ -66,11 +75,12 @@ const AdminApp = () => {
       getItem(<Link to='/admin'>{homePage}</Link>, '1', <HomeOutlined />),
     ];
     // TODO: modify sider contents here
-    if (roles.indexOf("SuperAdmin") != -1) {
+    if (roles.indexOf("SuperAdmin") != -1) {    
       items.push(getItem(<Link to='/admin/admin'>Admin Management</Link>, '2', <ContactsOutlined />));
       items.push(getItem(<Link to='/admin/role'>Role Management</Link>, '3', <ApartmentOutlined />));
-      items.push(getItem(<Link to='/admin/user'>User Management</Link>, '4', <ContactsOutlined />));
-      items.push(getItem(<Link to='/admin/function'>Function Management</Link>, '5', <ApartmentOutlined />));
+      items.push(getItem(<Link to='/admin/user'>User Management</Link>, '4', <UserOutlined />));
+      items.push(getItem(<Link to='/admin/function'>Function Management</Link>, '5', <UngroupOutlined />));
+      items.push(getItem(<Link to='/admin/exercise'>Exercise Management</Link>, '6', <SubnodeOutlined />));
     }
     if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
       items.push(getItem("Shop Management", 'sub1', <ShopOutlined />, [
@@ -96,6 +106,7 @@ const AdminApp = () => {
               background: 'rgba(255, 255, 255, 0.2)',
             }}
           />
+          {/* need to handle previous page to correct the side bar */}
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
         </Sider>
         <Layout className="site-layout">
@@ -151,6 +162,9 @@ const AdminApp = () => {
                 <Route path="/function" element={<FunctionManagement/>} />
                 <Route path="/function/add" element={<AddFunction/>} />
                 <Route path="/function/edit/:id" element={<EditFunction/>} />
+                <Route path="/exercise" element={<ExerciseManagement/>} />
+                <Route path="/exercise/add" element={<AddExercise/>} />
+                <Route path="/exercise/edit/:id" element={<EditExercise/>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
