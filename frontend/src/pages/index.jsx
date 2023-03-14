@@ -27,37 +27,30 @@ const Index = () => {
       <div>
         { username ? 
           (
-            <><Row>
-              <Col lg={8} xxl={9}>
-              </Col>
-              <Col lg={8} xxl={5}>
-                <Carousel autoplay>
+            <>
+                <Carousel autoplay style={{textAlign:"center"}}>
                   <div>
                     <Image
-                      width={420}
-                      height={420}
+                      width={800}
+                      height={450}
+                      src={'https://fellaverse.blob.core.windows.net/product-images/Aerial.png'}
+                      fallback={GGko} />
+                  </div>
+                  <div>
+                    <Image
+                      width={800}
+                      height={450}
                       src={'www.aaaa.com'}
                       fallback={GGko} />
                   </div>
                   <div>
                     <Image
-                      width={420}
-                      height={420}
-                      src={'www.aaaa.com'}
-                      fallback={GGko} />
-                  </div>
-                  <div>
-                    <Image
-                      width={420}
-                      height={420}
+                      width={800}
+                      height={450}
                       src={'www.aaaa.com'}
                       fallback={GGko} />
                   </div>
                 </Carousel>
-              </Col>
-              <Col lg={8} xxl={10}>
-              </Col>
-            </Row>
               <h1 style={{ marginLeft: '40px', }}>
                 Welcome to Fellaverse, {username}.
               </h1></>
