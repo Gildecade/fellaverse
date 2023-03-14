@@ -27,5 +27,5 @@ public interface FeignScheduleService {
 
 
     @GetMapping("/{userId}")
-    public List<ScheduleInfo> findScheduleByUserId(@PathVariable("userId") Long userId);
+    public List<ScheduleDTO> findScheduleByUserId(@PathVariable("userId") Long userId);
 }

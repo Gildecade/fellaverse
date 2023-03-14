@@ -27,5 +27,5 @@ public interface FeignProgramService {
 
 
     @GetMapping("/{userId}")
-    public List<ProgramInfo> findProgramByUserId(@PathVariable("userId") Long userId);
+    public List<ProgramDTO> findProgramByUserId(@PathVariable("userId") Long userId);
 }

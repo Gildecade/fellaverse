@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.fellaverse.backend.validator.ValidGroup;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * A DTO for the {@link com.fellaverse.backend.bean.Record} entity
@@ -20,7 +20,7 @@ public class RecordDTO implements Serializable {
     @NotNull(groups = ValidGroup.Crud.Update.class, message = "User ID cannot be null")
     private UserDTO user;
     @NotNull(groups = ValidGroup.Crud.Create.class, message = "Username cannot be blank")
-    private LocalDate createDateTime;
+    private LocalDateTime createDateTime;
     @NotNull(groups = ValidGroup.Crud.Create.class, message = "Username cannot be blank")
     private Float weights;
     @NotNull(groups = ValidGroup.Crud.Create.class, message = "Username cannot be blank")

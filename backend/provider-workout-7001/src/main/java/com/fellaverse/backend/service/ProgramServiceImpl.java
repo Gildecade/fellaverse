@@ -1,9 +1,11 @@
 package com.fellaverse.backend.service;
 
+import com.fellaverse.backend.bean.Exercise;
 import com.fellaverse.backend.bean.Program;
 import com.fellaverse.backend.projection.ProgramInfo;
 import com.fellaverse.backend.repository.ProgramRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,13 +20,18 @@ public class ProgramServiceImpl implements ProgramService {
     }
 
     @Override
-    public List<ProgramInfo> findAllPrograms(Long user_id) {
-        return programRepository.findByUser_Id(user_id);
+    public List<ProgramInfo> findAllPrograms(Long scheduleId) {
+        return programRepository.findByScheduleId(scheduleId);
     }
 
     @Override
+    @Transactional
     public Program addProgram (Program program) {
-        return programRepository.save(program);
+        Program result = programRepository.save(program);
+        for (Exercise exercise : program.getExercises()) {
+            programRepository.insertToProgramExercise(exercise.getId(), result.getId());
+        }
+        return result;
     }
 
     @Override
@@ -40,7 +47,7 @@ public class ProgramServiceImpl implements ProgramService {
 
     @Override
     public boolean updateProgram(Program program) {
-
+        System.out.println(program.getId());
         try {
             programRepository.save(program);
         }

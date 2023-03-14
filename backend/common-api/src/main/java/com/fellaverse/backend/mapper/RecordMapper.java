@@ -4,7 +4,7 @@ import com.fellaverse.backend.bean.Record;
 import com.fellaverse.backend.dto.RecordDTO;
 import org.mapstruct.*;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring", uses = {RecordIdMapper.class, UserMapper.class, ExerciseMapper.class})
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface RecordMapper {
     Record toEntity(RecordDTO recordDTO);
 

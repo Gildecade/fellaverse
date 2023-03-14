@@ -10,21 +10,12 @@ public interface ProgramInfo {
 
     Set<ExerciseInfo> getExercises();
 
-    UserInfo getUser();
-
     /**
      * A Projection for the {@link com.fellaverse.backend.bean.Exercise} entity
      */
     interface ExerciseInfo {
+        Long getId();
+
         String getExerciseName();
-    }
-
-    /**
-     * A Projection for the {@link com.fellaverse.backend.bean.User} entity
-     */
-    interface UserInfo {
-        String getUsername();
-
-        String getEmail();
     }
 }

@@ -6,9 +6,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication  // auto enable eureka client
 @EnableFeignClients
-public class RecordConsumer_7999 {
+public class WorkoutConsumer_7999 {
     public static void main(String[] args) {
-        SpringApplication.run(RecordConsumer_7999.class, args);
+        SpringApplication.run(WorkoutConsumer_7999.class, args);
     }
 }
 
