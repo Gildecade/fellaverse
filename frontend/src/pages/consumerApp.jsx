@@ -70,17 +70,18 @@ const ConsumerApp = () => {
         minHeight: '100vh',
       }}
     >
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} theme="light">
         <div
           style={{
             height: 32,
-            margin: 16,
-            background: 'rgba(255, 255, 255, 0.2)',
+            margin: 16
           }}
-        />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+        >
+          <img src="./title.png" alt="title" style={{width:170,height:32}} />
+        </div>
+        <Menu theme="light" defaultSelectedKeys={['1']} mode="inline" items={items} />
       </Sider>
-      <Layout className="site-layout">
+      <Layout className="site-layout" >
         <Header style={{
             padding: 0,
             background: colorBgContainer,
