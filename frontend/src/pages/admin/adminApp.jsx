@@ -29,6 +29,9 @@ import AddRole from './role/addRole';
 import EditRole from './role/editRole';
 import LimitedProductManagement from './limitedProduct/listLimitedProduct';
 import AddLimitedProduct from './limitedProduct/addLimitedProduct';
+import EditLimitedProduct from './limitedProduct/editLimitedProduct';
+import FlashSaleOrderManagement from './flashSaleOrder/listOrder';
+import DetailSaleOrder from './flashSaleOrder/detailOrder';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -149,6 +152,9 @@ const AdminApp = () => {
                 <Route path="/role/edit/:id" element={<EditRole/>} />
                 <Route path="/limitedProduct" element={<LimitedProductManagement/>} />
                 <Route path="/limitedProduct/add" element={<AddLimitedProduct/>} />
+                <Route path="/limitedProduct/edit/:id" element={<EditLimitedProduct/>} />
+                <Route path="/saleOrder" element={<FlashSaleOrderManagement/>} />
+                <Route path="/saleOrder/detail/:id" element={<DetailSaleOrder/>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>

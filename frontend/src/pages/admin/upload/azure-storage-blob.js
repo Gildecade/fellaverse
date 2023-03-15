@@ -11,7 +11,6 @@ const storageAccountName = process.env.REACT_APP_AZURE_STORAGE_RESOURCE_NAME;
 
 // <snippet_get_client>
 const uploadUrl = `https://${storageAccountName}.blob.core.windows.net/?${sasToken}`;
-console.log(uploadUrl);
 
 // get BlobService = notice `?` is pulled out of sasToken - if created in Azure portal
 const blobService = new BlobServiceClient(uploadUrl);

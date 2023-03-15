@@ -307,7 +307,7 @@ const LimitedProductManagement = () => {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
         axios.defaults.headers.common['Fellaverse-token'] = token;
         const result = await axios.get(`${domain}management/limitedProduct`);
-        // console.log(result);
+        console.log(result);
         const productList = result.data.data.map(f => {
           return {...f, key: f.id};
         });
@@ -315,7 +315,17 @@ const LimitedProductManagement = () => {
         
       } catch (error) {
         console.log(error);
-        message.error(error.response.data.message);
+        let msg = null;
+        if (error.response.data.data) {
+          msg = error.response.data.data.message;
+        } else if (error.response.data.message) {
+          msg = error.response.data.message;
+        } else if (error.response) {
+          msg = error.response.data;
+        } else {
+          msg = "Add failed. Internal server error.";
+        }
+        message.error(msg);
       }
 
     }

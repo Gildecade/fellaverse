@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button, Form, Input, InputNumber, message, Select, Space, DatePicker } from 'antd';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { Button, Form, Input, Select, message,InputNumber, Space, DatePicker } from 'antd';
 import axios from 'axios';
 import { domain } from '../../../config';
 import uploadFileToBlob, { isStorageConfigured, getBlobsInContainer } from '../upload/azure-storage-blob';
@@ -8,7 +8,6 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 const storageConfigured = isStorageConfigured();
-
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -43,11 +42,19 @@ const tailFormItemLayout = {
     },
   },
 };
-const AddLimitedProduct = () => {
+const EditLimitedProduct = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [statuses, setStatuses] = useState([]);
+  const productId = useParams().id;
   const navigate = useNavigate();
+  form.setFieldsValue({
+    "statuses": statuses,
+  })
+  const parameters = useLocation();
+  const record = parameters.state;
+  // console.log(record);
+
   const azure = "https://fellaverse.blob.core.windows.net/product-images/";
 
   // all blobs in container
@@ -95,8 +102,6 @@ const AddLimitedProduct = () => {
       </Button>
     </Space>
   )
-
-  const delay = ms => new Promise(res => setTimeout(res, ms));
   
   // eslint-disable-next-line arrow-body-style
   const disabledDate = (current) => {
@@ -112,50 +117,40 @@ const AddLimitedProduct = () => {
     console.log('onOk: ', value);
   };
 
+  const delay = ms => new Promise(res => setTimeout(res, ms));
+
   const onFinish = async (values) => {
-    // if (fileUploaded === '') {
-    //   message.error("Please upload image!");
-    //   return;
-    // }
-    // setLoading(true);
-    values = {...values, imageUrl: azure + fileUploaded};
-    console.log('Received values of form: ', values);
+    setLoading(true);
+    const imgUrl = null;
+    if (fileUploaded !== "") {
+      imgUrl = azure + fileUploaded;
+    }
+    const request = {...values, id: productId, imageUrl: imgUrl};
+    console.log('Received values of form: ', request);
     try {
-      const result = await axios.post(`${domain}management/limitedProduct`, values);
-      message.success("Add successfully.");
+      const result = await axios.put(`${domain}management/limitedProduct`, request);
+      message.success("Update successfully.");
       const data = result.data.data;
       console.log(data);
       await delay(1000);
       const title = data;
-      const subTitle = "Add new limited product success!";
+      const subTitle = "Update limited product success!";
       navigate(`/admin/success/${title}/${subTitle}`);
     } catch (error) {
       setLoading(false);
       console.log(error);
       let msg = null;
-      if (error.response.data.data) {
-        msg = error.response.data.data.message;
-      } else if (error.response.data.message) {
-        msg = error.response.data.message;
-      } else if (error.response) {
-        msg = error.response.data;
+      if (error.response) {
+        if (error.response.data.message) {
+          msg = error.response.data.message;
+        } else {
+          msg = error.response.data;
+        }
+        message.error(msg);
       } else {
-        msg = "Add failed. Internal server error.";
-      }
-      message.error(msg);
+        message.error("Update failed. Internal server error.");}
     }
   };
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <div
-        style={{
-          width: 30,
-        }}
-      >
-        +1
-      </div>
-    </Form.Item>
-  );
   useEffect(() => {
     const initialize = async () => {
       try {
@@ -176,7 +171,7 @@ const AddLimitedProduct = () => {
   <Form
     {...formItemLayout}
     form={form}
-    name="Add admin"
+    name="Edit limited product"
     onFinish={onFinish}
     initialValues={{
     prefix: '1',
@@ -186,10 +181,9 @@ const AddLimitedProduct = () => {
     <Form.Item
       name="productName"
       label="Product name"
+      initialValue={record.productName}
       rules={[
         {
-        required: true,
-        message: 'Please input product name!',
         whitespace: true,
         },
     ]}
@@ -200,38 +194,22 @@ const AddLimitedProduct = () => {
     <Form.Item
       name="description"
       label="Description"
-      rules={[
-        {
-        required: true,
-        message: 'Please input description',
-        },
-    ]}
+      initialValue={record.description}
     >
       <TextArea autoSize={true} maxLength={255} showCount={true} allowClear={true} />
     </Form.Item>
-
     <Form.Item
       name="quantity"
       label="Quantity"
-      rules={[
-        {
-        required: true,
-        message: 'Please input quantity',
-        },
-    ]}
+      initialValue={record.quantity}
     >
     <InputNumber  min={0} />
+    
     </Form.Item>
-
     <Form.Item
       name="price"
       label="Price"
-      rules={[
-        {
-        required: true,
-        message: 'Please input price',
-        },
-    ]}
+      initialValue={record.price}
     >
     <InputNumber  min={0} />
     </Form.Item>
@@ -239,12 +217,7 @@ const AddLimitedProduct = () => {
     <Form.Item
       name="img"
       label="Image"
-      rules={[
-        {
-        required: true,
-        message: 'Please upload image',
-        },
-    ]}
+      initialValue={record.imageUrl}
     >
       <div>
         {storageConfigured && !uploading && DisplayForm()}
@@ -256,12 +229,6 @@ const AddLimitedProduct = () => {
     <Form.Item
       name="createdDateTime"
       label="Create Time"
-      rules={[
-        {
-        required: true,
-        message: 'Please input create time',
-        },
-    ]}
     >
     <DatePicker showTime onChange={onChange} onOk={onOk} />
     </Form.Item>
@@ -269,12 +236,6 @@ const AddLimitedProduct = () => {
     <Form.Item
       name="saleDateTime"
       label="Sale Time"
-      rules={[
-        {
-        required: true,
-        message: 'Please input sale time',
-        },
-    ]}
     >
       <DatePicker
         format="YYYY-MM-DD HH:mm:ss"
@@ -288,13 +249,9 @@ const AddLimitedProduct = () => {
     <Form.Item
       name="productStatus"
       label="Status"
-      rules={[
-        {
-          required: true,
-        },
-      ]}
+      initialValue={record.productStatus}
     >
-      <Select placeholder="Please select admin statuses">
+      <Select placeholder="Please select product status">
         {statuses.map(status => (
           <Option key={status}>{status}</Option>
         ))}
@@ -303,11 +260,11 @@ const AddLimitedProduct = () => {
     
     <Form.Item {...tailFormItemLayout}>
     <Button type="primary" htmlType="submit" loading={loading}>
-        Add
+        Submit
     </Button>
     </Form.Item>
 </Form>
   );
 };
-export default AddLimitedProduct;
+export default EditLimitedProduct;
 
