@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button, Input, Space, Table, Tag, Popconfirm, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
-import { domain } from '../../../config';
+import { domain } from '../../config';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -280,8 +280,9 @@ const PersonalFlashSaleOrder = () => {
     const initialize = async () => {
       try {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
+        const userId = localStorage.getItem('userId') ? localStorage.getItem('userId') : sessionStorage.getItem('userId');
         axios.defaults.headers.common['Fellaverse-token'] = token;
-        const result = await axios.get(`${domain}management/flashSaleOrder`);
+        const result = await axios.get(`${domain}user/${userId}/flashSaleOrder`);
         const productList = result.data.data.map(f => {
           return {...f, key: f.id};
         });

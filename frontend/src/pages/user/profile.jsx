@@ -52,6 +52,7 @@ const Profile = () => {
         <Descriptions.Item label="User ID">{user.id}</Descriptions.Item>
         <Descriptions.Item label="Username">{user.username}</Descriptions.Item>
         <Descriptions.Item label="Email">{user.email }</Descriptions.Item>
+        <Descriptions.Item label="Phone number">{user.phoneNumber }</Descriptions.Item>
         <Descriptions.Item label="Wallet"><Statistic value={user.wallet} precision={2} formatter={formatter} valueStyle={{fontSize:14}} /></Descriptions.Item>
       </Descriptions>
     </div>
