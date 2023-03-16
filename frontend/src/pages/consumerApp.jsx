@@ -26,6 +26,9 @@ import ForgotPasswordForm from './authentication/forgotPassword';
 import FlashSale from './flashSale/listFlashSale';
 import DetailFlashSale from './flashSale/detailFlashSale';
 import OrderSuccess from './flashSale/orderSuccess';
+import UserCheckIn from './checkIn/listCheckIn';
+import AddCheckIn from './checkIn/addCheckIn';
+import EditCheckIn from './checkIn/editCheckIn';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -64,7 +67,7 @@ const ConsumerApp = () => {
       getItem('Schedule', '6'),
     ]),
     getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '7'), getItem('Team 2', '8')]),
-    getItem('Files', '9', <FileOutlined />),
+    getItem(<Link to='/checkin'>{'Check in'}</Link>, '9', <FileOutlined />),
   ] :
   [
     getItem(<Link to='/'>{homePage}</Link>, '1', <HomeOutlined />),
@@ -155,6 +158,9 @@ const ConsumerApp = () => {
               <Route path='/flash-sale/:title/:subTitle' element={<OrderSuccess />}></Route>
               <Route path='/success/:title/:subTitle' element={<Success />} />
               <Route path='/forgotPassword' element={<ForgotPasswordForm />} />
+              <Route path='/checkIn' element={<UserCheckIn />} />
+              <Route path='/checkIn/add' element={<AddCheckIn />} />
+              <Route path='/checkIn/edit' element={<EditCheckIn />} /> 
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

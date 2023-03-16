@@ -34,7 +34,7 @@ import LimitedProductManagement from './limitedProduct/listLimitedProduct';
 import AddLimitedProduct from './limitedProduct/addLimitedProduct';
 // user
 import UserManagement from './user/listUser';
-import EditUserFunction from '../admin copy/user/editUserFunction';
+import EditUserFunction from '../admin/user/editUserFunction';
 // function
 import FunctionManagement from './function/listFunction';
 import AddFunction from './function/addFunction';

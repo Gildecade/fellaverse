@@ -89,6 +89,8 @@ const EditFunction = () => {
       initialValue={record.functionName}
       rules={[
         {
+        required: true,
+        message: 'Please input exercise name!',
         whitespace: true,
         },
     ]}
