@@ -5,6 +5,7 @@ import {
   TeamOutlined,
   UserOutlined,
   HomeOutlined,
+  FireOutlined,
 } from '@ant-design/icons';
 import { Breadcrumb, Col, Layout, Menu, Row, theme, Space } from 'antd';
 import {
@@ -23,6 +24,10 @@ import NotFound from './result/404';
 // TODO: import your components here
 import Success from './result/Success';
 import ForgotPasswordForm from './authentication/forgotPassword';
+import FlashSale from './flashSale/listFlashSale';
+import DetailFlashSale from './flashSale/detailFlashSale';
+import OrderSuccess from './flashSale/orderSuccess';
+import UserApp from './user/userApp';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -52,13 +57,16 @@ const ConsumerApp = () => {
   [
     // TODO: modify sider contents here
     getItem(<Link to='/'>{homePage}</Link>, '1', <HomeOutlined />),
-    getItem('eShop', '2', <ShopOutlined />),
-    getItem('User', 'sub1', <UserOutlined />, [
-      getItem('Record', '3'),
-      getItem('Schedule', '4'),
-      getItem('Alex', '5'),
+    getItem(<Link to='/user'>Profile</Link>, 'p', <UserOutlined />),
+    getItem('eShop', '2', <ShopOutlined />, [
+      getItem('Home', '3'),
+      getItem(<Link to='/flash-sale'>{'Flash sale'}</Link>, '4'),
     ]),
-    getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
+    getItem('Workout', 'sub1', <FireOutlined />, [
+      getItem('Record', '5'),
+      getItem('Schedule', '6'),
+    ]),
+    getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '7'), getItem('Team 2', '8')]),
     getItem('Files', '9', <FileOutlined />),
   ] :
   [
@@ -145,6 +153,10 @@ const ConsumerApp = () => {
             <Routes>
               {/* TODO: link your components(element) with route paths here */}
               <Route path="/" element={<Index />} />
+              <Route path='/user/*' element={<UserApp />}></Route>
+              <Route path='/flash-sale' element={<FlashSale />}></Route>
+              <Route path='/flash-sale/:id' element={<DetailFlashSale />} />
+              <Route path='/flash-sale/:title/:subTitle' element={<OrderSuccess />}></Route>
               <Route path='/success/:title/:subTitle' element={<Success />} />
               <Route path='/forgotPassword' element={<ForgotPasswordForm />} />
               <Route path="*" element={<NotFound />} />

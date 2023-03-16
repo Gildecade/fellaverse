@@ -4,6 +4,7 @@ import com.fellaverse.backend.validator.ValidGroup;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -17,8 +18,10 @@ public class RoleDTO implements Serializable {
     private Long id;
 
     @NotBlank(groups = ValidGroup.Crud.Create.class, message = "Role name cannot be blank")
+    @Size(max = 60)
     private String roleName;
 
     @NotBlank(groups = ValidGroup.Crud.Create.class, message = "Role description cannot be blank")
+    @Size(max = 255)
     private String description;
 }

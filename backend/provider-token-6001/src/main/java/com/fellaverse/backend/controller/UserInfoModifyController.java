@@ -28,7 +28,7 @@ public class UserInfoModifyController {
     public String register(@Validated @UniqueUser @RequestBody UserRegisterDTO userRegisterDTO) {
         userRegisterDTO.setPassword(passwordEncryptService.getEncryptedPassword(userRegisterDTO.getPassword()));
         User user = userRegisterMapper.toEntity(userRegisterDTO);
-        user.setStatus(UserStatus.valueOf("NORMAL")).setWallet(1000L);
+        user.setStatus(UserStatus.valueOf("NORMAL")).setWallet(1000F);
         User register = this.userInfoModifyService.register(user);
         this.userInfoModifyService.addFunctions(register);
         return "Register success!";

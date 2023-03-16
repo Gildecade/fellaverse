@@ -29,7 +29,7 @@ public class UserBasicInfoDTO implements Serializable {
     @NotBlank(groups = ValidGroup.Crud.Create.class, message = "Phone number cannot be blank")
     private String phoneNumber;
     @NotNull(message = "ID cannot be null")
-    private Long wallet;
+    private Float wallet;
     @NotNull(groups = ValidGroup.Crud.Create.class, message = "status annot be null")
     @EnumString(value = {"normal","locked","unknown"}, groups = ValidGroup.Crud.Update.class, message="invalid status")
     private UserStatus status;

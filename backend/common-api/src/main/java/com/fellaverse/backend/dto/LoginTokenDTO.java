@@ -14,6 +14,7 @@ import java.util.List;
 @Accessors(chain = true)
 public class LoginTokenDTO implements Serializable {
     private String token;
+    private Long userId;
     private String username;
     private List<String> roles;
     private List<String> functions;

@@ -38,8 +38,8 @@ public class User {
     @Column(name = "phone_number", nullable = false, length = 60)
     private String phoneNumber;
 
-    @Column(name = "wallet", nullable = false, columnDefinition = "bigint default 1000")
-    private Long wallet;
+    @Column(name = "wallet", nullable = false, columnDefinition = "float default 1000.0")
+    private Float wallet;
 
     // use columnDefinition to add specific constraints manually
     @Column(name = "status", nullable = false, columnDefinition = "varchar(60) default 'NORMAL'")

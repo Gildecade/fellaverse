@@ -27,6 +27,11 @@ import EditAdmin from './admin/editAdmin';
 import RoleManagement from './role/listRole';
 import AddRole from './role/addRole';
 import EditRole from './role/editRole';
+import LimitedProductManagement from './limitedProduct/listLimitedProduct';
+import AddLimitedProduct from './limitedProduct/addLimitedProduct';
+import EditLimitedProduct from './limitedProduct/editLimitedProduct';
+import FlashSaleOrderManagement from './flashSaleOrder/listOrder';
+import DetailSaleOrder from './flashSaleOrder/detailOrder';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -69,6 +74,12 @@ const AdminApp = () => {
       items.push(getItem("Shop Management", 'sub1', <ShopOutlined />, [
         getItem(<Link to='/admin'>Product</Link>, '4', <ShoppingOutlined />),
         getItem(<Link to='/admin'>Order</Link>, '5', <ShoppingCartOutlined />),
+      ]));
+    }
+    if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
+      items.push(getItem("Sale Management", 'sub2', <ShopOutlined />, [
+        getItem(<Link to='/admin/limitedProduct'>Product</Link>, '6', <ShoppingCartOutlined />),
+        getItem(<Link to='/admin/saleOrder'>Order</Link>, '7', <ShoppingCartOutlined />),
       ]));
     }
     setItems(items);
@@ -139,6 +150,11 @@ const AdminApp = () => {
                 <Route path="/role" element={<RoleManagement/>} />
                 <Route path="/role/add" element={<AddRole/>} />
                 <Route path="/role/edit/:id" element={<EditRole/>} />
+                <Route path="/limitedProduct" element={<LimitedProductManagement/>} />
+                <Route path="/limitedProduct/add" element={<AddLimitedProduct/>} />
+                <Route path="/limitedProduct/edit/:id" element={<EditLimitedProduct/>} />
+                <Route path="/saleOrder" element={<FlashSaleOrderManagement/>} />
+                <Route path="/saleOrder/detail/:id" element={<DetailSaleOrder/>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
