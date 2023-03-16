@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { Button, Descriptions } from 'antd';
+import moment from 'moment/moment';
 
 const DetailSaleOrder = () => {
   const parameters = useLocation();
@@ -14,7 +15,7 @@ const DetailSaleOrder = () => {
         <Descriptions.Item label="Order ID">{record.id}</Descriptions.Item>
         <Descriptions.Item label="Quantity">{record.quantity }</Descriptions.Item>
         <Descriptions.Item label="Amount">{record.amount}</Descriptions.Item>
-        <Descriptions.Item label="Purchase datetime">{record.purchaseDateTime}</Descriptions.Item>
+        <Descriptions.Item label="Purchase date time">{moment(record.purchaseDateTime).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
         <Descriptions.Item label="Status">{record.orderStatus}</Descriptions.Item>
       </Descriptions>
       <br/>
@@ -34,8 +35,8 @@ const DetailSaleOrder = () => {
         <Descriptions.Item label="Price">{record.limitedProduct.price}</Descriptions.Item>
         <Descriptions.Item label="Quantity">{record.limitedProduct.quantity }</Descriptions.Item>
         <Descriptions.Item label="Status">{record.limitedProduct.productStatus}</Descriptions.Item>
-        <Descriptions.Item label="Create time">{record.limitedProduct.createdDateTime}</Descriptions.Item>
-        <Descriptions.Item label="Sale time">{record.limitedProduct.saleDateTime}</Descriptions.Item>
+        <Descriptions.Item label="Create date time">{moment(record.limitedProduct.createdDateTime).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
+        <Descriptions.Item label="Sale date time">{moment(record.limitedProduct.saleDateTime).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
       </Descriptions>
       <br/>
       <Button type='primary' onClick={OnClick}>Back</Button>
