@@ -1,8 +1,8 @@
 package com.fellaverse.backend.service;
 
+import com.fellaverse.backend.bean.FlashSaleOrderUserDTO;
 import com.fellaverse.backend.config.ConsumerErrorDecoder;
 import com.fellaverse.backend.config.FeignBasicAuthRequestInterceptor;
-import com.fellaverse.backend.dto.FlashSaleOrderDTO;
 import com.fellaverse.backend.dto.UserProfileDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -20,5 +20,5 @@ public interface FeignUserService {
     UserProfileDTO findAllInfo(@PathVariable("id") Long id);
 
     @GetMapping("/{id}/flashSaleOrder")
-    List<FlashSaleOrderDTO> findAllFlashSaleOrder(@PathVariable("id") Long id);
+    List<FlashSaleOrderUserDTO> findAllFlashSaleOrder(@PathVariable("id") Long id);
 }

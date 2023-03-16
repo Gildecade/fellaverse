@@ -16,5 +16,6 @@ public class UserProfileDTO implements Serializable {
     private Long id;
     private String username;
     private String email;
+    private String phoneNumber;
     private Float wallet;
 }

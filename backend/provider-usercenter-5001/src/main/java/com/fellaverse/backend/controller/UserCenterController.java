@@ -1,8 +1,8 @@
 package com.fellaverse.backend.controller;
 
-import com.fellaverse.backend.dto.FlashSaleOrderDTO;
+import com.fellaverse.backend.bean.FlashSaleOrderUserDTO;
+import com.fellaverse.backend.bean.FlashSaleOrderUserMapper;
 import com.fellaverse.backend.dto.UserProfileDTO;
-import com.fellaverse.backend.mapper.FlashSaleOrderMapper;
 import com.fellaverse.backend.mapper.UserProfileMapper;
 import com.fellaverse.backend.service.FlashSaleOrderUserService;
 import com.fellaverse.backend.service.UserService;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/user/{id}")
+@RequestMapping("/api/user")
 public class UserCenterController {
     @Autowired
     private UserService userService;
@@ -28,15 +28,15 @@ public class UserCenterController {
     private UserProfileMapper userProfileMapper;
 
     @Autowired
-    private FlashSaleOrderMapper flashSaleOrderMapper;
+    private FlashSaleOrderUserMapper flashSaleOrderUserMapper;
 
-    @GetMapping("/")
+    @GetMapping("/{id}")
     public UserProfileDTO findAllInfo(@PathVariable("id") Long id) {
         return userProfileMapper.toDto(userService.findUserById(id));
     }
 
-    @GetMapping("/flashSaleOrder")
-    public List<FlashSaleOrderDTO> findAllFlashSaleOrder(@PathVariable("id") Long id) {
-        return flashSaleOrderUserService.findAll(id).stream().map(flashSaleOrderMapper::toDto).collect(Collectors.toList());
+    @GetMapping("/{id}/flashSaleOrder")
+    public List<FlashSaleOrderUserDTO> findAllFlashSaleOrder(@PathVariable("id") Long id) {
+        return flashSaleOrderUserService.findAll(id).stream().map(flashSaleOrderUserMapper::toDto).collect(Collectors.toList());
     }
 }
