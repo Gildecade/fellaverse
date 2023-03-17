@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
  * A Projection for the {@link com.fellaverse.backend.bean.Course} entity
  */
 public interface CourseInfo {
+    Long getId();
     String getProductName();
 
     String getDescription();

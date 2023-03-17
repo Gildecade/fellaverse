@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 /**
  * A DTO for the {@link com.fellaverse.backend.bean.Course} entity
  */
-public record CourseRecord(String productName, String description, String imageUrl, Float price,
+public record CourseRecord(Long id, String productName, String description, String imageUrl, Float price,
                            LocalDateTime createdDateTime, ProductStatus productStatus,
                            UserRecord user) implements Serializable {
     /**

@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { Button, Form, Input, Select, message } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Select, message, InputNumber, Upload, Typography, Tag, Space } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { domain } from '../../../config';
 
 const { Option } = Select;
 
+const { Title } = Typography;
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -36,16 +39,12 @@ const tailFormItemLayout = {
     },
   },
 };
-const EditAdmin = () => {
+const EditCourse = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [roles, setRoles] = useState([]);
-  const [roleIds, setRoleIds] = useState([]);
-  const adminId = useParams().id;
+  const [users, setUsers] = useState([]);
+  const courseId = useParams().id;
   const navigate = useNavigate();
-  form.setFieldsValue({
-    "roleIds": roleIds,
-  })
   const parameters = useLocation();
   const record = parameters.state;
   // console.log(record);
@@ -53,20 +52,20 @@ const EditAdmin = () => {
   const delay = ms => new Promise(res => setTimeout(res, ms));
   const onFinish = async (values) => {
     setLoading(true);
-    const request = {...values, id: adminId};
+    const request = {...values, id: courseId};
     console.log('Received values of form: ', request);
     try {
-      const result = await axios.put(`${domain}management/admin`, request);
-      if (request.roles != roleIds) {
-        const roleResult = await axios.put(`${domain}management/admin/` + adminId, request.roleIds);
-      }
+      const result = await axios.put(`${domain}management/shop/course`, request);
+      // if (request.roles != roleIds) {
+      //   const roleResult = await axios.put(`${domain}management/course/` + courseId, request.roleIds);
+      // }
       message.success("Update successfully.");
       const data = result.data.data;
       console.log(data);
       await delay(1000);
       const title = data;
-      const subTitle = "Update admin info success!";
-      navigate(`/admin/success/${title}/${subTitle}`);
+      const subTitle = "Update course info success!";
+      navigate(`/course/success/${title}/${subTitle}`);
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -82,7 +81,6 @@ const EditAdmin = () => {
         message.error("Update failed. Internal server error.");}
     }
   };
-  const getRoleIdByRoleName = (rname, rlist) => rlist.find(item => item.roleName == rname).id;
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
       <div
@@ -99,11 +97,10 @@ const EditAdmin = () => {
       try {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
         axios.defaults.headers.common['Fellaverse-token'] = token;
-        const result = await axios.get(`${domain}management/role`);
-        const roles = result.data.data;
-        // console.log(roles);
-        setRoles(roles);
-        setRoleIds(record.roles.map(role=>getRoleIdByRoleName(role, roles)))
+        const result = await axios.get(`${domain}management/user`);
+        const users = result.data.data;
+        // console.log(users);
+        setUsers(users);
       } catch (error) {
         console.log(error);
       }
@@ -111,110 +108,154 @@ const EditAdmin = () => {
     initialize();
   }, []);
   return (
-  <Form
-    {...formItemLayout}
-    form={form}
-    name="Edit admin"
-    onFinish={onFinish}
-    initialValues={{
-    prefix: '1',
-    }}
-    scrollToFirstError
-  >
-    <Form.Item
-      name="username"
-      label="Username"
-      tooltip="What do you want others to call you?"
-      initialValue={record.username}
-      rules={[
-        {
-        whitespace: true,
-        },
-    ]}
-    >
-    <Input />
-    </Form.Item>
+    <div> 
+      <Title level={3}>Edit course with id {record.id}</Title>
+       <Form
+          {...formItemLayout}
+          form={form}
+          name="Edit course"
+          onFinish={onFinish}
+          initialValues={{
+          prefix: '1',
+          }}
+          scrollToFirstError
+        >
+          <Form.Item
+            name="productName"
+            label="Product Name"
+            tooltip="Name of the product"
+            initialValue={record.productName}
+            rules={[
+              {
+              required: true,
+              message: 'Please input the product name!',
+              whitespace: true,
+              },
+          ]}
+          >
+          <Input />
+          </Form.Item>
 
-    <Form.Item
-      name="email"
-      label="E-mail"
-      initialValue={record.email}
-      rules={[
-        {
-        type: 'email',
-        message: 'The input is not valid E-mail!',
-        },
-        {
-        message: 'Please input your E-mail!',
-        },
-    ]}
-    >
-    <Input />
-    </Form.Item>
-    <Form.Item
-      name="phoneNumber"
-      label="Phone Number"
-      initialValue={record.phoneNumber}
-    >
-    <Input
-      addonBefore={prefixSelector}
-      style={{
-      width: '100%',
-      }}
-    />
-    </Form.Item>
-    <Form.Item
-      name="password"
-      label="Password"
-    hasFeedback
-    >
-      <Input.Password />
-    </Form.Item>
+          <Form.Item
+            name="description"
+            label="Description"
+            initialValue={record.description}
+            rules={[
+              {
+              required: true,
+              message: 'Please input product description',
+              },
+          ]}
+          >
+          <Input />
+          </Form.Item>
+          <Form.Item
+            name="price"
+            label="Price"
+            initialValue={record.price}
+            rules={[
+              {
+              required: true,
+              message: 'Please input product price',
+              },
+          ]}
+          >
+          <InputNumber
+            formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            // parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
+            // onChange={onChange}
+          />
+          </Form.Item>
+          
+          <Form.Item
+            name="imageUrl"
+            label="Product Image"      
+          >
+            <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+              {record.imageUrl != null &&
+                <Tag>{record.imageUrl}</Tag>
 
-    <Form.Item
-      name="confirm"
-      label="Confirm Password"
-      dependencies={['password']}
-      hasFeedback
-      rules={[
-        ({ getFieldValue }) => ({
-        validator(_, value) {
-            if (!value || getFieldValue('password') === value) {
-            return Promise.resolve();
-            }
-            return Promise.reject(new Error('The two passwords that you entered do not match!'));
-        },
-        }),
-    ]}
-    >
-    <Input.Password />
-    </Form.Item>
+              }
+              <Upload action="/upload.do" listType="picture-card">
+                <div>
+                  <PlusOutlined />
+                  <div style={{ marginTop: 8 }}>Upload</div>
+                </div>
+              </Upload>
+            </Space>
+          </Form.Item>
 
-    <Form.Item
-      name="roleIds"
-      label="Roles"
-      // initialValue={roleIds}
-      rules={[
-        {
-          required: false,
-          type: 'array',
-        },
-      ]}
-    >
-      <Select mode="multiple" placeholder="Please select admin roles">
-        {roles.map(role => (
-          <Option key={role.id} value={role.id}>{role.roleName}</Option>
-        ))}
-      </Select>
-    </Form.Item>
-    
-    <Form.Item {...tailFormItemLayout}>
-    <Button type="primary" htmlType="submit" loading={loading}>
-        Submit
-    </Button>
-    </Form.Item>
-</Form>
+          <Form.Item
+            name="videoUrl"
+            label="Video"
+            hasFeedback
+            rules={[
+              {
+              required: true,
+              message: 'Please upload the course video',
+              },
+          ]}
+          >
+            <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+              {record.videoUrl != null &&
+                <Tag>{record.videoUrl}</Tag>
+
+              }
+              <Upload action="/upload.do" listType="picture-card">
+                <div>
+                  <PlusOutlined />
+                  <div style={{ marginTop: 8 }}>Upload</div>
+                </div>
+              </Upload>
+            </Space>
+          </Form.Item>
+
+          <Form.Item
+            name="productStatus"
+            label="Product Status"
+            initialValue={record.productStatus}
+            hasFeedback
+            rules={[
+              {
+              required: true,
+              message: 'Please input the video Url',
+              },
+          ]}
+          >
+            <Select>
+              <Select.Option value="0">Active</Select.Option>
+              <Select.Option value="1">Unavailable</Select.Option>
+              <Select.Option value="2">Hide</Select.Option>
+              <Select.Option value="3">Other</Select.Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            name="userId"
+            label="User"
+            initialValue={record.username}
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Select placeholder="Please select associated coach">
+              {users.map(user => (
+                <Option key={user.id} value={user.username} label={user.username}/>
+              ))}
+            </Select>
+          </Form.Item>
+          
+          <Form.Item {...tailFormItemLayout}>
+          <Button type="primary" htmlType="submit" loading={loading}>
+              Submit
+          </Button>
+          </Form.Item>
+      </Form>
+    </div>
+ 
   );
 };
-export default EditAdmin;
+export default EditCourse;
 

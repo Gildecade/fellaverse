@@ -27,6 +27,9 @@ import EditAdmin from './admin/editAdmin';
 import RoleManagement from './role/listRole';
 import AddRole from './role/addRole';
 import EditRole from './role/editRole';
+import CourseManagement from './course/listCourse';
+import AddCourse from './course/addCourse';
+import EditCourse from './course/editCourse';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -67,7 +70,7 @@ const AdminApp = () => {
     }
     if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
       items.push(getItem("Shop Management", 'sub1', <ShopOutlined />, [
-        getItem(<Link to='/admin/shop'>Course</Link>, '4', <ShoppingOutlined />),
+        getItem(<Link to='/admin/shop/course'>Course</Link>, '4', <ShoppingOutlined />),
         getItem(<Link to='/admin'>Order</Link>, '5', <ShoppingCartOutlined />),
       ]));
     }
@@ -81,16 +84,16 @@ const AdminApp = () => {
           minHeight: '100vh',
         }}
       >
-        <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} width={"220"} theme="light">
+        <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} width={"220"} >
           <div
             style={{
               height: 32,
               margin: 16
             }}
           >
-          <img src="./title.png" alt="title" style={{width:170,height:32}} />
+          <img key="project-image" src="./title.png" alt="title" style={{width:170,height:32}} />
           </div>
-          <Menu defaultSelectedKeys={['1']} mode="inline" items={items} />
+          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
         </Sider>
         <Layout className="site-layout">
           <Header style={{
@@ -128,6 +131,7 @@ const AdminApp = () => {
                 padding: 24,
                 minHeight: 360,
                 background: colorBgContainer,
+                paddingTop: 1
               }}
             >
               <Routes>
@@ -140,10 +144,9 @@ const AdminApp = () => {
                 <Route path="/role" element={<RoleManagement/>} />
                 <Route path="/role/add" element={<AddRole/>} />
                 <Route path="/role/edit/:id" element={<EditRole/>} />
-                <Route path="/admin/shop/course" element={<ListCourse />} />
-                <Route path="*" element={<NotFound />} />
-                <Route path="*" element={<NotFound />} />
-                <Route path="*" element={<NotFound />} />
+                <Route path="/shop/course" element={<CourseManagement />} />
+                <Route path="/shop/course/add" element={<AddCourse/>} />
+                <Route path="/shop/course/edit/:id" element={<EditCourse/>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>

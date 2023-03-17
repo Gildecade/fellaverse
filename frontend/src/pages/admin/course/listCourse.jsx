@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Input, Space, Table, Tag, Popconfirm, message } from 'antd';
+import { Button, Input, Space, Table, Tag, Popconfirm, message, Typography } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { domain } from '../../../config';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
+const { Title } = Typography;
 const CourseManagement = () => {
   const [Courses, setCourses] = useState([]);
   const [searchText, setSearchText] = useState('');
@@ -230,12 +231,12 @@ const CourseManagement = () => {
     },
     {
       title: 'Username',
-      dataIndex: 'username',
-      key: 'Username',
-      ...getColumnSearchProps('Username'),
+      dataIndex: ['user','username'],
+      key: 'username',
+      ...getColumnSearchProps(['user','username']),
         sorter: (a, b) => {
-          const nameA = a.Username.toUpperCase(); // ignore upper and lowercase
-          const nameB = b.Username.toUpperCase(); // ignore upper and lowercase
+          const nameA = a.user.username.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.user.username.toUpperCase(); // ignore upper and lowercase
           if (nameA < nameB) {
             return -1;
           }
@@ -250,12 +251,12 @@ const CourseManagement = () => {
     },
     {
       title: 'Email',
-      dataIndex: 'email',
+      dataIndex: ['user','email'],
       key: 'email',
-      ...getColumnSearchProps('email'),
+      ...getColumnSearchProps(['user','email']),
         sorter: (a, b) => {
-          const nameA = a.email.toUpperCase(); // ignore upper and lowercase
-          const nameB = b.email.toUpperCase(); // ignore upper and lowercase
+          const nameA = a.user.email.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.user.email.toUpperCase(); // ignore upper and lowercase
           if (nameA < nameB) {
             return -1;
           }
@@ -268,27 +269,26 @@ const CourseManagement = () => {
         },
         sortDirections: ['descend', 'ascend'],
     },
-    // {
-    //   title: 'CreatedDateTime',
-    //   key: 'reatedDateTime',
-    //   dataIndex: 'roles',
-    //   render: (tags) => (
-    //     tags ? 
-    //     <span>
-    //       {tags.map((tag) => {
-    //         let color = getExtract(colors)[0];
-    //         colorDict[tag] = color;
-    //         // console.log(colorDict);
-    //         return (
-    //           <Tag color={colorDict[tag]} key={tag}>
-    //             {tag}
-    //           </Tag>
-    //         );
-    //       })}
-    //     </span> : 
-    //     <span />
-    //   ),
-    // },
+    {
+      title: 'Created Date Time',
+      key: 'createdDateTime',
+      dataIndex: 'createdDateTime',
+      ...getColumnSearchProps("createdDateTime"),
+        sorter: (a, b) => {
+          const nameA = a.createdDateTime.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.createdDateTime.toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+        
+          // names must be equal
+          return 0;
+        },
+        sortDirections: ['descend', 'ascend'],
+    },
     {
       title: 'Action',
       key: 'action',
@@ -308,7 +308,7 @@ const CourseManagement = () => {
       try {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
         axios.defaults.headers.common['Fellaverse-token'] = token;
-        const result = await axios.get(`${domain}management/Course`);
+        const result = await axios.get(`${domain}management/shop/course`);
         // console.log(result);
         const CourseList = result.data.data.map(f => {
           return {...f, key: f.id};
@@ -326,6 +326,7 @@ const CourseManagement = () => {
 
   return (
     <div>
+      <Title level={3}>Courses</Title>
       <Table
         columns={columns}
         pagination={{

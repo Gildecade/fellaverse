@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Form, Input, message, Select } from 'antd';
+import { Button, Form, Input, message, Select, InputNumber, Upload, Typography } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { domain } from '../../../config';
 
 const { Option } = Select;
 
+const { Title } = Typography;
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -36,10 +38,10 @@ const tailFormItemLayout = {
     },
   },
 };
-const AddAdmin = () => {
+const AddCourse = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [roles, setRoles] = useState([]);
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -47,14 +49,14 @@ const AddAdmin = () => {
     setLoading(true);
     console.log('Received values of form: ', values);
     try {
-      const result = await axios.post(`${domain}management/admin`, values);
+      const result = await axios.post(`${domain}management/shop/course`, values);
       message.success("Add successfully.");
       const data = result.data.data;
       console.log(data);
       await delay(1000);
       const title = data;
-      const subTitle = "Add new admin success!";
-      navigate(`/admin/success/${title}/${subTitle}`);
+      const subTitle = "Add new course success!";
+      navigate(`/course/success/${title}/${subTitle}`);
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -87,10 +89,10 @@ const AddAdmin = () => {
       try {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
         axios.defaults.headers.common['Fellaverse-token'] = token;
-        const result = await axios.get(`${domain}management/role`);
-        const roles = result.data.data;
-        console.log(roles);
-        setRoles(roles);
+        const result = await axios.get(`${domain}management/user`);
+        const users = result.data.data;
+        console.log(users);
+        setUsers(users);
         
       } catch (error) {
         console.log(error);
@@ -99,125 +101,138 @@ const AddAdmin = () => {
     initialize();
   }, []);
   return (
-  <Form
-    {...formItemLayout}
-    form={form}
-    name="Add admin"
-    onFinish={onFinish}
-    initialValues={{
-    prefix: '1',
-    }}
-    scrollToFirstError
-  >
-    <Form.Item
-      name="username"
-      label="Username"
-      tooltip="What do you want others to call you?"
-      rules={[
-        {
-        required: true,
-        message: 'Please input your username!',
-        whitespace: true,
-        },
-    ]}
-    >
-    <Input />
-    </Form.Item>
+    <div>
 
-    <Form.Item
-      name="email"
-      label="E-mail"
-      rules={[
-        {
-        type: 'email',
-        message: 'The input is not valid E-mail!',
-        },
-        {
-        required: true,
-        message: 'Please input your E-mail!',
-        },
-    ]}
-    >
-    <Input />
-    </Form.Item>
-    <Form.Item
-      name="phoneNumber"
-      label="Phone Number"
-      rules={[
-        {
-        required: true,
-        message: 'Please input your phone number!',
-        },
-    ]}
-    >
-    <Input
-      addonBefore={prefixSelector}
-      style={{
-      width: '100%',
-      }}
-    />
-    </Form.Item>
-    <Form.Item
-      name="password"
-      label="Password"
-      rules={[
-        {
-        required: true,
-        message: 'Please input your password!',
-        },
-    ]}
-    hasFeedback
-    >
-      <Input.Password />
-    </Form.Item>
+      <Title level={3}>Add new course</Title>
+      <Form
+        {...formItemLayout}
+        form={form}
+        name="Add course"
+        onFinish={onFinish}
+        initialValues={{
+        prefix: '1',
+        }}
+        scrollToFirstError
+      >
+        <Form.Item
+          name="productName"
+          label="Product Name"
+          tooltip="Name of the product"
+          rules={[
+            {
+            required: true,
+            message: 'Please input the product name!',
+            whitespace: true,
+            },
+        ]}
+        >
+        <Input />
+        </Form.Item>
 
-    <Form.Item
-      name="confirm"
-      label="Confirm Password"
-      dependencies={['password']}
-      hasFeedback
-      rules={[
-        {
-        required: true,
-        message: 'Please confirm your password!',
-        },
-        ({ getFieldValue }) => ({
-        validator(_, value) {
-            if (!value || getFieldValue('password') === value) {
-            return Promise.resolve();
-            }
-            return Promise.reject(new Error('The two passwords that you entered do not match!'));
-        },
-        }),
-    ]}
-    >
-      <Input.Password />
-    </Form.Item>
+        <Form.Item
+          name="description"
+          label="Description"
+          rules={[
+            {
+            required: true,
+            message: 'Please input product description',
+            },
+        ]}
+        >
+        <Input />
+        </Form.Item>
+        <Form.Item
+          name="price"
+          label="Price"
+          rules={[
+            {
+            required: true,
+            message: 'Please input product price',
+            },
+        ]}
+        >
+        <InputNumber
+          defaultValue={100}
+          formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          // parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
+          // onChange={onChange}
+        />
+        </Form.Item>
+        
+        <Form.Item
+          name="imageUrl"
+          label="Product Image"      
+        >
+          <Upload action="/upload.do" listType="picture-card">
+            <div>
+              <PlusOutlined />
+              <div style={{ marginTop: 8 }}>Upload</div>
+            </div>
+          </Upload>
+        </Form.Item>
 
-    <Form.Item
-      name="roleIds"
-      label="Roles"
-      rules={[
-        {
-          required: false,
-          type: 'array',
-        },
-      ]}
-    >
-      <Select mode="multiple" placeholder="Please select admin roles">
-        {roles.map(role => (
-          <Option key={role.id} value={role.id}>{role.roleName}</Option>
-        ))}
-      </Select>
-    </Form.Item>
-    
-    <Form.Item {...tailFormItemLayout}>
-    <Button type="primary" htmlType="submit" loading={loading}>
-        Add
-    </Button>
-    </Form.Item>
-</Form>
+        <Form.Item
+          name="videoUrl"
+          label="Video"
+          hasFeedback
+          rules={[
+            {
+            required: true,
+            message: 'Please upload the course video',
+            },
+        ]}
+        >
+          <Upload action="/upload.do" listType="picture-card">
+            <div>
+              <PlusOutlined />
+              <div style={{ marginTop: 8 }}>Upload</div>
+            </div>
+          </Upload>
+        </Form.Item>
+
+        <Form.Item
+          name="productStatus"
+          label="Product Status"
+          hasFeedback
+          rules={[
+            {
+            required: true,
+            message: 'Please input the video Url',
+            },
+        ]}
+        >
+          <Select>
+            <Select.Option value="0">Active</Select.Option>
+            <Select.Option value="1">Unavailable</Select.Option>
+            <Select.Option value="2">Hide</Select.Option>
+            <Select.Option value="3">Other</Select.Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          name="userId"
+          label="User"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Select placeholder="Please select associated coach">
+            {users.map(user => (
+              <Option key={user.id} value={user.id}>{user.userName}</Option>
+            ))}
+          </Select>
+        </Form.Item>
+        
+        <Form.Item {...tailFormItemLayout}>
+        <Button type="primary" htmlType="submit" loading={loading}>
+            Add
+        </Button>
+        </Form.Item>
+      </Form>
+    </div>
   );
 };
-export default AddAdmin;
+export default AddCourse;
 
