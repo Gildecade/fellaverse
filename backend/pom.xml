@@ -30,6 +30,8 @@
         <module>redis-config</module>
         <module>provider-flashsale-7502</module>
         <module>consumer-flashsale-7702</module>
+        <module>provider-usercenter-5001</module>
+        <module>consumer-usercenter-5002</module>
     </modules>
 
     <properties>

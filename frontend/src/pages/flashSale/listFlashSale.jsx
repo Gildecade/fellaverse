@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Space, message, Card } from 'antd';
+import { Space, message, Card, Image } from 'antd';
 import { domain } from '../../config';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -43,7 +43,7 @@ const FlashSale = () => {
               }}
               loading={loading}
               // cover={<img alt={product.productName} src={GGko}></img>}
-              cover={<img alt="example" src={product.imageUrl} height='250px' width='250px'></img>}
+              cover={<Image alt={product.productName} src={product.imageUrl} height='250px' width='250px' fallback={GGko}></Image>}
             >
               <Meta title={product.productName} />
               <Space size={'middle'} align='baseline' style={{marginTop:'-15px', marginBottom:'-50px'}}>

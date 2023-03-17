@@ -1,11 +1,8 @@
 server:
-  port: 8001
+  port: 5001
 spring:
   application:
-    name: provider-management
-  profiles:
-    include:
-      - dev
+    name: provider-usercenter
   jpa:
     show-sql: true
     properties:
@@ -13,17 +10,18 @@ spring:
         format_sql: true
         jdbc:
           time_zone: UTC
-  data:
-    redis:
-      host: fellaverse.redis.cache.windows.net
-      port: 6380
-      password: ClAgCgTJVCGKGIPcDLYlACy4BEOrWsm5rAzCaF7FPvw=
-      ssl: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # create db fellaverse manually in IDEA
+    url: jdbc:mysql://localhost:3306/fellaverse?serverTimeZone=UTC&useSSL=true
+    username: root
+    password: root
 # register this microservice to eureka server
 eureka:
   instance:
     hostname: localhost
-    instance-id: provider-management-8001
+    instance-id: provider-usercenter-5001
   client:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${eureka.client.eureka-server-port}/eureka/
@@ -39,7 +37,7 @@ management:
       enabled: true
 # springboot actuator info
 info:
-  app.name: microservice-management
+  app.name: microservice-usercenter
   author: GCH
 
 fellaverse:
@@ -54,3 +52,4 @@ fellaverse:
         encrypt:
           repeat: 5
           salt: www.fellaverse.com
+

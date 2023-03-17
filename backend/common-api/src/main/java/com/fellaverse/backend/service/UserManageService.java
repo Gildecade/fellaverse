@@ -6,7 +6,7 @@ import com.fellaverse.backend.dto.UserBalanceStatusDTO;
 
 import java.util.Set;
 
-public interface UserManageService {
+public interface UserManageService extends UserService {
     /**
      * return true for successful update a certain user's balance or status
      */
@@ -23,6 +23,8 @@ public interface UserManageService {
     Set<User> findUserByEmail(String userEmail);
 
     Set<User> findAllUser();
+
+    Boolean updateUserFunction(Long userId, Set<Function> functions);
 
     User findUserById(Long userId);
 

@@ -115,6 +115,14 @@ spring:
           uri: lb://consumer-flashsale
           predicates:
             - Path=/limitedProduct/**
+        - id: provider-usercenter
+          uri: lb://provider-usercenter
+          predicates:
+            - Path=/api/user/**
+        - id: consumer-usercenter
+          uri: lb://consumer-usercenter
+          predicates:
+            - Path=/user/**
 
 fellaverse:
   security:
