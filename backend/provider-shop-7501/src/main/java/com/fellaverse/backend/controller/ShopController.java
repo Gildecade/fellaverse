@@ -3,15 +3,18 @@ package com.fellaverse.backend.controller;
 import com.fellaverse.backend.bean.Course;
 import com.fellaverse.backend.bean.Order;
 import com.fellaverse.backend.dto.CourseBuyDTO;
+import com.fellaverse.backend.dto.CourseFindAllDTO;
+import com.fellaverse.backend.dto.LimitedProductDTO;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
+import com.fellaverse.backend.mapper.CourseFindAllMapper;
 import com.fellaverse.backend.service.*;
 import com.fellaverse.backend.validator.ValidGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/shop")  // any requests under token will be proceeded
@@ -28,6 +31,15 @@ public class ShopController {
 
     @Autowired
     private UserManageService adminManageUserInfoService;
+
+    @Autowired
+    private CourseFindAllMapper courseFindAllMapper;
+
+
+    @GetMapping("")
+    public List<CourseFindAllDTO> findAll() {
+        return shopService.findAll().stream().map(courseFindAllMapper::toDto).collect(Collectors.toList());
+    }
 
     @JWTCheckToken(function = "buy")
     @PostMapping("/course")

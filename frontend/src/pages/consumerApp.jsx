@@ -26,6 +26,10 @@ import ForgotPasswordForm from './authentication/forgotPassword';
 import FlashSale from './flashSale/listFlashSale';
 import DetailFlashSale from './flashSale/detailFlashSale';
 import OrderSuccess from './flashSale/orderSuccess';
+import Shop from './shop/listShop'
+import DetailShop from './shop/detailShop';
+import RecordManagement from './record/listRecord';
+import AddRecord from './record/addRecord';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -56,11 +60,11 @@ const ConsumerApp = () => {
     // TODO: modify sider contents here
     getItem(<Link to='/'>{homePage}</Link>, '1', <HomeOutlined />),
     getItem('eShop', '2', <ShopOutlined />, [
-      getItem('Home', '3'),
+      getItem(<Link to='/shop'>{'Store'}</Link>, '3'),
       getItem(<Link to='/flash-sale'>{'Flash sale'}</Link>, '4'),
     ]),
     getItem('User', 'sub1', <UserOutlined />, [
-      getItem('Record', '5'),
+      getItem(<Link to='/record'>{'Record'}</Link>, '5'),
       getItem('Schedule', '6'),
     ]),
     getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '7'), getItem('Team 2', '8')]),
@@ -153,6 +157,9 @@ const ConsumerApp = () => {
               <Route path='/flash-sale' element={<FlashSale />}></Route>
               <Route path='/flash-sale/:id' element={<DetailFlashSale />} />
               <Route path='/flash-sale/:title/:subTitle' element={<OrderSuccess />}></Route>
+              <Route path='/shop' element={<Shop />}></Route>
+              <Route path='/shop/:id' element={<DetailShop />}></Route>
+              <Route path='/record' element={<RecordManagement />}></Route>
               <Route path='/success/:title/:subTitle' element={<Success />} />
               <Route path='/forgotPassword' element={<ForgotPasswordForm />} />
               <Route path="*" element={<NotFound />} />

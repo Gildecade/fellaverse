@@ -1,12 +1,12 @@
 package com.fellaverse.backend.controller;
 
 import com.fellaverse.backend.dto.CourseBuyDTO;
+import com.fellaverse.backend.dto.CourseFindAllDTO;
 import com.fellaverse.backend.service.FeignShopService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/shop")
@@ -20,4 +20,8 @@ public class FeignShopController {
         return feignShopService.purchase(courseBuyDTO);
     }
 
+    @GetMapping("")
+    public List<CourseFindAllDTO> findAll(){
+        return feignShopService.findAll();
+    };
 }

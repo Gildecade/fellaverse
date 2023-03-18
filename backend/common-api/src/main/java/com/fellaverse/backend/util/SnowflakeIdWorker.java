@@ -4,8 +4,10 @@ import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 
+import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 public class SnowflakeIdWorker {
 
@@ -54,8 +56,18 @@ public class SnowflakeIdWorker {
         }
     }
 
-    private static Long getDataCenterId(){
-        int[] ints = StringUtils.toCodePoints(SystemUtils.getHostName());
+    private static Long getDataCenterId() {
+        String hostName = SystemUtils.getHostName();
+        if(hostName == null){
+            try {
+                hostName = execReadToString("hostname");
+            } catch (IOException e) {
+                System.out.println(e);
+            }
+        }
+//        System.out.println(hostName);
+        int[] ints = StringUtils.toCodePoints(hostName);
+
         int sums = 0;
         for (int i: ints) {
             sums += i;
@@ -63,6 +75,11 @@ public class SnowflakeIdWorker {
         return (long)(sums % 32);
     }
 
+    public static String execReadToString(String execCommand) throws IOException {
+        try (Scanner s = new Scanner(Runtime.getRuntime().exec(execCommand).getInputStream()).useDelimiter("\\A")) {
+            return s.hasNext() ? s.next() : "";
+        }
+    }
 
 
     public SnowflakeIdWorker(long workerId, long datacenterId) {
@@ -144,15 +161,15 @@ public class SnowflakeIdWorker {
     public static synchronized Long generateId(){
         return idWorker.nextId();
     }
-//    /**
-//     *  main test class
-//     * @param args
-//     */
-//    public static void main(String[] args) {
-//        SnowflakeIdWorker worker = new SnowflakeIdWorker(1,1);
-//        System.out.println(worker.timeGen());
-//		for (int i = 0; i < 22; i++) {
-//			System.out.println(worker.nextId());
-//		}
-//    }
+    /**
+     *  main test class
+     * @param args
+     */
+    public static void main(String[] args) {
+        SnowflakeIdWorker worker = new SnowflakeIdWorker(1,1);
+        System.out.println(worker.timeGen());
+		for (int i = 0; i < 22; i++) {
+			System.out.println(worker.nextId());
+		}
+    }
 }
