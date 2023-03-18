@@ -1,59 +1,57 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Input, Space, Table, Popconfirm, message } from 'antd';
+import { Button, Input, Space, Table, Tag, Popconfirm, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { domain } from '../../config';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import {
+  CheckCircleOutlined,
+  ClockCircleOutlined,
+  CloseCircleOutlined,
+  ExclamationCircleOutlined,
+} from '@ant-design/icons';
+import moment from 'moment/moment';
 
-const RecordManagement = () => {
-  const [records, setRecords] = useState([]);
+const PersonalFlashSaleOrder = () => {
+  const [products, setProducts] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
-  const userId = localStorage.getItem('userId') ? localStorage.getItem('userId') : sessionStorage.getItem('userId');
-
   const navigate = useNavigate();
 
-  const handleDelete = async (key) => {
-    try {
-      console.log(key);
-      const result = await axios.delete(`${domain}record/` + key); // TODO: should be /id/userid
-      message.success("Delete successfully.");
-      const data = result.data.data;
-      console.log(data);
-      const title = data;
-      const subTitle = "Delete record success!";
-      navigate(`/admin/success/${title}/${subTitle}`); //TODO
-    } catch (error) {
-      console.log(error);
-      let msg = null;
-      if (error.response) {
-        if (error.response.data.message) {
-          msg = error.response.data.message;
-        } else {
-          msg = error.response.data;
-        }
-        message.error(msg);
-      } else {
-        message.error("Update failed. Internal server error.");}
-    }
-  };
-
-
+  // const handleDelete = async (key) => {
+  //   try {
+  //     const result = await axios.delete(`${domain}management/limitedProduct/` + key);
+  //     message.success("Delete successfully.");
+  //     const data = result.data.data;
+  //     // console.log(data);
+  //     const title = data;
+  //     const subTitle = "Delete limited product success!";
+  //     navigate(`/admin/success/${title}/${subTitle}`);
+  //   } catch (error) {
+  //     console.log(error);
+  //     let msg = null;
+  //     if (error.response) {
+  //       if (error.response.data.message) {
+  //         msg = error.response.data.message;
+  //       } else {
+  //         msg = error.response.data;
+  //       }
+  //       message.error(msg);
+  //     } else {
+  //       message.error("Update failed. Internal server error.");}
+  //   }
+  // };
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
   };
-
-
   const handleReset = (clearFilters) => {
     clearFilters();
     setSearchText('');
   };
-
-
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
       <div
@@ -149,16 +147,15 @@ const RecordManagement = () => {
       ),
   });
 
-  const columns = [ // TODO: need to change cols
+  const columns = [
     {
-      title: 'Record Time',
-      dataIndex: 'createDateTime',  //TODO
-      key: 'createDateTime', // TODO
-      render: (text) => <a>{text}</a>, // TODO
-      ...getColumnSearchProps('record time'),
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      ...getColumnSearchProps('id'),
         sorter: (a, b) => {
-          const nameA = a.createDateTime.toUpperCase(); // ignore upper and lowercase
-          const nameB = b.createDateTime.toUpperCase(); // ignore upper and lowercase
+          const nameA = a.id; // ignore upper and lowercase
+          const nameB = b.id; // ignore upper and lowercase
           if (nameA < nameB) {
             return -1;
           }
@@ -171,45 +168,14 @@ const RecordManagement = () => {
         },
         sortDirections: ['descend', 'ascend'],
     },
-    {
-      title: 'Weights',
-      dataIndex: 'weights',
-      key: 'weights',
-      ...getColumnSearchProps('weights'),
-        sorter: (a, b) => a.weights - b.weights,
-        sortDirections: ['descend', 'ascend'],
-    },
-
     {
       title: 'Quantity',
       dataIndex: 'quantity',
       key: 'quantity',
       ...getColumnSearchProps('quantity'),
-        sorter: (a, b) => a.quantity - b.quantity,
-        sortDirections: ['descend', 'ascend'],
-    },
-
-    {
-      title: 'Sets',
-      dataIndex: 'numOfSets',
-      key: 'numOfSets',
-      ...getColumnSearchProps('numOfSets'),
-        sorter: (a, b) => a.sets - b.sets,
-        sortDirections: ['descend', 'ascend'],
-    },
-
-    {
-      title: 'Exercise',
-      dataIndex: ['exercise', 'exerciseName'],  //TODO
-      key: 'exercise', // TODO
-      // {exercise.map((exercise) => {
-      //   <Option key={exercise.id} value={exercise.id}>{exercise.exerciseName}</Option>
-      // }
-      // )}, // TODO
-      ...getColumnSearchProps(['exercise', 'exerciseName']),
         sorter: (a, b) => {
-          const nameA = a.exercise.exerciseName.toUpperCase(); // TODO
-          const nameB = b.exercise.exerciseName.toUpperCase(); 
+          const nameA = a.quantity; // ignore upper and lowercase
+          const nameB = b.quantity; // ignore upper and lowercase
           if (nameA < nameB) {
             return -1;
           }
@@ -222,15 +188,89 @@ const RecordManagement = () => {
         },
         sortDirections: ['descend', 'ascend'],
     },
-
+    {
+      title: 'Amount',
+      dataIndex: 'amount',
+      key: 'amount',
+      ...getColumnSearchProps('amount'),
+        sorter: (a, b) => {
+          const nameA = a.amount; // ignore upper and lowercase
+          const nameB = b.amount; // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+        
+          // names must be equal
+          return 0;
+        },
+        sortDirections: ['descend', 'ascend'],
+    },
+    {
+      title: 'Status',
+      key: 'orderStatus',
+      dataIndex: 'orderStatus',
+      render: (tag) => {
+        switch (tag) {
+          case "COMPLETED":
+            return (
+              <Tag color="success" icon={<CheckCircleOutlined />} key={tag}>
+                {tag}
+              </Tag>
+            );
+            case "CANCELLED":
+            return (
+              <Tag color="error" icon={<CloseCircleOutlined />} key={tag}>
+                {tag}
+              </Tag>
+            );
+            case "ACTIVE":
+            return (
+              <Tag color={"warning"} icon={<ClockCircleOutlined />} key={tag}>
+                {tag}
+              </Tag>
+            );
+            case "OTHER":
+            return (
+              <Tag color={"default"} icon={<ExclamationCircleOutlined />} key={tag}>
+                {tag}
+              </Tag>
+            );
+          default:
+            return (<span />);
+        }
+      },
+    },
+    {
+      title: 'Purchase time',
+      dataIndex: 'purchaseDateTime',
+      key: 'purchaseDateTime',
+      render: (dateTime) => {
+        return moment(dateTime).format('YYYY-MM-DD HH:mm:ss');
+      },
+        sorter: (a, b) => {
+          const nameA = a.purchaseDateTime; // ignore upper and lowercase
+          const nameB = b.purchaseDateTime; // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+        
+          // names must be equal
+          return 0;
+        },
+        sortDirections: ['descend', 'ascend'],
+    },
     {
       title: 'Action',
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-            <a>Delete</a>
-          </Popconfirm>
+          <Link to={'detail/'+record.key} state={record}>Detail</Link>
         </Space>
       ),
     },
@@ -240,23 +280,25 @@ const RecordManagement = () => {
     const initialize = async () => {
       try {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
+        const userId = localStorage.getItem('userId') ? localStorage.getItem('userId') : sessionStorage.getItem('userId');
         axios.defaults.headers.common['Fellaverse-token'] = token;
-
-        // TODO: get by user id
-        const result = await axios.get(`${domain}record/${userId}`); // TODO
-
-        const recordList = result.data.data.map(f => {  // changed to record list
+        const result = await axios.get(`${domain}user/${userId}/flashSaleOrder`);
+        const productList = result.data.data.map(f => {
           return {...f, key: f.id};
         });
-        setRecords(recordList);
-        console.log(recordList);
+        setProducts(productList);
+        
       } catch (error) {
         console.log(error);
-        let msg = "Internal server error."
-        if (error.response.data.message) {
+        let msg = null;
+        if (error.response.data.data) {
+          msg = error.response.data.data.message;
+        } else if (error.response.data.message) {
           msg = error.response.data.message;
-        } else if (error.response.data) {
+        } else if (error.response) {
           msg = error.response.data;
+        } else {
+          msg = "Internal server error.";
         }
         message.error(msg);
       }
@@ -272,17 +314,10 @@ const RecordManagement = () => {
         pagination={{
           position: ['bottomRight'],
         }}
-        dataSource={records}
+        dataSource={products}
       />
-      <Link to={'/record'}>
-        <Button
-          type="primary"
-        >
-          Add new record
-        </Button>
-      </Link>
     </div>
   );
 };
 
-export default RecordManagement;
+export default PersonalFlashSaleOrder;
