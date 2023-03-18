@@ -30,7 +30,7 @@ public class BalanceServiceImpl implements BalanceService{
     public Boolean updateBalance(Long userId, Float price) {
         User user = userRepository.findById(userId).orElse(null);
         if(user != null){
-            user.setWallet((long) (user.getWallet() + price));
+            user.setWallet(user.getWallet() + price);
             userRepository.save(user);
             return true;
         }

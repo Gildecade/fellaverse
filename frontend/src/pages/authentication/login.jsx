@@ -25,11 +25,13 @@ const LoginForm = () => {
       const data = result.data.data;
       console.log(data);
       const token = data.token;
+      const userId = data.userId;
       const username = data.username;
       const roles = data.roles;
       const functions = data.functions;
       if (remember) {
         localStorage.setItem("token", token);
+        localStorage.setItem("userId", userId);
         localStorage.setItem("username", username);
         if (roles) {
           localStorage.setItem("roles", JSON.stringify(roles));
@@ -38,6 +40,7 @@ const LoginForm = () => {
         }
       } else {
         sessionStorage.setItem("token", token);
+        sessionStorage.setItem("userId", userId);
         sessionStorage.setItem("username", username);
         if (roles) {
           sessionStorage.setItem("roles", JSON.stringify(roles));

@@ -11,6 +11,14 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        jdbc:
+          time_zone: UTC
+  data:
+    redis:
+      host: fellaverse.redis.cache.windows.net
+      port: 6380
+      password: ClAgCgTJVCGKGIPcDLYlACy4BEOrWsm5rAzCaF7FPvw=
+      ssl: true
 # register this microservice to eureka server
 eureka:
   instance:

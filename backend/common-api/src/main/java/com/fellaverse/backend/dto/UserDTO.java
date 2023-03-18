@@ -17,22 +17,26 @@ public class UserDTO implements Serializable {
     private Long id;
 
     @NotBlank(groups = {ValidGroup.Crud.Create.class, ValidGroup.Crud.Update.class}, message = "Username cannot be blank")
+    @Size(max = 60)
     private String username;
 
     @NotBlank(groups = {ValidGroup.Crud.Create.class, ValidGroup.Crud.Update.class, ValidGroup.Crud.Query.class}, message = "Password cannot be blank")
+    @Size(max = 40)
     private String password;
 
     @NotBlank(groups = {ValidGroup.Crud.Create.class, ValidGroup.Crud.Update.class, ValidGroup.Crud.Query.class}, message = "Email cannot be blank")
     @Email(message = "Please enter correct Email address")
+    @Size(max = 255)
     private String email;
 
     @NotBlank(groups = {ValidGroup.Crud.Create.class, ValidGroup.Crud.Update.class}, message = "Phone number cannot be blank")
     @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$", message = "Phone number format is wrong")
+    @Size(max = 60)
     private String phoneNumber;
 
     @Null(groups = ValidGroup.Crud.Create.class, message = "Wallet should be null when registering")
     @NotNull(groups = ValidGroup.Crud.Update.class, message = "Wallet cannot be null")
-    private Long wallet;
+    private Float wallet;
 
     @Null(groups = ValidGroup.Crud.Create.class, message = "Status should be null when registering")
     @NotNull(groups = ValidGroup.Crud.Update.class, message = "Status cannot be null")

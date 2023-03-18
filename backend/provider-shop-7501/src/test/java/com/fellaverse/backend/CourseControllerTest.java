@@ -7,12 +7,12 @@ import com.fellaverse.backend.bean.Course;
 import com.fellaverse.backend.bean.User;
 import com.fellaverse.backend.controller.CourseController;
 import com.fellaverse.backend.dto.CourseDTO;
-import com.fellaverse.backend.projection.CourseInfo;
 import com.fellaverse.backend.enumerator.ProductStatus;
 import com.fellaverse.backend.enumerator.UserStatus;
 import com.fellaverse.backend.jwt.service.JWTTokenService;
 import com.fellaverse.backend.jwt.util.JWTMemberDataService;
 import com.fellaverse.backend.mapper.CourseMapper;
+import com.fellaverse.backend.projection.CourseInfo;
 import com.fellaverse.backend.service.CourseManageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,16 +26,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Collections;
-
 import java.time.LocalDateTime;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = CourseController.class)
@@ -79,7 +76,7 @@ public class CourseControllerTest {
         user.setPhoneNumber("5195195199");
         user.setUsername("test1");
         user.setEmail("test@fellaverse.com");
-        user.setWallet(100L);
+        user.setWallet(100F);
         user.setStatus(UserStatus.NORMAL);
 
         course.setUser(user);
