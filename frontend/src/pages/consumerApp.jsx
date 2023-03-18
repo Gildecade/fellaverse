@@ -5,6 +5,7 @@ import {
   TeamOutlined,
   UserOutlined,
   HomeOutlined,
+  FireOutlined,
 } from '@ant-design/icons';
 import { Breadcrumb, Col, Layout, Menu, Row, theme, Space } from 'antd';
 import {
@@ -26,6 +27,7 @@ import ForgotPasswordForm from './authentication/forgotPassword';
 import FlashSale from './flashSale/listFlashSale';
 import DetailFlashSale from './flashSale/detailFlashSale';
 import OrderSuccess from './flashSale/orderSuccess';
+import UserApp from './user/userApp';
 import Shop from './shop/listShop'
 import DetailShop from './shop/detailShop';
 import RecordManagement from './record/listRecord';
@@ -59,10 +61,13 @@ const ConsumerApp = () => {
   [
     // TODO: modify sider contents here
     getItem(<Link to='/'>{homePage}</Link>, '1', <HomeOutlined />),
+    getItem(<Link to='/user'>Profile</Link>, 'p', <UserOutlined />),
     getItem('eShop', '2', <ShopOutlined />, [
       getItem(<Link to='/shop'>{'Store'}</Link>, '3'),
       getItem(<Link to='/flash-sale'>{'Flash sale'}</Link>, '4'),
     ]),
+    getItem('Workout', 'sub1', <FireOutlined />, [
+      getItem('Record', '5'),
     getItem('User', 'sub1', <UserOutlined />, [
       getItem(<Link to='/record'>{'Record'}</Link>, '5'),
       getItem('Schedule', '6'),
@@ -154,6 +159,7 @@ const ConsumerApp = () => {
             <Routes>
               {/* TODO: link your components(element) with route paths here */}
               <Route path="/" element={<Index />} />
+              <Route path='/user/*' element={<UserApp />}></Route>
               <Route path='/flash-sale' element={<FlashSale />}></Route>
               <Route path='/flash-sale/:id' element={<DetailFlashSale />} />
               <Route path='/flash-sale/:title/:subTitle' element={<OrderSuccess />}></Route>

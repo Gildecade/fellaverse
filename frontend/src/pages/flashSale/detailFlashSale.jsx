@@ -64,6 +64,8 @@ const DetailFlashSale = () => {
     }
     initialize();
     var now = moment();
+    console.log(now);
+    console.log(moment(product.saleDateTime));
     if (now.isBefore(product.saleDateTime)) {
       setDisabled(true);
     }

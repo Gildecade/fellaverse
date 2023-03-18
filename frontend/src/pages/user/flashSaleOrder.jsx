@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button, Input, Space, Table, Tag, Popconfirm, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
-import { domain } from '../../../config';
+import { domain } from '../../config';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -13,36 +13,36 @@ import {
 } from '@ant-design/icons';
 import moment from 'moment/moment';
 
-const LimitedProductManagement = () => {
+const PersonalFlashSaleOrder = () => {
   const [products, setProducts] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
   const navigate = useNavigate();
 
-  const handleDelete = async (key) => {
-    try {
-      const result = await axios.delete(`${domain}management/limitedProduct/` + key);
-      message.success("Delete successfully.");
-      const data = result.data.data;
-      // console.log(data);
-      const title = data;
-      const subTitle = "Delete limited product success!";
-      navigate(`/admin/success/${title}/${subTitle}`);
-    } catch (error) {
-      console.log(error);
-      let msg = null;
-      if (error.response) {
-        if (error.response.data.message) {
-          msg = error.response.data.message;
-        } else {
-          msg = error.response.data;
-        }
-        message.error(msg);
-      } else {
-        message.error("Update failed. Internal server error.");}
-    }
-  };
+  // const handleDelete = async (key) => {
+  //   try {
+  //     const result = await axios.delete(`${domain}management/limitedProduct/` + key);
+  //     message.success("Delete successfully.");
+  //     const data = result.data.data;
+  //     // console.log(data);
+  //     const title = data;
+  //     const subTitle = "Delete limited product success!";
+  //     navigate(`/admin/success/${title}/${subTitle}`);
+  //   } catch (error) {
+  //     console.log(error);
+  //     let msg = null;
+  //     if (error.response) {
+  //       if (error.response.data.message) {
+  //         msg = error.response.data.message;
+  //       } else {
+  //         msg = error.response.data;
+  //       }
+  //       message.error(msg);
+  //     } else {
+  //       message.error("Update failed. Internal server error.");}
+  //   }
+  // };
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -149,13 +149,13 @@ const LimitedProductManagement = () => {
 
   const columns = [
     {
-      title: 'Product name',
-      dataIndex: 'productName',
-      key: 'productName',
-      ...getColumnSearchProps('productName'),
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      ...getColumnSearchProps('id'),
         sorter: (a, b) => {
-          const nameA = a.productName.toUpperCase(); // ignore upper and lowercase
-          const nameB = b.productName.toUpperCase(); // ignore upper and lowercase
+          const nameA = a.id; // ignore upper and lowercase
+          const nameB = b.id; // ignore upper and lowercase
           if (nameA < nameB) {
             return -1;
           }
@@ -189,13 +189,13 @@ const LimitedProductManagement = () => {
         sortDirections: ['descend', 'ascend'],
     },
     {
-      title: 'Price',
-      dataIndex: 'price',
-      key: 'price',
-      ...getColumnSearchProps('price'),
+      title: 'Amount',
+      dataIndex: 'amount',
+      key: 'amount',
+      ...getColumnSearchProps('amount'),
         sorter: (a, b) => {
-          const nameA = a.price; // ignore upper and lowercase
-          const nameB = b.price; // ignore upper and lowercase
+          const nameA = a.amount; // ignore upper and lowercase
+          const nameB = b.amount; // ignore upper and lowercase
           if (nameA < nameB) {
             return -1;
           }
@@ -210,31 +210,31 @@ const LimitedProductManagement = () => {
     },
     {
       title: 'Status',
-      key: 'productStatus',
-      dataIndex: 'productStatus',
+      key: 'orderStatus',
+      dataIndex: 'orderStatus',
       render: (tag) => {
         switch (tag) {
-          case "ACTIVE":
+          case "COMPLETED":
             return (
               <Tag color="success" icon={<CheckCircleOutlined />} key={tag}>
                 {tag}
               </Tag>
             );
-            case "UNAVAILABLE":
+            case "CANCELLED":
             return (
               <Tag color="error" icon={<CloseCircleOutlined />} key={tag}>
                 {tag}
               </Tag>
             );
-            case "HIDE":
+            case "ACTIVE":
             return (
-              <Tag color={"warning"} icon={<ExclamationCircleOutlined />} key={tag}>
+              <Tag color={"warning"} icon={<ClockCircleOutlined />} key={tag}>
                 {tag}
               </Tag>
             );
             case "OTHER":
             return (
-              <Tag color={"default"} icon={<ClockCircleOutlined />} key={tag}>
+              <Tag color={"default"} icon={<ExclamationCircleOutlined />} key={tag}>
                 {tag}
               </Tag>
             );
@@ -244,37 +244,15 @@ const LimitedProductManagement = () => {
       },
     },
     {
-      title: 'Create time',
-      dataIndex: 'createdDateTime',
-      key: 'createdDateTime',
+      title: 'Purchase time',
+      dataIndex: 'purchaseDateTime',
+      key: 'purchaseDateTime',
       render: (dateTime) => {
         return moment(dateTime).format('YYYY-MM-DD HH:mm:ss');
       },
         sorter: (a, b) => {
-          const nameA = a.createdDateTime; // ignore upper and lowercase
-          const nameB = b.createdDateTime; // ignore upper and lowercase
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-        
-          // names must be equal
-          return 0;
-        },
-        sortDirections: ['descend', 'ascend'],
-    },
-    {
-      title: 'Sale time',
-      dataIndex: 'saleDateTime',
-      key: 'saleDateTime',
-      render: (dateTime) => {
-        return moment(dateTime).format('YYYY-MM-DD HH:mm:ss');
-      },
-        sorter: (a, b) => {
-          const nameA = a.saleDateTime; // ignore upper and lowercase
-          const nameB = b.saleDateTime; // ignore upper and lowercase
+          const nameA = a.purchaseDateTime; // ignore upper and lowercase
+          const nameB = b.purchaseDateTime; // ignore upper and lowercase
           if (nameA < nameB) {
             return -1;
           }
@@ -292,10 +270,7 @@ const LimitedProductManagement = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <Link to={'edit/'+record.key} state={record}>Edit</Link>
-          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-            <a>Delete</a>
-          </Popconfirm>
+          <Link to={'detail/'+record.key} state={record}>Detail</Link>
         </Space>
       ),
     },
@@ -305,9 +280,9 @@ const LimitedProductManagement = () => {
     const initialize = async () => {
       try {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
+        const userId = localStorage.getItem('userId') ? localStorage.getItem('userId') : sessionStorage.getItem('userId');
         axios.defaults.headers.common['Fellaverse-token'] = token;
-        const result = await axios.get(`${domain}management/limitedProduct`);
-        console.log(result);
+        const result = await axios.get(`${domain}user/${userId}/flashSaleOrder`);
         const productList = result.data.data.map(f => {
           return {...f, key: f.id};
         });
@@ -323,7 +298,7 @@ const LimitedProductManagement = () => {
         } else if (error.response) {
           msg = error.response.data;
         } else {
-          msg = "Add failed. Internal server error.";
+          msg = "Internal server error.";
         }
         message.error(msg);
       }
@@ -341,15 +316,8 @@ const LimitedProductManagement = () => {
         }}
         dataSource={products}
       />
-      <Link to={'/admin/limitedProduct/add'}>
-        <Button
-          type="primary"
-        >
-          Add new limited product
-        </Button>
-      </Link>
     </div>
   );
 };
 
-export default LimitedProductManagement;
+export default PersonalFlashSaleOrder;
