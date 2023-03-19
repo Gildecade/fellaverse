@@ -102,7 +102,7 @@ const AdminApp = () => {
               margin: 16
             }}
           >
-          <img key="project-image" src="./title.png" alt="title" style={{width:170,height:32}} />
+          <img id="project-image" src="./title.png" alt="title" style={{width:170,height:32}} />
           </div>
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
         </Sider>

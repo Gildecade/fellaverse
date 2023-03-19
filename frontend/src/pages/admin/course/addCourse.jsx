@@ -4,7 +4,9 @@ import { Button, Form, Input, message, Select, InputNumber, Upload, Typography }
 import { PlusOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { domain } from '../../../config';
-
+import uploadFileToBlob, { isStorageConfigured } from '../upload/azure-storage-blob';
+import { v4 as uuidv4 } from 'uuid';
+const storageConfigured = isStorageConfigured();
 const { Option } = Select;
 
 const { Title } = Typography;
@@ -43,20 +45,31 @@ const AddCourse = () => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+  const storageUrl = "https://fellaverse.blob.core.windows.net/";
+  const imageContainerUrl = storageUrl + "product_images/";
+  const videoContainerUrl = storageUrl + "course_videos/";
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
   const onFinish = async (values) => {
     setLoading(true);
+    values = {...values, imageUrl: imageContainerUrl + uuidv4()+".png", videoUrl: videoContainerUrl + uuidv4() + ".png", createdDateTime: new Date()};
     console.log('Received values of form: ', values);
     try {
       const result = await axios.post(`${domain}management/shop/course`, values);
       message.success("Add successfully.");
       const data = result.data.data;
+      onFileUpload(imageSelected);
+      onFileUpload(videoSelected);
       console.log(data);
+
+      resetState(imageSelected, 0) 
+      resetState(videoSelected, 1) 
+      
       await delay(1000);
+
       const title = data;
       const subTitle = "Add new course success!";
-      navigate(`/course/success/${title}/${subTitle}`);
+      navigate(`/admin/success/${title}/${subTitle}`);
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -84,6 +97,70 @@ const AddCourse = () => {
       </div>
     </Form.Item>
   );
+
+  
+  // current file to upload into container
+  const [imageSelected, setImageSelected] = useState();
+  const [videoSelected, setVideoSelected] = useState();
+  const [fileUploaded, setFileUploaded] = useState('');
+  
+  // UI/form management
+  const [uploading, setUploading] = useState(false);
+  const [inputKey, setInputKey] = useState(Math.random().toString(36));
+
+  const onImageChange = (event) => {
+    // capture file into state
+    setImageSelected(event.target.files[0]);
+  };
+
+  const onVideoChange = (event) => {
+    // capture file into state
+    setVideoSelected(event.target.files[0]);
+  };
+
+  const onFileUpload = async (file) => {
+
+    if(file && file?.name){
+      // prepare UI
+      // setUploading(true);
+
+      // *** UPLOAD TO AZURE STORAGE ***
+      await uploadFileToBlob(file);
+    }
+  };
+
+  const resetState = (file, mode) => {
+    if (mode == 0) {
+      setImageSelected(null);
+    }
+    else {
+      setVideoSelected(null);
+    } 
+    //setUploading(false);
+    //setInputKey(Math.random().toString(36));
+    console.log(fileUploaded);
+    message.success("Upload " + file.name +" successfully!");
+  }
+
+  // upload product images form
+  const uploadForm = (action) => (
+    // <div class="ant-upload ant-upload-select">
+    //   <span tabindex="0" class="ant-upload" role="button">
+    //     <input type="file" accept="" style={{ display: "none" }} onChange={action} key={inputKey || ''}/>
+    //     <button type="button" class="ant-btn css-ph9edi ant-btn-default">
+    //       <span role="img" aria-label="upload" class="anticon anticon-upload">
+    //         <svg viewBox="64 64 896 896" focusable="false" data-icon="upload" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+    //           <path d="M400 317.7h73.9V656c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V317.7H624c6.7 0 10.4-7.7 6.3-12.9L518.3 163a8 8 0 00-12.6 0l-112 141.7c-4.1 5.3-.4 13 6.3 13zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"></path>
+    //         </svg>
+    //       </span>
+    //       <span>Click to Upload</span>
+    //     </button>
+    //   </span>
+    // </div>
+    <Input type="file" bordered={false} onChange={action} key={inputKey || ''} />
+
+  )
+
   useEffect(() => {
     const initialize = async () => {
       try {
@@ -163,12 +240,7 @@ const AddCourse = () => {
           name="imageUrl"
           label="Product Image"      
         >
-          <Upload action="/upload.do" listType="picture-card">
-            <div>
-              <PlusOutlined />
-              <div style={{ marginTop: 8 }}>Upload</div>
-            </div>
-          </Upload>
+          {storageConfigured && !uploading && uploadForm(onImageChange)}
         </Form.Item>
 
         <Form.Item
@@ -182,12 +254,8 @@ const AddCourse = () => {
             },
         ]}
         >
-          <Upload action="/upload.do" listType="picture-card">
-            <div>
-              <PlusOutlined />
-              <div style={{ marginTop: 8 }}>Upload</div>
-            </div>
-          </Upload>
+          {storageConfigured && !uploading && uploadForm(onVideoChange)}
+
         </Form.Item>
 
         <Form.Item
@@ -220,7 +288,7 @@ const AddCourse = () => {
         >
           <Select placeholder="Please select associated coach">
             {users.map(user => (
-              <Option key={user.id} value={user.id}>{user.userName}</Option>
+              <Option key={user.id} value={user.username} label={user.username}/>
             ))}
           </Select>
         </Form.Item>

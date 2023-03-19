@@ -30,14 +30,14 @@ public class CourseManageController {
         return courseManageService.findAllCourse();
     }
 
-    @JWTCheckToken(role = "ShopAdmin")
+    @JWTCheckToken(role = {"SuperAdmin", "ShopAdmin"})
     @PostMapping("")
     public ResponseEntity<String> addCourse(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) CourseDTO courseDTO) {
         courseManageService.addCourse(courseMapper.toEntity(courseDTO));
         return new ResponseEntity<>("Add course succeeded!", HttpStatus.CREATED);
     }
 
-    @JWTCheckToken(role = "ShopAdmin")
+    @JWTCheckToken(role = {"SuperAdmin", "ShopAdmin"})
     @PutMapping("")
     public String updateCourse(@RequestBody @Validated(value = ValidGroup.Crud.Update.class) CourseDTO courseDTO) {
         Course course = courseManageService.findCourseById(courseDTO.getId());
@@ -45,7 +45,7 @@ public class CourseManageController {
         return "Update course succeeded!";
     }
 
-    @JWTCheckToken(role = "ShopAdmin")
+    @JWTCheckToken(role = {"SuperAdmin", "ShopAdmin"})
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable("id") Long id) {
         courseManageService.deleteCourse(id);

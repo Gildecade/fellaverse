@@ -23,13 +23,15 @@ const CourseManagement = () => {
   }
   const handleDelete = async (key) => {
     try {
+      const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
+      axios.defaults.headers.common['Fellaverse-token'] = token;
       const result = await axios.delete(`${domain}management/shop/course/` + key);
       message.success("Delete successfully.");
       const data = result.data.data;
       // console.log(data);
       const title = data;
       const subTitle = "Delete Course success!";
-      navigate(`/shop/Course/success/${title}/${subTitle}`);
+      navigate(`admin/shop/Course`);
     } catch (error) {
       console.log(error);
       let msg = null;
@@ -213,7 +215,7 @@ const CourseManagement = () => {
       title: 'Created Date Time',
       dataIndex: 'createdDateTime',
       key: 'createdDateTime',
-      ...getColumnSearchProps('created Date Time'),
+      ...getColumnSearchProps('createdDateTime'),
         sorter: (a, b) => {
           const nameA = a.createdDateTime.toUpperCase(); // ignore upper and lowercase
           const nameB = b.createdDateTime.toUpperCase(); // ignore upper and lowercase
