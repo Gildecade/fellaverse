@@ -40,7 +40,7 @@ const Index = () => {
                     <Image
                       width={800}
                       height={450}
-                      src={'www.aaaa.com'}
+                      src={'https://fellaverse.blob.core.windows.net/product-images/p5s_home.jpg'}
                       fallback={GGko} />
                   </div>
                   <div>

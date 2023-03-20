@@ -121,7 +121,7 @@ const EditLimitedProduct = () => {
 
   const onFinish = async (values) => {
     setLoading(true);
-    const imgUrl = null;
+    let imgUrl = null;
     if (fileUploaded !== "") {
       imgUrl = azure + fileUploaded;
     }

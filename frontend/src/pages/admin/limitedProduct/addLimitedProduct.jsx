@@ -113,10 +113,10 @@ const AddLimitedProduct = () => {
   };
 
   const onFinish = async (values) => {
-    // if (fileUploaded === '') {
-    //   message.error("Please upload image!");
-    //   return;
-    // }
+    if (fileUploaded === '') {
+      message.error("Please upload image!");
+      return;
+    }
     // setLoading(true);
     values = {...values, imageUrl: azure + fileUploaded};
     console.log('Received values of form: ', values);
