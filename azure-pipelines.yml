@@ -16,7 +16,7 @@ steps:
     mavenPomFile: 'backend/provider-token-6001/pom.xml'
 - task: AzureSpringCloud@0
   inputs:
-    azureSubscription: 'Azure for Students'
+    azureSubscription: 'Fellaverse Service Connection'
     Action: 'Deploy'
     AzureSpringCloud: fellaverse
     AppName: tokenserver-6001
