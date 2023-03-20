@@ -27,6 +27,11 @@ import ForgotPasswordForm from './authentication/forgotPassword';
 import FlashSale from './flashSale/listFlashSale';
 import DetailFlashSale from './flashSale/detailFlashSale';
 import OrderSuccess from './flashSale/orderSuccess';
+
+import ViewSchedule from './schedule/viewSchedule';
+// import DetailFlashSale from './schedule/addSchedule';
+// import OrderSuccess from './schedule/editSchedule';
+
 import UserApp from './user/userApp';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -64,7 +69,7 @@ const ConsumerApp = () => {
     ]),
     getItem('Workout', 'sub1', <FireOutlined />, [
       getItem('Record', '5'),
-      getItem('Schedule', '6'),
+      // getItem(<Link to='/schedule'>{'Schedule'}</Link>, '6'),
     ]),
     getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '7'), getItem('Team 2', '8')]),
     getItem('Files', '9', <FileOutlined />),
@@ -158,6 +163,11 @@ const ConsumerApp = () => {
               <Route path='/flash-sale' element={<FlashSale />}></Route>
               <Route path='/flash-sale/:id' element={<DetailFlashSale />} />
               <Route path='/flash-sale/:title/:subTitle' element={<OrderSuccess />}></Route>
+              
+              <Route path='/schedule/:id' element={<ViewSchedule />}></Route>
+              {/* <Route path='/schedule/edit' element={<DetailFlashSale />} />
+              <Route path='/flash-sale/:title/:subTitle' element={<OrderSuccess />}></Route>
+               */}
               <Route path='/success/:title/:subTitle' element={<Success />} />
               <Route path='/forgotPassword' element={<ForgotPasswordForm />} />
               <Route path="*" element={<NotFound />} />

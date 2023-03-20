@@ -52,9 +52,34 @@ const AddCourse = () => {
   const delay = ms => new Promise(res => setTimeout(res, ms));
   const onFinish = async (values) => {
     setLoading(true);
-    values = {...values, imageUrl: imageContainerUrl + uuidv4()+".png", videoUrl: videoContainerUrl + uuidv4() + ".png", createdDateTime: new Date()};
+    values = {...values, createdDateTime: new Date().getTime()};
     console.log('Received values of form: ', values);
     try {
+      var currentDateObj = new Date();
+      var numberOfMlSeconds = currentDateObj.getTime();
+      var addMlSeconds = 4 * 60 * 60 * 1000;
+      var newDateObj = new Date(numberOfMlSeconds + addMlSeconds);
+      values = {...values, createdDateTime: newDateObj};
+
+      // add file extension by file types
+      if (imageSelected.type == "image/png") {
+        values = {...values, imageUrl: imageContainerUrl + uuidv4()+".png"};
+      }
+      else if (imageSelected.type == "image/jpeg")
+      {
+        values = {...values, imageUrl: imageContainerUrl + uuidv4()+".jpeg"};
+      }
+      else {
+        values = {...values, imageUrl: imageContainerUrl + uuidv4()};
+      }
+
+      if (videoSelected.type == "video/mp4") {
+        values = {...values, videoUrl: videoContainerUrl + uuidv4() + ".mp4"};
+      }
+      else {
+        values = {...values, videoUrl: videoContainerUrl + uuidv4()};
+      }
+
       const result = await axios.post(`${domain}management/shop/course`, values);
       message.success("Add successfully.");
       const data = result.data.data;
@@ -143,23 +168,20 @@ const AddCourse = () => {
   }
 
   // upload product images form
-  const uploadForm = (action) => (
-    // <div class="ant-upload ant-upload-select">
-    //   <span tabindex="0" class="ant-upload" role="button">
-    //     <input type="file" accept="" style={{ display: "none" }} onChange={action} key={inputKey || ''}/>
-    //     <button type="button" class="ant-btn css-ph9edi ant-btn-default">
-    //       <span role="img" aria-label="upload" class="anticon anticon-upload">
-    //         <svg viewBox="64 64 896 896" focusable="false" data-icon="upload" width="1em" height="1em" fill="currentColor" aria-hidden="true">
-    //           <path d="M400 317.7h73.9V656c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V317.7H624c6.7 0 10.4-7.7 6.3-12.9L518.3 163a8 8 0 00-12.6 0l-112 141.7c-4.1 5.3-.4 13 6.3 13zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"></path>
-    //         </svg>
-    //       </span>
-    //       <span>Click to Upload</span>
-    //     </button>
-    //   </span>
-    // </div>
-    <Input type="file" bordered={false} onChange={action} key={inputKey || ''} />
+  const uploadForm = (action, mode) => {
+    if (mode == 0) {
+      return <Input type="file" accept="image/*" bordered={false} onChange={action} key={inputKey || ''} />
 
-  )
+    }
+    else {
+      return <Input type="file" accept="video/*" bordered={false} onChange={action} key={inputKey || ''} />
+    }
+
+  }
+
+  const userOptions = (user) => {
+    return {value : user.id, label: user.username}
+  }
 
   useEffect(() => {
     const initialize = async () => {
@@ -240,7 +262,7 @@ const AddCourse = () => {
           name="imageUrl"
           label="Product Image"      
         >
-          {storageConfigured && !uploading && uploadForm(onImageChange)}
+          {storageConfigured && !uploading && uploadForm(onImageChange, 0)}
         </Form.Item>
 
         <Form.Item
@@ -254,7 +276,7 @@ const AddCourse = () => {
             },
         ]}
         >
-          {storageConfigured && !uploading && uploadForm(onVideoChange)}
+          {storageConfigured && !uploading && uploadForm(onVideoChange, 1)}
 
         </Form.Item>
 
@@ -286,10 +308,10 @@ const AddCourse = () => {
             },
           ]}
         >
-          <Select placeholder="Please select associated coach">
-            {users.map(user => (
-              <Option key={user.id} value={user.username} label={user.username}/>
-            ))}
+          <Select placeholder="Please select associated coach"
+            options = {users.map(userOptions)}>
+            
+          
           </Select>
         </Form.Item>
         

@@ -316,7 +316,6 @@ const CourseManagement = () => {
           return {...f, key: f.id};
         });
         setCourses(CourseList);
-        
       } catch (error) {
         console.log(error);
         message.error(error.response.data.message);
