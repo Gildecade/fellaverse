@@ -3,7 +3,7 @@
 1. Install azure cli
 2. Install mvn from [here](https://stackoverflow.com/questions/10649707/maven-mvn-command-not-found)
 3. Build and package maven projects locally in the `backend` directory
-    - `mvn clean package -DskipTests -amd spring-boot:repackage -pl '!openfeign-config, !redis-config, !consumer-utils'` 
+    - `mvn clean package -DskipTests -amd spring-boot:repackage` 
 4. Run an az command 
     - `az spring app deploy -n demo -g <resourceGroup> -s <Azure Spring Apps instance> --jar-path target\hellospring-0.0.1-SNAPSHOT.jar`
     - `az spring app deploy -n eurekaserver-8761 -g fellaverse -s fellaverse --jar-path 'eureka-8761/target/eureka-8761-0.0.1-SNAPSHOT.jar' --disable-validation`
