@@ -1,7 +1,7 @@
 package com.fellaverse.backend.controller;
 
-import com.fellaverse.backend.bean.FlashSaleOrderUserDTO;
-import com.fellaverse.backend.bean.FlashSaleOrderUserMapper;
+import com.fellaverse.backend.dto.FlashSaleOrderUserDTO;
+import com.fellaverse.backend.mapper.FlashSaleOrderUserMapper;
 import com.fellaverse.backend.dto.UserProfileDTO;
 import com.fellaverse.backend.mapper.UserProfileMapper;
 import com.fellaverse.backend.service.FlashSaleOrderUserService;

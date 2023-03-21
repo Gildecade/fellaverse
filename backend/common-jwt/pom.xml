@@ -72,8 +72,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.fellaverse.backend.jwt.StartJWTConfiguration</mainClass>
-                    <layout>JAR</layout>
+                    <skip>true</skip>
                 </configuration>
 
                 <executions>

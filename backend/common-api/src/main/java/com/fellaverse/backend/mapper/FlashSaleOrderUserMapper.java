@@ -1,6 +1,7 @@
-package com.fellaverse.backend.bean;
+package com.fellaverse.backend.mapper;
 
-import com.fellaverse.backend.mapper.LimitedProductMapper;
+import com.fellaverse.backend.bean.FlashSaleOrder;
+import com.fellaverse.backend.dto.FlashSaleOrderUserDTO;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {LimitedProductMapper.class})

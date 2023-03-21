@@ -1,6 +1,6 @@
 package com.fellaverse.backend.service;
 
-import com.fellaverse.backend.bean.FlashSaleOrderUserDTO;
+import com.fellaverse.backend.dto.FlashSaleOrderUserDTO;
 import com.fellaverse.backend.config.ConsumerErrorDecoder;
 import com.fellaverse.backend.config.FeignBasicAuthRequestInterceptor;
 import com.fellaverse.backend.dto.UserProfileDTO;
