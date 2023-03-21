@@ -4,7 +4,11 @@
 2. Install mvn from [here](https://stackoverflow.com/questions/10649707/maven-mvn-command-not-found)
 3. Build and package maven projects locally in the `backend` directory
     - `mvn clean package -DskipTests -amd spring-boot:repackage` 
-4. Run an az command 
+4. Try to execute the package locally
+    - `java -jar <path-to-jar-file-in-target-folder`
+    - `java -jar eureka-8761/target/eureka-8761-0.0.1-SNAPSHOT.jar`
+
+5. Run an az command  (only run this step if the above all steps succeed)
     - `az spring app deploy -n demo -g <resourceGroup> -s <Azure Spring Apps instance> --jar-path target\hellospring-0.0.1-SNAPSHOT.jar`
     - `az spring app deploy -n eurekaserver-8761 -g fellaverse -s fellaverse --jar-path 'eureka-8761/target/eureka-8761-0.0.1-SNAPSHOT.jar' --disable-validation`
     - `az spring app deploy -n gateway-9001 -g fellaverse -s fellaverse --jar-path 'provider-gateway-9001/target/provider-gateway-9001-0.0.1-SNAPSHOT.jar' --disable-validation`
