@@ -6,9 +6,10 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/fellaverse?serverTimeZone=UTC&useSSL=true
-    username: root
-    password: root
+    # create db fellaverse manually in IDEA
+    url: jdbc:mysql://fellaverse.mysql.database.azure.com:3306/fellaverse?useSSL=true
+    username: fella
+    password: zesqiq-6ryvte-Cejxew
   jpa:
     show-sql: true
     properties:

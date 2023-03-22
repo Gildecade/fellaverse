@@ -29,6 +29,7 @@ spring:
     name: provider-gateway
   main:
     web-application-type: reactive
+    allow-bean-definition-overriding: true
   cloud:
     gateway:
       globalcors:
