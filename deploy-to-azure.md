@@ -13,7 +13,7 @@
     - `az spring app deploy -n eurekaserver-8761 -g fellaverse -s fellaverse --jar-path 'eureka-8761/target/eureka-8761-0.0.1-SNAPSHOT.jar' --disable-validation`
     - `az spring app deploy -n gateway-9001 -g fellaverse -s fellaverse --jar-path 'provider-gateway-9001/target/provider-gateway-9001-0.0.1-SNAPSHOT.jar' --disable-validation`
     - `az spring app deploy -n provider-token -g fellaverse -s fellaverse --jar-path 'provider-token-6001/target/provider-token-6001-0.0.1-SNAPSHOT.jar' --disable-validation`
-    - `az spring app deploy -n consumer-token -g fellaverse -s fellaverse --jar-path 'consumer-token-6001/target/consumer-token-6001-0.0.1-SNAPSHOT.jar' --disable-validation`
+    - `az spring app deploy -n consumer-token -g fellaverse -s fellaverse --jar-path 'consumer-token-6002/target/consumer-token-6002-0.0.1-SNAPSHOT.jar' --disable-validation`
     - `az spring app deploy -n provider-shop-7501 -g fellaverse -s fellaverse --jar-path 'provider-shop-7501/target/provider-shop-7501-0.0.1-SNAPSHOT.jar' --disable-validation`
     - `az spring app deploy -n consumer-shop-7701 -g fellaverse -s fellaverse --jar-path 'consumer-shop-7701/target/consumer-shop-7701-0.0.1-SNAPSHOT.jar' --disable-validation`
     - `az spring app deploy -n provider-management-8001 -g fellaverse -s fellaverse --jar-path 'provider-management-8001/target/provider-management-8001-0.0.1-SNAPSHOT.jar' --disable-validation`
