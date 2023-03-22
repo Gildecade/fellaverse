@@ -4,9 +4,10 @@ import com.fellaverse.backend.bean.Course;
 import com.fellaverse.backend.bean.Order;
 import com.fellaverse.backend.dto.CourseBuyDTO;
 import com.fellaverse.backend.dto.CourseFindAllDTO;
-import com.fellaverse.backend.dto.LimitedProductDTO;
+import com.fellaverse.backend.dto.OrderDTO;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
 import com.fellaverse.backend.mapper.CourseFindAllMapper;
+import com.fellaverse.backend.mapper.OrderMapper;
 import com.fellaverse.backend.service.*;
 import com.fellaverse.backend.validator.ValidGroup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,19 @@ public class ShopController {
     @Autowired
     private CourseFindAllMapper courseFindAllMapper;
 
+    @Autowired
+    private OrderMapper orderMapper;
+
 
     @GetMapping("")
     public List<CourseFindAllDTO> findAll() {
         return shopService.findAll().stream().map(courseFindAllMapper::toDto).collect(Collectors.toList());
+    }
+
+    @GetMapping("/{userId}/order")
+    public List<OrderDTO> findOrderByUserId(@PathVariable("userId") Long userId) {
+        return orderService.findByUserId(userId).stream().map(orderMapper::toDto).collect(Collectors.toList());
+//        return shopService.findAll().stream().map(courseFindAllMapper::toDto).collect(Collectors.toList());
     }
 
     @JWTCheckToken(function = "buy")

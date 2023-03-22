@@ -3,7 +3,7 @@ import { Button, Descriptions, Card, Image } from 'antd';
 import moment from 'moment/moment';
 import GGko from '../../images/GGko.jpg';
 
-const PersonalDetailSaleOrder = () => {
+const DetailShopOrder = () => {
   const parameters = useLocation();
   const record = parameters.state;
 
@@ -12,18 +12,19 @@ const PersonalDetailSaleOrder = () => {
   };
   return (
     <>
-      <Descriptions title="Flash Sale Order Information" bordered>
+      <Descriptions title="Shop Order Information" bordered>
         <Descriptions.Item label="Order ID">{record.id}</Descriptions.Item>
         <Descriptions.Item label="Quantity">{record.quantity }</Descriptions.Item>
         <Descriptions.Item label="Amount">{record.amount}</Descriptions.Item>
         <Descriptions.Item label="Purchase date time">{moment(record.purchaseDateTime).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
-        <Descriptions.Item label="Status">{record.orderStatus}</Descriptions.Item>
       </Descriptions>
       <br/>
-      <Descriptions title="Limited Product Information" bordered>
-        <Descriptions.Item label="Product name">{record.limitedProduct.productName}</Descriptions.Item>
-        <Descriptions.Item label="Description">{record.limitedProduct.description }</Descriptions.Item>
-        <Descriptions.Item label="Price">{record.limitedProduct.price}</Descriptions.Item>
+      <Descriptions title="Course Information" bordered>
+        <Descriptions.Item label="course name">{record.product.productName}</Descriptions.Item>
+        <Descriptions.Item label="Description">{record.product.description }</Descriptions.Item>
+        <Descriptions.Item label="Price">{record.product.price}</Descriptions.Item>
+        <Descriptions.Item label="link">{record.product.course.videoUrl}</Descriptions.Item>
+
       </Descriptions>
       <br/>
       <Card 
@@ -40,5 +41,5 @@ const PersonalDetailSaleOrder = () => {
     </>
   );
 };
-export default PersonalDetailSaleOrder;
+export default DetailShopOrder;
 

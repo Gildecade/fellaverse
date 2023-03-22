@@ -24,7 +24,7 @@ const RecordManagement = () => {
       console.log(data);
       const title = data;
       const subTitle = "Delete record success!";
-      navigate(`/admin/success/${title}/${subTitle}`); //TODO
+      navigate(`/success/${title}/${subTitle}`); //TODO
     } catch (error) {
       console.log(error);
       let msg = null;
@@ -274,7 +274,7 @@ const RecordManagement = () => {
         }}
         dataSource={records}
       />
-      <Link to={'/record'}>
+      <Link to={'/record/add'}>
         <Button
           type="primary"
         >

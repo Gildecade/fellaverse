@@ -30,6 +30,8 @@ import Shop from './shop/listShop'
 import DetailShop from './shop/detailShop';
 import RecordManagement from './record/listRecord';
 import AddRecord from './record/addRecord';
+import ShopOrder from './user/shopOrder';
+import DetailShopOrder from './user/detailShopOrder';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -66,6 +68,7 @@ const ConsumerApp = () => {
     getItem('User', 'sub1', <UserOutlined />, [
       getItem(<Link to='/record'>{'Record'}</Link>, '5'),
       getItem('Schedule', '6'),
+      getItem(<Link to='/order'>{'Order'}</Link>, '10'),
     ]),
     getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '7'), getItem('Team 2', '8')]),
     getItem('Files', '9', <FileOutlined />),
@@ -160,6 +163,14 @@ const ConsumerApp = () => {
               <Route path='/shop' element={<Shop />}></Route>
               <Route path='/shop/:id' element={< DetailShop/>}></Route>
               <Route path='/record' element={<RecordManagement />}></Route>
+              <Route path='/record/add' element={<AddRecord />}></Route>
+
+              <Route path='/order' element={<ShopOrder />}></Route>
+              <Route path='/order/detail' element={<DetailShopOrder />}></Route>
+
+
+              {/* <Route path='/order/' element={<Shop />}></Route> */}
+
               <Route path='/success/:title/:subTitle' element={<Success />} />
               <Route path='/forgotPassword' element={<ForgotPasswordForm />} />
               <Route path="*" element={<NotFound />} />
