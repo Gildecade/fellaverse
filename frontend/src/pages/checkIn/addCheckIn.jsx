@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment/moment';
 import { useNavigate } from 'react-router-dom';
-import { Button, Form, Input, message, DatePicker, TimePicker } from 'antd';
+import { Button, Form, Input, message, DatePicker, TimePicker, Space } from 'antd';
 import axios from 'axios';
 import { domain } from '../../config';
+import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
+var utc = require('dayjs/plugin/utc')
+var timezone = require('dayjs/plugin/timezone') // dependent on utc plugin
+dayjs.extend(utc)
+dayjs.extend(timezone)
+const tz = "America/New_York"
 
 const { TextArea } = Input;
 const formItemLayout = {
@@ -50,17 +56,24 @@ const AddCheckIn = () => {
   const [date, setDate] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [weightValue, setWeightValue] = useState(0);
   const [startTimeString, setStartTimeString] = useState('');
   const [endTimeString, setEndTimeString] = useState('');
+  const [offset, setOffset] = useState(0);
   const userId = localStorage.getItem('userId') ? localStorage.getItem('userId') : sessionStorage.getItem('userId');
 
+  const setWeight = (e) => {
+    //setWeight(e.target.value);
+    console.log("v", e.target.value);
+    data.weight = e.target.value;
+  }
   const onChange = (value, dateString) => {
     console.log('Selected Time: ', value);
     console.log('Formatted Selected Time: ', dateString);
     setStartTimeString(dateString[0]);
     setEndTimeString(dateString[1]);
   };
-  const data = {
+  var data = {
     "id": {
       "id": null,
       "userId": userId
@@ -75,11 +88,19 @@ const AddCheckIn = () => {
   const delay = ms => new Promise(res => setTimeout(res, ms));
   const onFinish = async (values) => {
     setLoading(true);
-    console.log('Received values of form: ', values);
-    data.weight = values.weight;
-    console.log('data',data);
-    console.log(dayjs().format('YYYY-MM-DD'));
+    //console.log('Received values of form: ', values);
+    console.log(values);
+    //console.log(dayjs().format('YYYY-MM-DD'));
     try {
+      const now = dayjs();
+      const localUtcOffset = now.utcOffset();
+      console.log(localUtcOffset / 60);
+      //data.startDateTime = dayjs(data.startDateTime).subtract(-4, 'h');
+      data.startDateTime = dayjs(data.startDateTime).subtract(localUtcOffset/60, 'h');
+      //data.endDateTime = dayjs(data.endDateTime).subtract(-4, 'h');
+      data.endDateTime = dayjs(data.endDateTime).subtract(localUtcOffset/60, 'h');
+      console.log("start", data.startDateTime);
+      console.log("end", data.endDateTime);
       const result = await axios.post(`${domain}checkin`, data);
       message.success("Add successfully.");
       const resultData = result.data.data;
@@ -105,6 +126,22 @@ const AddCheckIn = () => {
       message.error(msg);
     }
   };
+
+
+  useEffect( ()=>{
+    const initialize = async () => {
+      try {
+        const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
+        axios.defaults.headers.common['Fellaverse-token'] = token;
+
+      } catch (error) {
+        console.log(error);
+        message.error(error.response.data.message);
+      }
+    }
+    initialize();
+  } , [] );
+
   return (
   <Form
     {...formItemLayout}
@@ -157,13 +194,22 @@ const AddCheckIn = () => {
         },
     ]}
     >
-      <Input type="number" style={{width: 'calc(5%)',}}/> (optional)
+      <Input type="number" min="0" style={{width: 'calc(10%)'}} onChange={setWeight}/> (optional)
     </Form.Item>
 
     <Form.Item {...tailFormItemLayout}>
-      <Button type="primary" htmlType="submit" loading={loading}>
-        Add
-      </Button>
+      <Space size='small'>
+        <Button type="primary" htmlType="submit" loading={loading}>
+          Add
+        </Button>
+        <Link to={'/checkIn'}>
+          <Button
+            type="default"
+          >
+            Cancel
+          </Button>
+        </Link>
+      </Space>
     </Form.Item>
 </Form>
   );

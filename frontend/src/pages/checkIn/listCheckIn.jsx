@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Input, Space, Table, Tag, Popconfirm, message } from 'antd';
+import { Button, Input, Space, Table, Tag, Popconfirm, message, Badge, Calendar, Modal } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { domain } from '../../config';
@@ -7,27 +7,174 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import {
-  CheckCircleOutlined,
-  ClockCircleOutlined,
-  CloseCircleOutlined,
-  ExclamationCircleOutlined,
-} from '@ant-design/icons';
-import moment from 'moment/moment';
+import './Badge.css';
+import './hr.css';
 dayjs.extend(customParseFormat);
 
 const UserCheckIn = () => {
   const [checkIns, setCheckIns] = useState([]);
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
-  const searchInput = useRef(null);
   const navigate = useNavigate();
-  const [userRecord, setUserRecord] = useState('');
   const delay = ms => new Promise(res => setTimeout(res, ms));
+  var calendarItem = [];
+  var nowMonth;
+  const [calendarList, setCalendarList] = useState([]);
+  const [monthValue, setMonthValue] = useState(0);
+/////////////////// modal //////////////////////////
+  const maskStyle = {
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+  };
+  const handleButton = (data) => {
+    navigate('edit',
+    {
+        state: data,
+    });
+    window.location.reload(false);
+  }
+  const handleContent = (calendarListItem) => {
+    //console.log("line46", calendarListItem);
+     return (
+       <Space size="1" direction="vertical">
+         {calendarListItem.map((item) => (
+            <>
+            <Space size="middle">
+              <p><b>start time : </b>{dayjs(item.startDateTime).format("HH:mm")}</p>
+              <Popconfirm title="Sure to edit?" onConfirm={() => handleButton(item)}>
+                <a>Edit</a>
+              </Popconfirm>
+              <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(item)}>
+                <a>Delete</a>
+              </Popconfirm>
+            </Space>
+              <small>body weight : {item.weight}</small>
+              <hr class="rounded"></hr>
+            </>
+         ))}
+       </Space>
+     )
+  };
+////////////////////// calendar ///////////////////////////////
+  const getListData = (value) => {
+    let listData = [];
+    let listData2;
+
+    //console.log(calendarList);
+
+    switch (value.date()) {
+      case value.date():
+        let day2 = calendarList[value.date()];
+        try {
+            //console.log("ssss",day2);
+            day2.forEach(day3 => {
+              if (day3) {
+                listData2 = [
+                  {
+                    type: 'success',
+                    content: 'start:\t ' + dayjs(day3.startDateTime).format("HH:mm"),
+                  },
+                  {
+                    type: 'warning',
+                    content: '   end:\t ' + dayjs(day3.endDateTime).format("HH:mm"),
+                  },
+                ];
+                listData.push(listData2[0]);
+                listData.push(listData2[1]);
+                //console.log(listData);
+              }
+            });
+        }catch (error) {
+          //console.log("not this one");
+        }
+        break;
+      default:
+    }
+    return listData || [];
+  };
+  const getMonthData = (value) => {
+    let num2 = 0;
+    switch(value.month()) {
+      case value.month():
+        checkIns.forEach(element => {
+          if (element.length!=0) {
+
+            console.log(dayjs(element.startDateTime).format("M"));
+            console.log(dayjs(value.month()).format("M"));
+            if (dayjs(element.startDateTime).format("M") == dayjs(value.month()).format("M")) {
+              console.log("++");
+              num2++;
+            }
+            //console.log(calendarListTemp);
+          }
+        });
+      default:
+    }
+    return num2 || [];
+  };
+
+  const monthCellRender = (value) => {
+    const num = getMonthData(value);
+    return num ? (
+      <div className="notes-month">
+          <div key={value.month()}>
+            <Badge status="success" text={num}/>
+          </div>
+      </div>
+    ) : null;
+  };
+
+  const onClick = (event, calendarList) => {
+    //console.log("cl",dayjs(calendarList[0].startDateTime).format("DD"));
+    calendarItem = calendarList;
+    const modal = Modal.info();
+    modal.update({
+      title: dayjs(calendarItem[0].startDateTime).format("MM-DD"),
+      content: handleContent(calendarItem),
+      centered: true,
+      maskClosable: true,
+      maskStyle,
+    });
+    //showModal();
+    //console.log(event.target.innerText);
+  }
+
+  const dateCellRender = (value) => {
+    const listData = getListData(value, calendarList);
+    return (
+      <ul className="events">
+        {listData.map((item) => (
+          <div key={item.content}>
+            <Badge status={item.type} text={item.content} onClick={event => onClick(event, calendarList[value.date()])}/>
+          </div>
+        ))}
+      </ul>
+    );
+  };
+
+  const onPanelChange = (e) => {
+    //console.log(e);
+    nowMonth = parseInt(e.format("YYYYM"));
+    //console.log("nowMonth:", nowMonth);
+
+    let calendarListTemp = [];
+    for (let i =0; i<31; i++) {
+      calendarListTemp.push([]);
+    }
+    checkIns.forEach(element => {
+      if (element.length!=0) {
+        //console.log("e=", parseInt(dayjs(element.startDateTime).format("MM")), "n2=", nowMonth, "TF=", parseInt(dayjs(element.startDateTime).format("MM")) == nowMonth);
+        if (parseInt(dayjs(element.startDateTime).format("YYYYM")) == nowMonth) {
+          let day = dayjs(element.startDateTime).format("DD");
+          //console.log(day);
+          calendarListTemp[day].push(element);
+        }
+        //console.log(calendarListTemp);
+      }
+    });
+    setCalendarList(calendarListTemp);
+  }
+/////////////////////// delete /////////////////////////////
   const handleDelete = async (record) => {
     try {
       console.log('record',record);
-      setUserRecord(record);
       const data = {
         "id": {
           "id": record.id.id,
@@ -64,117 +211,14 @@ const UserCheckIn = () => {
         message.error("Update failed. Internal server error.");}
     }
   };
-  const handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
-  const handleReset = (clearFilters) => {
-    clearFilters();
-    setSearchText('');
-  };
-  const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
-      <div
-        style={{
-          padding: 8,
-        }}
-        onKeyDown={(e) => e.stopPropagation()}
-      >
-        <Input
-          ref={searchInput}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{
-            marginBottom: 8,
-            display: 'block',
-          }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Reset
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              confirm({
-                closeDropdown: false,
-              });
-              setSearchText(selectedKeys[0]);
-              setSearchedColumn(dataIndex);
-            }}
-          >
-            Filter
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              close();
-            }}
-          >
-            close
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered) => (
-      <SearchOutlined
-        style={{
-          color: filtered ? '#1890ff' : undefined,
-        }}
-      />
-    ),
-    onFilter: (value, record) =>
-      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
-    },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{
-            backgroundColor: '#ffc069',
-            padding: 0,
-          }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ''}
-        />
-      ) : (
-        text
-      ),
-  });
-
+/////////////////////// column /////////////////////////////
   const columns = [
     {
       title: 'Start time',
       dataIndex: 'startDateTime',
       key: 'startDateTime',
       render: (dateTime) => {
-        return moment(dateTime).format('YYYY-MM-DD HH:mm:ss');
+        return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
       },
         sorter: (a, b) => {
           const nameA = a.startDateTime; // ignore upper and lowercase
@@ -196,7 +240,7 @@ const UserCheckIn = () => {
       dataIndex: 'endDateTime',
       key: 'endDateTime',
       render: (dateTime) => {
-        return moment(dateTime).format('YYYY-MM-DD HH:mm:ss');
+        return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
       },
         sorter: (a, b) => {
           const nameA = a.endDateTime; // ignore upper and lowercase
@@ -219,7 +263,7 @@ const UserCheckIn = () => {
       dataIndex: 'weight',
       render: (tag) => {
         return (
-          <Tag color="success" icon={<CheckCircleOutlined />} key={tag}>
+          <Tag color="success" key={tag}>
             {tag}
           </Tag>
         );
@@ -252,35 +296,66 @@ const UserCheckIn = () => {
         });
         setCheckIns(checkInList);
         //console.log(checkIns);
-        const sortedCheckIns = [...checkInList].sort((a, b) => dayjs(a.startDateTime).diff(dayjs(b.startDateTime))<0 ? 1 : -1);
+        const sortedCheckIns = [...checkInList].sort((a, b) => dayjs(a.startDateTime).diff(dayjs(b.startDateTime))<0 ? -1 : 1);
         setCheckIns(sortedCheckIns);
         //console.log(sortedCheckIns);
-
+        nowMonth = parseInt(dayjs().format("YYYYM"));
+        //console.log(nowMonth);
+        let calendarListTemp = [];
+        for (let i =0; i<31; i++) {
+          calendarListTemp.push([]);
+        }
+        checkInList.forEach(element => {
+          if (element.length!=0) {
+            //console.log("e=", parseInt(dayjs(element.startDateTime).format("MM")), "n2=", nowMonth, "TF=", parseInt(dayjs(element.startDateTime).format("MM")) == nowMonth);
+            if (parseInt(dayjs(element.startDateTime).format("YYYYM")) == nowMonth) {
+              let day = dayjs(element.startDateTime).format("DD");
+              //console.log(day);
+              calendarListTemp[day].push(element);
+            }
+            //console.log(calendarListTemp);
+          }
+        });
+        setCalendarList(calendarListTemp);
       } catch (error) {
         console.log(error);
         message.error(error.response.data.message);
       }
 
     }
+
     initialize();
   }, []);
 
   return (
     <div>
-      <Link to={'/checkIn/add'}>
-        <Button
-          type="primary"
-        >
-          Add new check in
-        </Button>
-      </Link>
-      <Table
-        columns={columns}
-        pagination={{
-          position: ['bottomRight'],
-        }}
-        dataSource={checkIns}
-      />
+      <Space direction="vertical" size="middle">
+        <Link to={'/checkIn/add'}>
+          <Button
+            type="primary"
+            block
+          >
+            Add new check in
+          </Button>
+        </Link>
+        <Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender} onPanelChange={onPanelChange}/>
+        {/* <Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender} onPanelChange={onPanelChange}/> */}
+        <Link to={'/checkIn/add'}>
+          <Button
+            type="primary"
+            block
+          >
+            Add new check in
+          </Button>
+        </Link>
+        <Table
+          columns={columns}
+          pagination={{
+            position: ['bottomRight'],
+          }}
+          dataSource={checkIns}
+        />
+      </Space>
     </div>
   );
 };

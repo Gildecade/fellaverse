@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { Button, Form, Input, message, DatePicker, TimePicker } from 'antd';
+import { Button, Form, Input, message, DatePicker, TimePicker, Space } from 'antd';
 import axios from 'axios';
 import { domain } from '../../config';
+import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
+var utc = require('dayjs/plugin/utc')
+var timezone = require('dayjs/plugin/timezone') // dependent on utc plugin
+dayjs.extend(utc)
+dayjs.extend(timezone)
+const tz = "America/New_York"
 
 const { TextArea } = Input;
 const formItemLayout = {
@@ -53,6 +59,11 @@ const EditFunction = () => {
   //console.log('time',dayjs(record.startDateTime).format('HH:mm:ss'));
   //setStartTimeString(dayjs(record.startDateTime).format('HH:mm:ss'))
   //setEndTimeString(dayjs(record.endDateTime).format('HH:mm:ss'))
+  const setWeight = (e) => {
+    //setWeight(e.target.value);
+    console.log("v", e.target.value);
+    record.weight = e.target.value;
+  }
   const onChange = (value, dateString) => {
     //console.log('Selected Time: ', value);
     //console.log('Formatted Selected Time: ', dateString);
@@ -67,9 +78,14 @@ const EditFunction = () => {
   const delay = ms => new Promise(res => setTimeout(res, ms));
   const onFinish = async (values) => {
     setLoading(true);
-    record.startDateTime = date+"T"+startTimeString+"Z";
-    record.endDateTime = date+"T"+endTimeString+"Z";
-    record.weight = values.weight;
+    const now = dayjs();
+    const localUtcOffset = now.utcOffset();
+    console.log(localUtcOffset / 60);
+    record.startDateTime = dayjs(date+"T"+startTimeString+"Z").subtract(localUtcOffset/60, 'h');
+    //record.startDateTime = dayjs(date+"T"+startTimeString+"Z").subtract(-4, 'h');
+    record.endDateTime = dayjs(date+"T"+endTimeString+"Z").subtract(localUtcOffset/60, 'h');
+    //record.endDateTime = dayjs(date+"T"+endTimeString+"Z").subtract(-4, 'h');
+    
     const request = {...values, id: functionId};
     //console.log('Received values of form: ', request);
     console.log('Record: ', record);
@@ -103,12 +119,13 @@ const EditFunction = () => {
 // useEffect = (() => {
  // },[]);
   useEffect( ()=>{
-
     const initialize = async () => {
       try {
-      setStartTimeString(dayjs(record.startDateTime).format('HH:mm:ss'));
-      setEndTimeString(dayjs(record.endDateTime).format('HH:mm:ss'));
-      setDate(dayjs(record.startDateTime).format('YYYY-MM-DD'));
+        const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
+        axios.defaults.headers.common['Fellaverse-token'] = token;
+        setStartTimeString(dayjs(record.startDateTime).format('HH:mm:ss'));
+        setEndTimeString(dayjs(record.endDateTime).format('HH:mm:ss'));
+        setDate(dayjs(record.startDateTime).format('YYYY-MM-DD'));
 
       } catch (error) {
         console.log(error);
@@ -167,13 +184,22 @@ const EditFunction = () => {
         },
     ]}
     >
-      <Input type="number" defaultValue={record.weight} style={{width: 'calc(5%)',}}/>(optional)
+      <Input type="number" min="0" defaultValue={record.weight} style={{width: 'calc(10%)',}} onChange={setWeight}/>(optional)
     </Form.Item>
 
     <Form.Item {...tailFormItemLayout}>
-      <Button type="primary" htmlType="submit" loading={loading}>
-        Submit
-      </Button>
+      <Space size='small'>
+        <Button type="primary" htmlType="submit" loading={loading}>
+          Submit
+        </Button>
+        <Link to={'/checkIn'}>
+          <Button
+            type="default"
+          >
+            Cancel
+          </Button>
+        </Link>
+      </Space>
     </Form.Item>
 </Form>
   );
