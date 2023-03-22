@@ -17,7 +17,9 @@ const UserCheckIn = () => {
   const delay = ms => new Promise(res => setTimeout(res, ms));
   var calendarItem = [];
   var nowMonth;
+  var nowYear;
   const [calendarList, setCalendarList] = useState([]);
+  const [calendarListMonth, setCalendarListMonth] = useState([]);
   const [monthValue, setMonthValue] = useState(0);
 /////////////////// modal //////////////////////////
   const maskStyle = {
@@ -89,36 +91,53 @@ const UserCheckIn = () => {
     }
     return listData || [];
   };
+  const dateCellRender = (value) => {
+    const listData = getListData(value, calendarList);
+    return (
+      <ul className="events">
+        {listData.map((item) => (
+          <div key={item.content}>
+            <Badge status={item.type} text={item.content} onClick={event => onClick(event, calendarList[value.date()])}/>
+          </div>
+        ))}
+      </ul>
+    );
+  };
+
   const getMonthData = (value) => {
-    let num2 = 0;
+    let listDataMonth = 0;
+
     switch(value.month()) {
       case value.month():
-        checkIns.forEach(element => {
-          if (element.length!=0) {
-
-            console.log(dayjs(element.startDateTime).format("M"));
-            console.log(dayjs(value.month()).format("M"));
-            if (dayjs(element.startDateTime).format("M") == dayjs(value.month()).format("M")) {
-              console.log("++");
-              num2++;
+        let month2 = calendarListMonth[value.month()];
+        try {
+          month2.forEach(month3 => {
+            if (month3) {
+              listDataMonth++;
             }
-            //console.log(calendarListTemp);
-          }
-        });
+          }) 
+        }catch (error) {
+
+        }
+        break;
       default:
     }
-    return num2 || [];
+    //console.log(listDataMonth);
+    return listDataMonth || 0;
   };
 
   const monthCellRender = (value) => {
-    const num = getMonthData(value);
-    return num ? (
-      <div className="notes-month">
-          <div key={value.month()}>
-            <Badge status="success" text={num}/>
-          </div>
-      </div>
-    ) : null;
+    // work around
+    var num = getMonthData(dayjs(value).add(1,'month'));
+    if (num != 0) {
+      return (
+        <div className="notes-month">
+            <div key={value.month()}>
+              <Badge status="success" text={num}/>
+            </div>
+        </div>
+      );
+    }
   };
 
   const onClick = (event, calendarList) => {
@@ -136,27 +155,17 @@ const UserCheckIn = () => {
     //console.log(event.target.innerText);
   }
 
-  const dateCellRender = (value) => {
-    const listData = getListData(value, calendarList);
-    return (
-      <ul className="events">
-        {listData.map((item) => (
-          <div key={item.content}>
-            <Badge status={item.type} text={item.content} onClick={event => onClick(event, calendarList[value.date()])}/>
-          </div>
-        ))}
-      </ul>
-    );
-  };
-
   const onPanelChange = (e) => {
-    //console.log(e);
     nowMonth = parseInt(e.format("YYYYM"));
-    //console.log("nowMonth:", nowMonth);
+    nowYear = parseInt(e.format("YYYY"));
 
     let calendarListTemp = [];
     for (let i =0; i<31; i++) {
       calendarListTemp.push([]);
+    }
+    let calendarListMonthTemp = [];
+    for (let i =0; i<12; i++) {
+      calendarListMonthTemp.push([]);
     }
     checkIns.forEach(element => {
       if (element.length!=0) {
@@ -167,9 +176,15 @@ const UserCheckIn = () => {
           calendarListTemp[day].push(element);
         }
         //console.log(calendarListTemp);
+        if (parseInt(dayjs(element.startDateTime).format("YYYY")) == nowYear) {
+          let month = dayjs(element.startDateTime).format("M");
+          //console.log(day);
+          calendarListMonthTemp[month].push(element);
+        }
       }
     });
     setCalendarList(calendarListTemp);
+    setCalendarListMonth(calendarListMonthTemp);
   }
 /////////////////////// delete /////////////////////////////
   const handleDelete = async (record) => {
@@ -300,23 +315,32 @@ const UserCheckIn = () => {
         setCheckIns(sortedCheckIns);
         //console.log(sortedCheckIns);
         nowMonth = parseInt(dayjs().format("YYYYM"));
+        nowYear = parseInt(dayjs().format("YYYY"));
         //console.log(nowMonth);
         let calendarListTemp = [];
+        let calendarListMonthTemp = [];
         for (let i =0; i<31; i++) {
           calendarListTemp.push([]);
+        }
+        for (let i =0; i<12; i++) {
+          calendarListMonthTemp.push([]);
         }
         checkInList.forEach(element => {
           if (element.length!=0) {
             //console.log("e=", parseInt(dayjs(element.startDateTime).format("MM")), "n2=", nowMonth, "TF=", parseInt(dayjs(element.startDateTime).format("MM")) == nowMonth);
             if (parseInt(dayjs(element.startDateTime).format("YYYYM")) == nowMonth) {
               let day = dayjs(element.startDateTime).format("DD");
-              //console.log(day);
               calendarListTemp[day].push(element);
             }
-            //console.log(calendarListTemp);
+
+            if (parseInt(dayjs(element.startDateTime).format("YYYY")) == nowYear) {
+              let month = dayjs(element.startDateTime).format("M");
+              calendarListMonthTemp[month].push(element);
+            }
           }
         });
         setCalendarList(calendarListTemp);
+        setCalendarListMonth(calendarListMonthTemp);
       } catch (error) {
         console.log(error);
         message.error(error.response.data.message);
