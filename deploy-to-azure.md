@@ -14,3 +14,6 @@
     - `az spring app deploy -n gateway-9001 -g fellaverse -s fellaverse --jar-path 'provider-gateway-9001/target/provider-gateway-9001-0.0.1-SNAPSHOT.jar' --disable-validation`
     - `az spring app deploy -n tokenserver-6001 -g fellaverse -s fellaverse --jar-path 'provider-token-6001/target/provider-token-6001-0.0.1-SNAPSHOT.jar' --disable-validation`
     - `az spring app deploy -n tokenconsumer-6002 -g fellaverse -s fellaverse --jar-path 'consumer-token-6001/target/consumer-token-6001-0.0.1-SNAPSHOT.jar' --disable-validation`
+
+6. Log from azure
+    - `az spring app logs --name eureka-8761 --service "fellaverse" --resource-group "fellaverse" -f`
