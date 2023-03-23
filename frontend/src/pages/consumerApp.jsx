@@ -28,10 +28,6 @@ import FlashSale from './flashSale/listFlashSale';
 import DetailFlashSale from './flashSale/detailFlashSale';
 import OrderSuccess from './flashSale/orderSuccess';
 
-import ViewSchedule from './schedule/viewSchedule';
-// import DetailFlashSale from './schedule/addSchedule';
-// import OrderSuccess from './schedule/editSchedule';
-
 import UserApp from './user/userApp';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -162,12 +158,7 @@ const ConsumerApp = () => {
               <Route path='/user/*' element={<UserApp />}></Route>
               <Route path='/flash-sale' element={<FlashSale />}></Route>
               <Route path='/flash-sale/:id' element={<DetailFlashSale />} />
-              <Route path='/flash-sale/:title/:subTitle' element={<OrderSuccess />}></Route>
-              
-              <Route path='/schedule/:id' element={<ViewSchedule />}></Route>
-              {/* <Route path='/schedule/edit' element={<DetailFlashSale />} />
-              <Route path='/flash-sale/:title/:subTitle' element={<OrderSuccess />}></Route>
-               */}
+              <Route path='/flash-sale/:title/:subTitle' element={<OrderSuccess />}></Route>                          
               <Route path='/success/:title/:subTitle' element={<Success />} />
               <Route path='/forgotPassword' element={<ForgotPasswordForm />} />
               <Route path="*" element={<NotFound />} />
