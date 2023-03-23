@@ -10,7 +10,7 @@ spring:
         format_sql: true
   profiles:
     include:
-      - dev
+      - prod
 # register this microservice to eureka server
 eureka:
   instance:
