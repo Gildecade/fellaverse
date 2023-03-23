@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Input, Space, Table, Tag, Popconfirm, message } from 'antd';
+import { Button, Input, Space, Table, Tag, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { domain } from '../../config';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
 import {
   CheckCircleOutlined,
   ClockCircleOutlined,
   CloseCircleOutlined,
   ExclamationCircleOutlined,
 } from '@ant-design/icons';
-import moment from 'moment/moment';
 
 const PersonalFlashSaleOrder = () => {
   const [products, setProducts] = useState([]);
@@ -248,7 +248,7 @@ const PersonalFlashSaleOrder = () => {
       dataIndex: 'purchaseDateTime',
       key: 'purchaseDateTime',
       render: (dateTime) => {
-        return moment(dateTime).format('YYYY-MM-DD HH:mm:ss');
+        return dayjs.utc(dateTime).tz("America/Toronto").format('YYYY-MM-DD HH:mm:ss');
       },
         sorter: (a, b) => {
           const nameA = a.purchaseDateTime; // ignore upper and lowercase

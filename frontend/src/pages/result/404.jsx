@@ -15,7 +15,7 @@ const NotFound = () => {
       subTitle="Sorry, the page you visited does not exist."
       extra={[
         <Link to={homePage}>
-          <Button type="primary">
+          <Button type="primary" key="home">
             Back Home
           </Button>
         </Link>

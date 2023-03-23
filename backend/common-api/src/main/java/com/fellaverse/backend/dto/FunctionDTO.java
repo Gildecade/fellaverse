@@ -12,16 +12,19 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * A DTO for the {@link com.fellaverse.backend.bean.Exercise} entity
+ * A DTO for the {@link com.fellaverse.backend.bean.Function} entity
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExerciseDTO implements Serializable {
+public class FunctionDTO implements Serializable {
     @Null(groups = ValidGroup.Crud.Create.class, message = "ID should be null when creating")
     @NotNull(groups = ValidGroup.Crud.Update.class, message = "ID cannot be null")
     private Long id;
-    @NotBlank(message = "exercise name cannot be blank")
+    @NotBlank(message = "functionName name cannot be blank")
+    @Size(max = 60)
+    private String functionName;
+    @NotBlank(message = "function description cannot be blank")
     @Size(max = 256)
-    private String exerciseName;
+    private String description;
 }

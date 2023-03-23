@@ -1,48 +1,41 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Input, Space, Table, Tag, message } from 'antd';
+import { Button, Input, Space, Table, Popconfirm, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { domain } from '../../../config';
 import axios from 'axios';
-import dayjs from 'dayjs';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-  CheckCircleOutlined,
-  ClockCircleOutlined,
-  CloseCircleOutlined,
-  ExclamationCircleOutlined,
-} from '@ant-design/icons';
 
-const FlashSaleOrderManagement = () => {
-  const [products, setProducts] = useState([]);
+const FunctionManagement = () => {
+  const [funcs, setFuncs] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
   const navigate = useNavigate();
-
-  // const handleDelete = async (key) => {
-  //   try {
-  //     const result = await axios.delete(`${domain}management/limitedProduct/` + key);
-  //     message.success("Delete successfully.");
-  //     const data = result.data.data;
-  //     // console.log(data);
-  //     const title = data;
-  //     const subTitle = "Delete limited product success!";
-  //     navigate(`/admin/success/${title}/${subTitle}`);
-  //   } catch (error) {
-  //     console.log(error);
-  //     let msg = null;
-  //     if (error.response) {
-  //       if (error.response.data.message) {
-  //         msg = error.response.data.message;
-  //       } else {
-  //         msg = error.response.data;
-  //       }
-  //       message.error(msg);
-  //     } else {
-  //       message.error("Update failed. Internal server error.");}
-  //   }
-  // };
+  const handleDelete = async (key) => {
+    try {
+      const result = await axios.delete(`${domain}management/function/` + key);
+      message.success("Delete successfully.");
+      const data = result.data.data;
+      console.log(data);
+      const title = data;
+      const subTitle = "Delete function info success!";
+      //navigate(`/admin/success/${title}/${subTitle}`);
+      window.location = `/admin/function`;
+    } catch (error) {
+      console.log(error);
+      let msg = null;
+      if (error.response) {
+        if (error.response.data.message) {
+          msg = error.response.data.message;
+        } else {
+          msg = error.response.data;
+        }
+        message.error(msg);
+      } else {
+        message.error("Update failed. Internal server error.");}
+    }
+  };
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -149,13 +142,14 @@ const FlashSaleOrderManagement = () => {
 
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-      ...getColumnSearchProps('id'),
+      title: 'Function Name',
+      dataIndex: 'functionName',
+      key: 'functionName',
+      render: (text) => <a>{text}</a>,
+      ...getColumnSearchProps('function name'),
         sorter: (a, b) => {
-          const nameA = a.id; // ignore upper and lowercase
-          const nameB = b.id; // ignore upper and lowercase
+          const nameA = a.functionName.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.functionName.toUpperCase(); // ignore upper and lowercase
           if (nameA < nameB) {
             return -1;
           }
@@ -169,90 +163,13 @@ const FlashSaleOrderManagement = () => {
         sortDirections: ['descend', 'ascend'],
     },
     {
-      title: 'Quantity',
-      dataIndex: 'quantity',
-      key: 'quantity',
-      ...getColumnSearchProps('quantity'),
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+      ...getColumnSearchProps('description'),
         sorter: (a, b) => {
-          const nameA = a.quantity; // ignore upper and lowercase
-          const nameB = b.quantity; // ignore upper and lowercase
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-        
-          // names must be equal
-          return 0;
-        },
-        sortDirections: ['descend', 'ascend'],
-    },
-    {
-      title: 'Amount',
-      dataIndex: 'amount',
-      key: 'amount',
-      ...getColumnSearchProps('amount'),
-        sorter: (a, b) => {
-          const nameA = a.amount; // ignore upper and lowercase
-          const nameB = b.amount; // ignore upper and lowercase
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-        
-          // names must be equal
-          return 0;
-        },
-        sortDirections: ['descend', 'ascend'],
-    },
-    {
-      title: 'Status',
-      key: 'orderStatus',
-      dataIndex: 'orderStatus',
-      render: (tag) => {
-        switch (tag) {
-          case "COMPLETED":
-            return (
-              <Tag color="success" icon={<CheckCircleOutlined />} key={tag}>
-                {tag}
-              </Tag>
-            );
-            case "CANCELLED":
-            return (
-              <Tag color="error" icon={<CloseCircleOutlined />} key={tag}>
-                {tag}
-              </Tag>
-            );
-            case "ACTIVE":
-            return (
-              <Tag color={"warning"} icon={<ClockCircleOutlined />} key={tag}>
-                {tag}
-              </Tag>
-            );
-            case "OTHER":
-            return (
-              <Tag color={"default"} icon={<ExclamationCircleOutlined />} key={tag}>
-                {tag}
-              </Tag>
-            );
-          default:
-            return (<span />);
-        }
-      },
-    },
-    {
-      title: 'Purchase time',
-      dataIndex: 'purchaseDateTime',
-      key: 'purchaseDateTime',
-      render: (dateTime) => {
-        return dayjs.utc(dateTime).tz("America/Toronto").format('YYYY-MM-DD HH:mm:ss');
-      },
-        sorter: (a, b) => {
-          const nameA = a.purchaseDateTime; // ignore upper and lowercase
-          const nameB = b.purchaseDateTime; // ignore upper and lowercase
+          const nameA = a.description.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.description.toUpperCase(); // ignore upper and lowercase
           if (nameA < nameB) {
             return -1;
           }
@@ -270,7 +187,10 @@ const FlashSaleOrderManagement = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <Link to={'detail/'+record.key} state={record}>Detail</Link>
+          <Link to={'edit/'+record.key} state={record}>Edit</Link>
+          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+            <a>Delete</a>
+          </Popconfirm>
         </Space>
       ),
     },
@@ -281,23 +201,22 @@ const FlashSaleOrderManagement = () => {
       try {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
         axios.defaults.headers.common['Fellaverse-token'] = token;
-        const result = await axios.get(`${domain}management/flashSaleOrder`);
-        const productList = result.data.data.map(f => {
+        const result = await axios.get(`${domain}management/function`);
+        // console.log(result);
+        const functionList = result.data.data.map(f => {
           return {...f, key: f.id};
         });
-        setProducts(productList);
+        setFuncs(functionList);
+        const sortedFuncs = [...functionList].sort((a, b) => a.functionName < b.functionName ? -1 : 1);
+        setFuncs(sortedFuncs);
         
       } catch (error) {
         console.log(error);
-        let msg = null;
-        if (error.response.data.data) {
-          msg = error.response.data.data.message;
-        } else if (error.response.data.message) {
+        let msg = "Internal server error."
+        if (error.response.data.message) {
           msg = error.response.data.message;
-        } else if (error.response) {
+        } else if (error.response.data) {
           msg = error.response.data;
-        } else {
-          msg = "Internal server error.";
         }
         message.error(msg);
       }
@@ -313,10 +232,17 @@ const FlashSaleOrderManagement = () => {
         pagination={{
           position: ['bottomRight'],
         }}
-        dataSource={products}
+        dataSource={funcs}
       />
+      <Link to={'/admin/function/add'}>
+        <Button
+          type="primary"
+        >
+          Add new function
+        </Button>
+      </Link>
     </div>
   );
 };
 
-export default FlashSaleOrderManagement;
+export default FunctionManagement;

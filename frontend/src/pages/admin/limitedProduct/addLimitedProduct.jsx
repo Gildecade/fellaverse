@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, InputNumber, message, Select, Space, DatePicker } from 'antd';
 import axios from 'axios';
 import { domain } from '../../../config';
-import uploadFileToBlob, { isStorageConfigured, getBlobsInContainer } from '../upload/azure-storage-blob';
+import uploadFileToBlob, { isStorageConfigured } from '../upload/azure-storage-blob';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
@@ -113,10 +113,10 @@ const AddLimitedProduct = () => {
   };
 
   const onFinish = async (values) => {
-    // if (fileUploaded === '') {
-    //   message.error("Please upload image!");
-    //   return;
-    // }
+    if (fileUploaded === '') {
+      message.error("Please upload image!");
+      return;
+    }
     // setLoading(true);
     values = {...values, imageUrl: azure + fileUploaded};
     console.log('Received values of form: ', values);

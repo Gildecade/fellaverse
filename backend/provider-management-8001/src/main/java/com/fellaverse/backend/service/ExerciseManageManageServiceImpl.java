@@ -26,7 +26,7 @@ public class ExerciseManageManageServiceImpl implements ExerciseManageService
 
     @Override
     public Boolean editExercise(Exercise exercise) {
-        if (exerciseRepository.findById(exercise.getId()) == null)
+        if (exerciseRepository.findById(exercise.getId()) == null || exerciseRepository.findByExerciseName(exercise.getExerciseName()) != null)
             return false;
         else {
             exerciseRepository.save(exercise);

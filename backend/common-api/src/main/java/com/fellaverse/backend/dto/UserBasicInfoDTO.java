@@ -6,6 +6,7 @@ import com.fellaverse.backend.validator.ValidGroup;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class UserBasicInfoDTO implements Serializable {
     @NotBlank(groups = ValidGroup.Crud.Create.class, message = "Username cannot be blank")
     private String username;
     @NotBlank(groups = ValidGroup.Crud.Create.class, message = "Email cannot be blank")
+    @Size(max = 256)
     private String email;
     @NotBlank(groups = ValidGroup.Crud.Create.class, message = "Phone number cannot be blank")
     private String phoneNumber;

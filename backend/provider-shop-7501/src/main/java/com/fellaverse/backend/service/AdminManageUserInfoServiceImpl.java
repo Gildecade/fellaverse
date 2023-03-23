@@ -46,10 +46,6 @@ public class AdminManageUserInfoServiceImpl implements UserManageService{
         return userSet;
     }
 
-    @Override
-    public Boolean updateUserFunction(Long userId, Set<Function> functions) {
-        return null;
-    }
 
     @Override
     public User findUserById(Long userId) {

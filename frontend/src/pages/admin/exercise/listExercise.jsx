@@ -1,34 +1,29 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Input, Space, Table, Tag, Popconfirm, message } from 'antd';
+import { Button, Input, Space, Table, Popconfirm, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { domain } from '../../../config';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
-const AdminManagement = () => {
-  const [admins, setAdmins] = useState([]);
+const ExerciseManagement = () => {
+  const [exercises, setExercises] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
   const navigate = useNavigate();
-  var colors = ["magenta", "red", "volcano", "volcano", "gold", "lime", "green", "cyan", "blue", "geekblue", "purple"];
-  var colorDict = new Array();
-
-  const getExtract = (array) => {
-    const random = (min, max) => Math.floor(Math.random() * (max - min) + min);
-    let index=random(0, array.length);
-    return array.splice(index, 1);
-  }
+  const delay = ms => new Promise(res => setTimeout(res, ms));
   const handleDelete = async (key) => {
     try {
-      const result = await axios.delete(`${domain}management/admin/` + key);
+      const result = await axios.delete(`${domain}management/exercise/` + key);
       message.success("Delete successfully.");
       const data = result.data.data;
-      // console.log(data);
+      console.log(data);
+      await delay(500);
       const title = data;
-      const subTitle = "Delete admin info success!";
-      navigate(`/admin/success/${title}/${subTitle}`);
+      const subTitle = "Delete exercise info success!";
+      //navigate(`/admin/success/${title}/${subTitle}`);
+      window.location = `/admin/exercise`;
     } catch (error) {
       console.log(error);
       let msg = null;
@@ -149,13 +144,14 @@ const AdminManagement = () => {
 
   const columns = [
     {
-      title: 'Userame',
-      dataIndex: 'username',
-      key: 'username',
-      ...getColumnSearchProps('username'),
+      title: 'Exercise Name',
+      dataIndex: 'exerciseName',
+      key: 'exerciseName',
+      render: (text) => <a>{text}</a>,
+      ...getColumnSearchProps('exercise name'),
         sorter: (a, b) => {
-          const nameA = a.username.toUpperCase(); // ignore upper and lowercase
-          const nameB = b.username.toUpperCase(); // ignore upper and lowercase
+          const nameA = a.exerciseName.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.exerciseName.toUpperCase(); // ignore upper and lowercase
           if (nameA < nameB) {
             return -1;
           }
@@ -167,67 +163,6 @@ const AdminManagement = () => {
           return 0;
         },
         sortDirections: ['descend', 'ascend'],
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
-      ...getColumnSearchProps('email'),
-        sorter: (a, b) => {
-          const nameA = a.email.toUpperCase(); // ignore upper and lowercase
-          const nameB = b.email.toUpperCase(); // ignore upper and lowercase
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-        
-          // names must be equal
-          return 0;
-        },
-        sortDirections: ['descend', 'ascend'],
-    },
-    {
-      title: 'Phone Number',
-      dataIndex: 'phoneNumber',
-      key: 'phoneNumber',
-      ...getColumnSearchProps('phone number'),
-        sorter: (a, b) => {
-          const nameA = a.phoneNumber.toUpperCase(); // ignore upper and lowercase
-          const nameB = b.phoneNumber.toUpperCase(); // ignore upper and lowercase
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-        
-          // names must be equal
-          return 0;
-        },
-        sortDirections: ['descend', 'ascend'],
-    },
-    {
-      title: 'Roles',
-      key: 'roles',
-      dataIndex: 'roles',
-      render: (tags) => (
-        tags ? 
-        <span>
-          {tags.map((tag) => {
-            let color = getExtract(colors)[0];
-            colorDict[tag] = color;
-            // console.log(colorDict);
-            return (
-              <Tag color={colorDict[tag]} key={tag}>
-                {tag}
-              </Tag>
-            );
-          })}
-        </span> : 
-        <span />
-      ),
     },
     {
       title: 'Action',
@@ -248,16 +183,24 @@ const AdminManagement = () => {
       try {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
         axios.defaults.headers.common['Fellaverse-token'] = token;
-        const result = await axios.get(`${domain}management/admin`);
-         console.log(localStorage);
-        const adminList = result.data.data.map(f => {
+        const result = await axios.get(`${domain}management/exercise`);
+        // console.log(result);
+        const exerciseList = result.data.data.map(f => {
           return {...f, key: f.id};
         });
-        setAdmins(adminList);
+        setExercises(exerciseList);
+        const sortedExercises = [...exerciseList].sort((a, b) => a.exerciseName < b.exerciseName ? -1 : 1);
+        setExercises(sortedExercises);
         
       } catch (error) {
         console.log(error);
-        message.error(error.response.data.message);
+        let msg = "Internal server error."
+        if (error.response.data.message) {
+          msg = error.response.data.message;
+        } else if (error.response.data) {
+          msg = error.response.data;
+        }
+        message.error(msg);
       }
 
     }
@@ -271,17 +214,17 @@ const AdminManagement = () => {
         pagination={{
           position: ['bottomRight'],
         }}
-        dataSource={admins}
+        dataSource={exercises}
       />
-      <Link to={'/admin/admin/add'}>
+      <Link to={'/admin/exercise/add'}>
         <Button
           type="primary"
         >
-          Add new admin
+          Add new exercise
         </Button>
       </Link>
     </div>
   );
 };
 
-export default AdminManagement;
+export default ExerciseManagement;
