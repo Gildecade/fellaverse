@@ -100,7 +100,7 @@ const ConsumerApp = () => {
                 <Col lg={6} xxl={8}>
                 </Col>
                 <Col lg={6} xxl={8} style={{top:15,}}>
-                  <HeaderSearch></HeaderSearch>
+                  {/* <HeaderSearch></HeaderSearch> */}
                 </Col>
                 <Col lg={9} xxl={6}>
                 </Col>

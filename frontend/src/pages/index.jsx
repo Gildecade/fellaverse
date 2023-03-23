@@ -47,7 +47,7 @@ const Index = () => {
                     <Image
                       width={800}
                       height={450}
-                      src={'www.aaaa.com'}
+                      src={'https://fellaverse.blob.core.windows.net/product-images/forecast letter.png'}
                       fallback={GGko} />
                   </div>
                 </Carousel>
