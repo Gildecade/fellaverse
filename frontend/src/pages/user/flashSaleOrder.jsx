@@ -5,6 +5,7 @@ import Highlighter from 'react-highlight-words';
 import { domain } from '../../config';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
 import {
   CheckCircleOutlined,
   ClockCircleOutlined,
@@ -248,7 +249,7 @@ const PersonalFlashSaleOrder = () => {
       dataIndex: 'purchaseDateTime',
       key: 'purchaseDateTime',
       render: (dateTime) => {
-        return moment(dateTime).format('YYYY-MM-DD HH:mm:ss');
+        return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
       },
         sorter: (a, b) => {
           const nameA = a.purchaseDateTime; // ignore upper and lowercase
