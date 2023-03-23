@@ -3,7 +3,7 @@ import {
   HomeOutlined,
   UnorderedListOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Col, Layout, Menu, Row, theme, Space } from 'antd';
+import { Layout, Menu, theme } from 'antd';
 import {
   Routes,
   Route,
@@ -13,8 +13,6 @@ import {
 import Profile from './profile';
 import PersonalFlashSaleOrder from './flashSaleOrder';
 import PersonalDetailSaleOrder from './detailFlashSaleOrder';
-
-const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
     key,

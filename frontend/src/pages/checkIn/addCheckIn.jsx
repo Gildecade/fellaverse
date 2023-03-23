@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment/moment';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, message, DatePicker, TimePicker, Space } from 'antd';
 import axios from 'axios';
