@@ -3,6 +3,7 @@ import { Button, Input, Space, Table, Tag, Popconfirm, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { domain } from '../../../config';
+import dayjs from 'dayjs';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -248,7 +249,7 @@ const LimitedProductManagement = () => {
       dataIndex: 'createdDateTime',
       key: 'createdDateTime',
       render: (dateTime) => {
-        return moment(dateTime).format('YYYY-MM-DD HH:mm:ss');
+        return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
       },
         sorter: (a, b) => {
           const nameA = a.createdDateTime; // ignore upper and lowercase
@@ -270,7 +271,7 @@ const LimitedProductManagement = () => {
       dataIndex: 'saleDateTime',
       key: 'saleDateTime',
       render: (dateTime) => {
-        return moment(dateTime).format('YYYY-MM-DD HH:mm:ss');
+        return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
       },
         sorter: (a, b) => {
           const nameA = a.saleDateTime; // ignore upper and lowercase

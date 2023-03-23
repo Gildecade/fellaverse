@@ -267,7 +267,7 @@ const columns = [
           }
           return (
             <Input.Group compact value={balance}>
-              <Input type="number" onChange={handleChange} style={{width: 'calc(35%)',}}
+              <Input type="number" step="0.01" min="0" onChange={handleChange} style={{width: 'calc(35%)',}}
                 defaultValue={wallet}
               />
               <Button key={record.id} value={balance} type="primary" onClick={onClick} disabled={record.id != currentId || wallet.toString() == balance.toString()}>Submit</Button>

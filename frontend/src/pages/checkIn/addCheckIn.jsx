@@ -194,7 +194,7 @@ const AddCheckIn = () => {
         },
     ]}
     >
-      <Input type="number" min="0" style={{width: 'calc(10%)'}} onChange={setWeight}/> (optional)
+      <Input step="0.01" type="number" min="0" style={{width: 'calc(10%)'}} onChange={setWeight}/> (optional)
     </Form.Item>
 
     <Form.Item {...tailFormItemLayout}>

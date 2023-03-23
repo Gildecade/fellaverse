@@ -64,6 +64,10 @@ const EditFunction = () => {
     console.log("v", e.target.value);
     record.weight = e.target.value;
   }
+  const disabledDate = (current) => {
+    // Can not select days before today and today
+    return current > dayjs().endOf('day');
+  };
   const onChange = (value, dateString) => {
     //console.log('Selected Time: ', value);
     //console.log('Formatted Selected Time: ', dateString);
@@ -158,7 +162,7 @@ const EditFunction = () => {
         
         defaultPickerValue={dayjs()}
       /> */}
-      <DatePicker  defaultValue={dayjs(record.startDateTime)} defaultPickerValue={dayjs(record.startDateTime)} onChange={onChangeDate}/>
+      <DatePicker  disabledDate={disabledDate} defaultValue={dayjs(record.startDateTime)} defaultPickerValue={dayjs(record.startDateTime)} onChange={onChangeDate}/>
     </Form.Item>
 
     <Form.Item
@@ -184,7 +188,7 @@ const EditFunction = () => {
         },
     ]}
     >
-      <Input type="number" min="0" defaultValue={record.weight} style={{width: 'calc(10%)',}} onChange={setWeight}/>(optional)
+      <Input type="number" step="0.01" min="0" defaultValue={record.weight} style={{width: 'calc(10%)',}} onChange={setWeight}/>(optional)
     </Form.Item>
 
     <Form.Item {...tailFormItemLayout}>
