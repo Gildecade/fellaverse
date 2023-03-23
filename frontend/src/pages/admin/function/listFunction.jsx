@@ -1,35 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Input, Space, Table, Tag, Popconfirm, message } from 'antd';
+import { Button, Input, Space, Table, Popconfirm, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { domain } from '../../../config';
-import dayjs from 'dayjs';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-  CheckCircleOutlined,
-  ClockCircleOutlined,
-  CloseCircleOutlined,
-  ExclamationCircleOutlined,
-} from '@ant-design/icons';
-import moment from 'moment/moment';
 
-const LimitedProductManagement = () => {
-  const [products, setProducts] = useState([]);
+const FunctionManagement = () => {
+  const [funcs, setFuncs] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
   const navigate = useNavigate();
-
   const handleDelete = async (key) => {
     try {
-      const result = await axios.delete(`${domain}management/limitedProduct/` + key);
+      const result = await axios.delete(`${domain}management/function/` + key);
       message.success("Delete successfully.");
       const data = result.data.data;
-      // console.log(data);
+      console.log(data);
       const title = data;
-      const subTitle = "Delete limited product success!";
-      navigate(`/admin/success/${title}/${subTitle}`);
+      const subTitle = "Delete function info success!";
+      //navigate(`/admin/success/${title}/${subTitle}`);
+      window.location = `/admin/function`;
     } catch (error) {
       console.log(error);
       let msg = null;
@@ -150,13 +142,14 @@ const LimitedProductManagement = () => {
 
   const columns = [
     {
-      title: 'Product name',
-      dataIndex: 'productName',
-      key: 'productName',
-      ...getColumnSearchProps('productName'),
+      title: 'Function Name',
+      dataIndex: 'functionName',
+      key: 'functionName',
+      render: (text) => <a>{text}</a>,
+      ...getColumnSearchProps('function name'),
         sorter: (a, b) => {
-          const nameA = a.productName.toUpperCase(); // ignore upper and lowercase
-          const nameB = b.productName.toUpperCase(); // ignore upper and lowercase
+          const nameA = a.functionName.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.functionName.toUpperCase(); // ignore upper and lowercase
           if (nameA < nameB) {
             return -1;
           }
@@ -170,112 +163,13 @@ const LimitedProductManagement = () => {
         sortDirections: ['descend', 'ascend'],
     },
     {
-      title: 'Quantity',
-      dataIndex: 'quantity',
-      key: 'quantity',
-      ...getColumnSearchProps('quantity'),
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+      ...getColumnSearchProps('description'),
         sorter: (a, b) => {
-          const nameA = a.quantity; // ignore upper and lowercase
-          const nameB = b.quantity; // ignore upper and lowercase
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-        
-          // names must be equal
-          return 0;
-        },
-        sortDirections: ['descend', 'ascend'],
-    },
-    {
-      title: 'Price',
-      dataIndex: 'price',
-      key: 'price',
-      ...getColumnSearchProps('price'),
-        sorter: (a, b) => {
-          const nameA = a.price; // ignore upper and lowercase
-          const nameB = b.price; // ignore upper and lowercase
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-        
-          // names must be equal
-          return 0;
-        },
-        sortDirections: ['descend', 'ascend'],
-    },
-    {
-      title: 'Status',
-      key: 'productStatus',
-      dataIndex: 'productStatus',
-      render: (tag) => {
-        switch (tag) {
-          case "ACTIVE":
-            return (
-              <Tag color="success" icon={<CheckCircleOutlined />} key={tag}>
-                {tag}
-              </Tag>
-            );
-            case "UNAVAILABLE":
-            return (
-              <Tag color="error" icon={<CloseCircleOutlined />} key={tag}>
-                {tag}
-              </Tag>
-            );
-            case "HIDE":
-            return (
-              <Tag color={"warning"} icon={<ExclamationCircleOutlined />} key={tag}>
-                {tag}
-              </Tag>
-            );
-            case "OTHER":
-            return (
-              <Tag color={"default"} icon={<ClockCircleOutlined />} key={tag}>
-                {tag}
-              </Tag>
-            );
-          default:
-            return (<span />);
-        }
-      },
-    },
-    {
-      title: 'Create time',
-      dataIndex: 'createdDateTime',
-      key: 'createdDateTime',
-      render: (dateTime) => {
-        return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
-      },
-        sorter: (a, b) => {
-          const nameA = a.createdDateTime; // ignore upper and lowercase
-          const nameB = b.createdDateTime; // ignore upper and lowercase
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-        
-          // names must be equal
-          return 0;
-        },
-        sortDirections: ['descend', 'ascend'],
-    },
-    {
-      title: 'Sale time',
-      dataIndex: 'saleDateTime',
-      key: 'saleDateTime',
-      render: (dateTime) => {
-        return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
-      },
-        sorter: (a, b) => {
-          const nameA = a.saleDateTime; // ignore upper and lowercase
-          const nameB = b.saleDateTime; // ignore upper and lowercase
+          const nameA = a.description.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.description.toUpperCase(); // ignore upper and lowercase
           if (nameA < nameB) {
             return -1;
           }
@@ -307,24 +201,22 @@ const LimitedProductManagement = () => {
       try {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
         axios.defaults.headers.common['Fellaverse-token'] = token;
-        const result = await axios.get(`${domain}management/limitedProduct`);
-        console.log(result);
-        const productList = result.data.data.map(f => {
+        const result = await axios.get(`${domain}management/function`);
+        // console.log(result);
+        const functionList = result.data.data.map(f => {
           return {...f, key: f.id};
         });
-        setProducts(productList);
+        setFuncs(functionList);
+        const sortedFuncs = [...functionList].sort((a, b) => a.functionName < b.functionName ? -1 : 1);
+        setFuncs(sortedFuncs);
         
       } catch (error) {
         console.log(error);
-        let msg = null;
-        if (error.response.data.data) {
-          msg = error.response.data.data.message;
-        } else if (error.response.data.message) {
+        let msg = "Internal server error."
+        if (error.response.data.message) {
           msg = error.response.data.message;
-        } else if (error.response) {
+        } else if (error.response.data) {
           msg = error.response.data;
-        } else {
-          msg = "Add failed. Internal server error.";
         }
         message.error(msg);
       }
@@ -340,17 +232,17 @@ const LimitedProductManagement = () => {
         pagination={{
           position: ['bottomRight'],
         }}
-        dataSource={products}
+        dataSource={funcs}
       />
-      <Link to={'/admin/limitedProduct/add'}>
+      <Link to={'/admin/function/add'}>
         <Button
           type="primary"
         >
-          Add new limited product
+          Add new function
         </Button>
       </Link>
     </div>
   );
 };
 
-export default LimitedProductManagement;
+export default FunctionManagement;

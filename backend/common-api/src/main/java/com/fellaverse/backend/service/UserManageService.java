@@ -24,6 +24,6 @@ public interface UserManageService extends UserService {
 
     Set<User> findAllUser();
 
-    Boolean updateUserFunction(Long userId, Set<Function> functions);
+    User findUserById(Long userId);
 
 }
