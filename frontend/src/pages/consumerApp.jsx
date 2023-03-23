@@ -5,6 +5,7 @@ import {
   TeamOutlined,
   UserOutlined,
   HomeOutlined,
+  FireOutlined,
 } from '@ant-design/icons';
 import { Breadcrumb, Col, Layout, Menu, Row, theme, Space } from 'antd';
 import {
@@ -26,12 +27,12 @@ import ForgotPasswordForm from './authentication/forgotPassword';
 import FlashSale from './flashSale/listFlashSale';
 import DetailFlashSale from './flashSale/detailFlashSale';
 import OrderSuccess from './flashSale/orderSuccess';
+import UserApp from './user/userApp';
 import Shop from './shop/listShop'
 import DetailShop from './shop/detailShop';
 import RecordManagement from './record/listRecord';
 import AddRecord from './record/addRecord';
-import ShopOrder from './user/shopOrder';
-import DetailShopOrder from './user/detailShopOrder';
+
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -61,14 +62,14 @@ const ConsumerApp = () => {
   [
     // TODO: modify sider contents here
     getItem(<Link to='/'>{homePage}</Link>, '1', <HomeOutlined />),
+    getItem(<Link to='/user'>Profile</Link>, 'p', <UserOutlined />),
     getItem('eShop', '2', <ShopOutlined />, [
       getItem(<Link to='/shop'>{'Store'}</Link>, '3'),
       getItem(<Link to='/flash-sale'>{'Flash sale'}</Link>, '4'),
     ]),
-    getItem('User', 'sub1', <UserOutlined />, [
+    getItem('Workout', 'sub1', <FireOutlined />, [
       getItem(<Link to='/record'>{'Record'}</Link>, '5'),
       getItem('Schedule', '6'),
-      getItem(<Link to='/order'>{'Order'}</Link>, '10'),
     ]),
     getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '7'), getItem('Team 2', '8')]),
     getItem('Files', '9', <FileOutlined />),
@@ -157,6 +158,7 @@ const ConsumerApp = () => {
             <Routes>
               {/* TODO: link your components(element) with route paths here */}
               <Route path="/" element={<Index />} />
+              <Route path='/user/*' element={<UserApp />}></Route>
               <Route path='/flash-sale' element={<FlashSale />}></Route>
               <Route path='/flash-sale/:id' element={<DetailFlashSale />} />
               <Route path='/flash-sale/:title/:subTitle' element={<OrderSuccess />}></Route>
@@ -164,9 +166,6 @@ const ConsumerApp = () => {
               <Route path='/shop/:id' element={< DetailShop/>}></Route>
               <Route path='/record' element={<RecordManagement />}></Route>
               <Route path='/record/add' element={<AddRecord />}></Route>
-
-              <Route path='/order' element={<ShopOrder />}></Route>
-              <Route path='/order/detail' element={<DetailShopOrder />}></Route>
 
 
               {/* <Route path='/order/' element={<Shop />}></Route> */}

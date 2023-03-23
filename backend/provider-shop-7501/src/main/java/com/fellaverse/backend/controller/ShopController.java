@@ -47,7 +47,9 @@ public class ShopController {
 
     @GetMapping("/{userId}/order")
     public List<OrderDTO> findOrderByUserId(@PathVariable("userId") Long userId) {
+//        return orderService.findByUserId(userId).stream().map(orderMapper::toDto).collect(Collectors.toList());
         return orderService.findByUserId(userId).stream().map(orderMapper::toDto).collect(Collectors.toList());
+
 //        return shopService.findAll().stream().map(courseFindAllMapper::toDto).collect(Collectors.toList());
     }
 

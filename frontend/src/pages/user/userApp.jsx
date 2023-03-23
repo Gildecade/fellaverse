@@ -13,6 +13,8 @@ import {
 import Profile from './profile';
 import PersonalFlashSaleOrder from './flashSaleOrder';
 import PersonalDetailSaleOrder from './detailFlashSaleOrder';
+import ShopOrder from './shopOrder';
+import DetailShopOrder from './detailShopOrder';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -43,6 +45,8 @@ const UserApp = () => {
     // TODO: modify sider contents here
     getItem(<Link to='/user'>{homePage}</Link>, '1', <HomeOutlined />),
     getItem(<Link to='/user/flashSaleOrder'>Flash sale order</Link>, '2', <UnorderedListOutlined />),
+    getItem(<Link to='/user/order'>Shop order</Link>, '3', <UnorderedListOutlined />),
+
   ];
   return (
     <Layout
@@ -64,6 +68,8 @@ const UserApp = () => {
           <Route path='/' element={<Profile />}></Route>
           <Route path='/flashSaleOrder' element={<PersonalFlashSaleOrder />}></Route>
           <Route path="/flashSaleOrder/detail/:id" element={<PersonalDetailSaleOrder/>} />
+          <Route path='/order' element={<ShopOrder />}></Route>
+          <Route path='/order/detail/:id' element={<DetailShopOrder />}></Route>
         </Routes>
       </div>
     </Layout>

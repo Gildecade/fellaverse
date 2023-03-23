@@ -6,6 +6,7 @@ import GGko from '../../images/GGko.jpg';
 const DetailShopOrder = () => {
   const parameters = useLocation();
   const record = parameters.state;
+  console.log(record);
 
   const OnClick = () => {
     window.history.back();
@@ -23,7 +24,7 @@ const DetailShopOrder = () => {
         <Descriptions.Item label="course name">{record.product.productName}</Descriptions.Item>
         <Descriptions.Item label="Description">{record.product.description }</Descriptions.Item>
         <Descriptions.Item label="Price">{record.product.price}</Descriptions.Item>
-        <Descriptions.Item label="link">{record.product.course.videoUrl}</Descriptions.Item>
+        <Descriptions.Item label="link">{record.product.videoUrl}</Descriptions.Item>
 
       </Descriptions>
       <br/>
@@ -33,7 +34,7 @@ const DetailShopOrder = () => {
           width: 250,
         }}
         // cover={<img alt={product.productName} src={GGko}></img>}
-        cover={<Image alt={record.limitedProduct.productName} src={record.limitedProduct.imageUrl} height='250px' width='250px' fallback={GGko}></Image>}
+        cover={<Image alt={record.product.productName} src={record.product.imageUrl} height='250px' width='250px' fallback={GGko}></Image>}
       >
       </Card>
       <br />
