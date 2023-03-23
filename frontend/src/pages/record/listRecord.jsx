@@ -154,11 +154,12 @@ const RecordManagement = () => {
       title: 'Record Time',
       dataIndex: 'createDateTime',  //TODO
       key: 'createDateTime', // TODO
-      render: (text) => <a>{text}</a>, // TODO
-      ...getColumnSearchProps('record time'),
+      render: (dateTime) => {
+        return dayjs.utc(dateTime).tz("America/Toronto").format('YYYY-MM-DD HH:mm:ss');
+      },
         sorter: (a, b) => {
-          const nameA = a.createDateTime.toUpperCase(); // ignore upper and lowercase
-          const nameB = b.createDateTime.toUpperCase(); // ignore upper and lowercase
+          const nameA = a.createDateTime; // ignore upper and lowercase
+          const nameB = b.createDateTime; // ignore upper and lowercase
           if (nameA < nameB) {
             return -1;
           }

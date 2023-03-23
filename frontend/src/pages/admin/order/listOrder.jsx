@@ -11,7 +11,7 @@ import {
   CloseCircleOutlined,
   ExclamationCircleOutlined,
 } from '@ant-design/icons';
-import moment from 'moment/moment';
+
 
 const ShopOrderManagement = () => {
   const [products, setProducts] = useState([]);
@@ -191,7 +191,7 @@ const ShopOrderManagement = () => {
       dataIndex: 'purchaseDateTime',
       key: 'purchaseDateTime',
       render: (dateTime) => {
-        return moment(dateTime).format('YYYY-MM-DD HH:mm:ss');
+        return dayjs.utc(dateTime).tz("America/Toronto").format('YYYY-MM-DD HH:mm:ss');
       },
         sorter: (a, b) => {
           const nameA = a.purchaseDateTime; // ignore upper and lowercase
