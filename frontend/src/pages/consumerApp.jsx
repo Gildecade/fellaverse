@@ -7,7 +7,7 @@ import {
   HomeOutlined,
   FireOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Col, Layout, Menu, Row, theme, Space } from 'antd';
+import { Breadcrumb, Col, Layout, Menu, Row, theme } from 'antd';
 import {
   Routes,
   Route,
@@ -19,7 +19,6 @@ import Index from './index';
 import LoginForm from './authentication/login';
 import LogoutForm from './authentication/logout';
 import RegisterForm from './authentication/register';
-import HeaderSearch from './headerSearch';
 import NotFound from './result/404';
 // TODO: import your components here
 import Success from './result/Success';

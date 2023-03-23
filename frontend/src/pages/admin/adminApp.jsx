@@ -4,7 +4,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import { Breadcrumb, Col, Layout, Menu, Row, theme, Space } from 'antd';
+import { Breadcrumb, Col, Layout, Menu, Row, theme } from 'antd';
 import {
   ShopOutlined,
   HomeOutlined,
@@ -16,8 +16,6 @@ import {
   UngroupOutlined,
   SubnodeOutlined
 } from '@ant-design/icons';
-import { domain } from '../../config';
-import axios from 'axios';
 
 import AdminIndex from './adminIndex';
 import LogoutForm from '../authentication/logout';

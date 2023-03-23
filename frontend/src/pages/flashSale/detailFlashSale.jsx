@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Button, InputNumber, Space, Table, Tag, Popconfirm, message, Card, Image, Row, Col } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Button, InputNumber, Space, message, Image, Row, Col } from 'antd';
 import { domain } from '../../config';
 import axios from 'axios';
-import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import GGko from '../../images/GGko.jpg';
 import moment from 'moment/moment';
-
-const { Meta } = Card;
 
 const DetailFlashSale = () => {
   const [loading, setLoading] = useState(false);

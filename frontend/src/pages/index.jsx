@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Carousel, Row, Col, Image } from 'antd';
+import { Carousel, Image } from 'antd';
 import GGko from '../images/GGko.jpg';
 
 const contentStyle = {
