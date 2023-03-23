@@ -32,6 +32,8 @@ import AddLimitedProduct from './limitedProduct/addLimitedProduct';
 import EditLimitedProduct from './limitedProduct/editLimitedProduct';
 import FlashSaleOrderManagement from './flashSaleOrder/listOrder';
 import DetailSaleOrder from './flashSaleOrder/detailOrder';
+import ShopOrderManagement from './order/listOrder';
+import DetailOrderManagement from './order/detailOrder';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -73,7 +75,7 @@ const AdminApp = () => {
     if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
       items.push(getItem("Shop Management", 'sub1', <ShopOutlined />, [
         getItem(<Link to='/admin'>Product</Link>, '4', <ShoppingOutlined />),
-        getItem(<Link to='/admin'>Order</Link>, '5', <ShoppingCartOutlined />),
+        getItem(<Link to='/admin/order'>Order</Link>, '5', <ShoppingCartOutlined />),
       ]));
     }
     if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
@@ -155,6 +157,9 @@ const AdminApp = () => {
                 <Route path="/limitedProduct/edit/:id" element={<EditLimitedProduct/>} />
                 <Route path="/saleOrder" element={<FlashSaleOrderManagement/>} />
                 <Route path="/saleOrder/detail/:id" element={<DetailSaleOrder/>} />
+                <Route path="/order" element={<ShopOrderManagement/>} />
+                <Route path="/order/detail/:id" element={<DetailOrderManagement/>} />
+
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>

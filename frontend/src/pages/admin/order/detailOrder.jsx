@@ -32,7 +32,6 @@ const DetailOrderManagement = () => {
         <Descriptions.Item label="Course name">{record.product.productName}</Descriptions.Item>
         <Descriptions.Item label="Description">{record.product.description }</Descriptions.Item>
         <Descriptions.Item label="Price">{record.product.price}</Descriptions.Item>
-        <Descriptions.Item label="Quantity">{record.product.quantity }</Descriptions.Item>
         <Descriptions.Item label="Status">{record.product.productStatus}</Descriptions.Item>
         <Descriptions.Item label="Create date time">{moment(record.product.createdDateTime).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
         <Descriptions.Item label="link">{record.product.course.videoUrl}</Descriptions.Item>
