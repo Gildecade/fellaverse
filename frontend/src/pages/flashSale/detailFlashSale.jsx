@@ -5,6 +5,9 @@ import axios from 'axios';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import GGko from '../../images/GGko.jpg';
 import moment from 'moment/moment';
+import dayjs from 'dayjs';
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const DetailFlashSale = () => {
   const [loading, setLoading] = useState(false);
@@ -14,6 +17,7 @@ const DetailFlashSale = () => {
   const parameters = useLocation();
   const navigate = useNavigate();
   const product = parameters.state;
+  const timezone = dayjs.tz.guess();
   // console.log(product);
   const delay = ms => new Promise(res => setTimeout(res, ms));
 
@@ -61,10 +65,8 @@ const DetailFlashSale = () => {
       }
     }
     initialize();
-    var now = moment();
-    console.log(now);
-    console.log(moment(product.saleDateTime));
-    if (now.isBefore(product.saleDateTime)) {
+    var now = dayjs();
+    if (now.isBefore(dayjs.utc(product.saleDateTime).tz(timezone).format('YYYY-MM-DD HH:mm:ss'))) {
       setDisabled(true);
     }
   }, []);

@@ -6,6 +6,8 @@ import { domain } from '../../config';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
+dayjs.extend(utc);
+dayjs.extend(timezone);
 import {
   CheckCircleOutlined,
   ClockCircleOutlined,
@@ -19,6 +21,7 @@ const PersonalFlashSaleOrder = () => {
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
   const navigate = useNavigate();
+  const timezone = dayjs.tz.guess();
 
   // const handleDelete = async (key) => {
   //   try {
@@ -248,7 +251,7 @@ const PersonalFlashSaleOrder = () => {
       dataIndex: 'purchaseDateTime',
       key: 'purchaseDateTime',
       render: (dateTime) => {
-        return dayjs.utc(dateTime).tz("America/Toronto").format('YYYY-MM-DD HH:mm:ss');
+        return dayjs.utc(dateTime).tz(timezone).format('YYYY-MM-DD HH:mm:ss');
       },
         sorter: (a, b) => {
           const nameA = a.purchaseDateTime; // ignore upper and lowercase
