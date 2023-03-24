@@ -4,6 +4,9 @@ import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { domain } from '../../config';
 import axios from 'axios';
+import dayjs from 'dayjs';
+dayjs.extend(utc);
+dayjs.extend(timezone);
 import { Link, useNavigate } from 'react-router-dom';
 
 const RecordManagement = () => {
@@ -12,7 +15,7 @@ const RecordManagement = () => {
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
   const userId = localStorage.getItem('userId') ? localStorage.getItem('userId') : sessionStorage.getItem('userId');
-
+  const timezone = dayjs.tz.guess();
   const navigate = useNavigate();
 
   const handleDelete = async (key) => {
@@ -155,7 +158,7 @@ const RecordManagement = () => {
       dataIndex: 'createDateTime',  //TODO
       key: 'createDateTime', // TODO
       render: (dateTime) => {
-        return dayjs.utc(dateTime).tz("America/Toronto").format('YYYY-MM-DD HH:mm:ss');
+        return dayjs.utc(dateTime).tz(timezone).format('YYYY-MM-DD HH:mm:ss');
       },
         sorter: (a, b) => {
           const nameA = a.createDateTime; // ignore upper and lowercase

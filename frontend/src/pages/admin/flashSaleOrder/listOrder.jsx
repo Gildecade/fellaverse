@@ -5,6 +5,8 @@ import Highlighter from 'react-highlight-words';
 import { domain } from '../../../config';
 import axios from 'axios';
 import dayjs from 'dayjs';
+dayjs.extend(utc);
+dayjs.extend(timezone);
 import { Link, useNavigate } from 'react-router-dom';
 import {
   CheckCircleOutlined,
@@ -18,6 +20,7 @@ const FlashSaleOrderManagement = () => {
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
+  const timezone = dayjs.tz.guess();
   const navigate = useNavigate();
 
   // const handleDelete = async (key) => {
@@ -248,7 +251,7 @@ const FlashSaleOrderManagement = () => {
       dataIndex: 'purchaseDateTime',
       key: 'purchaseDateTime',
       render: (dateTime) => {
-        return dayjs.utc(dateTime).tz("America/Toronto").format('YYYY-MM-DD HH:mm:ss');
+        return dayjs.utc(dateTime).tz(timezone).format('YYYY-MM-DD HH:mm:ss');
       },
         sorter: (a, b) => {
           const nameA = a.purchaseDateTime; // ignore upper and lowercase
