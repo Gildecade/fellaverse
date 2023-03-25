@@ -19,6 +19,7 @@ import Index from './index';
 import LoginForm from './authentication/login';
 import LogoutForm from './authentication/logout';
 import RegisterForm from './authentication/register';
+import HeaderSearch from './headerSearch';
 import NotFound from './result/404';
 // TODO: import your components here
 import Success from './result/Success';
@@ -30,6 +31,11 @@ import UserApp from './user/userApp';
 import UserCheckIn from './checkIn/listCheckIn';
 import AddCheckIn from './checkIn/addCheckIn';
 import EditCheckIn from './checkIn/editCheckIn';
+import Shop from './shop/listShop'
+import DetailShop from './shop/detailShop';
+import RecordManagement from './record/listRecord';
+import AddRecord from './record/addRecord';
+
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -61,11 +67,11 @@ const ConsumerApp = () => {
     getItem(<Link to='/'>{homePage}</Link>, '1', <HomeOutlined />),
     getItem(<Link to='/user'>Profile</Link>, 'p', <UserOutlined />),
     getItem('eShop', '2', <ShopOutlined />, [
-      getItem('Home', '3'),
+      getItem(<Link to='/shop'>{'Store'}</Link>, '3'),
       getItem(<Link to='/flash-sale'>{'Flash sale'}</Link>, '4'),
     ]),
     getItem('Workout', 'sub1', <FireOutlined />, [
-      getItem('Record', '5'),
+      getItem(<Link to='/record'>{'Record'}</Link>, '5'),
       getItem('Schedule', '6'),
     ]),
     getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '7'), getItem('Team 2', '8')]),
@@ -159,6 +165,10 @@ const ConsumerApp = () => {
               <Route path='/flash-sale' element={<FlashSale />}></Route>
               <Route path='/flash-sale/:id' element={<DetailFlashSale />} />
               <Route path='/flash-sale/:title/:subTitle' element={<OrderSuccess />}></Route>
+              <Route path='/shop' element={<Shop />}></Route>
+              <Route path='/shop/:id' element={< DetailShop/>}></Route>
+              <Route path='/record' element={<RecordManagement />}></Route>
+              <Route path='/record/add' element={<AddRecord />}></Route>
               <Route path='/success/:title/:subTitle' element={<Success />} />
               <Route path='/forgotPassword' element={<ForgotPasswordForm />} />
               <Route path='/checkIn' element={<UserCheckIn />} />

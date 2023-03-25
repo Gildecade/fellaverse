@@ -5,9 +5,10 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 
 @AllArgsConstructor
@@ -32,7 +33,7 @@ public class Order {
 
     @NotNull
     @Column(name = "purchase_date_time", nullable = false)
-    private Instant purchaseDateTime;
+    private LocalDateTime purchaseDateTime;
 
     @NotNull
     @Column(name = "amount", nullable = false)

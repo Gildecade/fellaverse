@@ -1,5 +1,7 @@
 package com.fellaverse.backend.controller;
 
+import com.fellaverse.backend.dto.ExerciseDTO;
+import com.fellaverse.backend.dto.RecordAddDTO;
 import com.fellaverse.backend.dto.RecordDTO;
 import com.fellaverse.backend.service.FeignRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,15 @@ public class FeignRecordController {
     @Autowired
     private FeignRecordService feignRecordService;
 
+
+    @GetMapping("/exercise")
+    public List<ExerciseDTO> findAllExercise(){
+        return feignRecordService.findAllExercise();
+    }
+
     @PostMapping("")
-    public String addRecord(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) RecordDTO recordDTO){
-        String result = feignRecordService.addRecord(recordDTO);
+    public String addRecord(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) RecordAddDTO recordAddDTO){
+        String result = feignRecordService.addRecord(recordAddDTO);
         Assert.isTrue("Add record success!".equals(result), "Add record failed!");
         return result;
     }

@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Input, Space, Table, Tag, message } from 'antd';
+import { Button, Input, Space, Table, Tag, Popconfirm, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
-import { domain } from '../../../config';
+import { domain } from '../../config';
 import axios from 'axios';
-import dayjs from 'dayjs';
-dayjs.extend(utc);
-dayjs.extend(timezone);
 import { Link, useNavigate } from 'react-router-dom';
 import {
   CheckCircleOutlined,
@@ -14,8 +11,12 @@ import {
   CloseCircleOutlined,
   ExclamationCircleOutlined,
 } from '@ant-design/icons';
+import dayjs from 'dayjs';
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
-const FlashSaleOrderManagement = () => {
+
+const ShopOrder = () => {
   const [products, setProducts] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
@@ -171,6 +172,32 @@ const FlashSaleOrderManagement = () => {
         },
         sortDirections: ['descend', 'ascend'],
     },
+
+    {
+      title: 'Course',
+      dataIndex: ['product', 'productName'],  //TODO
+      key: 'product', // TODO
+      // {exercise.map((exercise) => {
+      //   <Option key={exercise.id} value={exercise.id}>{exercise.exerciseName}</Option>
+      // }
+      // )}, // TODO
+      ...getColumnSearchProps(['product', 'productName']),
+        sorter: (a, b) => {
+          const nameA = a.exercise.exerciseName.toUpperCase(); // TODO
+          const nameB = b.exercise.exerciseName.toUpperCase(); 
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+        
+          // names must be equal
+          return 0;
+        },
+        sortDirections: ['descend', 'ascend'],
+    },
+
     {
       title: 'Quantity',
       dataIndex: 'quantity',
@@ -211,41 +238,8 @@ const FlashSaleOrderManagement = () => {
         },
         sortDirections: ['descend', 'ascend'],
     },
-    {
-      title: 'Status',
-      key: 'orderStatus',
-      dataIndex: 'orderStatus',
-      render: (tag) => {
-        switch (tag) {
-          case "COMPLETED":
-            return (
-              <Tag color="success" icon={<CheckCircleOutlined />} key={tag}>
-                {tag}
-              </Tag>
-            );
-            case "CANCELLED":
-            return (
-              <Tag color="error" icon={<CloseCircleOutlined />} key={tag}>
-                {tag}
-              </Tag>
-            );
-            case "ACTIVE":
-            return (
-              <Tag color={"warning"} icon={<ClockCircleOutlined />} key={tag}>
-                {tag}
-              </Tag>
-            );
-            case "OTHER":
-            return (
-              <Tag color={"default"} icon={<ExclamationCircleOutlined />} key={tag}>
-                {tag}
-              </Tag>
-            );
-          default:
-            return (<span />);
-        }
-      },
-    },
+
+
     {
       title: 'Purchase time',
       dataIndex: 'purchaseDateTime',
@@ -283,8 +277,9 @@ const FlashSaleOrderManagement = () => {
     const initialize = async () => {
       try {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
+        const userId = localStorage.getItem('userId') ? localStorage.getItem('userId') : sessionStorage.getItem('userId');
         axios.defaults.headers.common['Fellaverse-token'] = token;
-        const result = await axios.get(`${domain}management/flashSaleOrder`);
+        const result = await axios.get(`${domain}shop/${userId}/order`);
         const productList = result.data.data.map(f => {
           return {...f, key: f.id};
         });
@@ -322,4 +317,4 @@ const FlashSaleOrderManagement = () => {
   );
 };
 
-export default FlashSaleOrderManagement;
+export default ShopOrder;

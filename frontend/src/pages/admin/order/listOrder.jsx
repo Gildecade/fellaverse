@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Input, Space, Table, Tag, message } from 'antd';
+import { Button, Input, Space, Table, Tag, Popconfirm, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { domain } from '../../../config';
@@ -15,7 +15,8 @@ import {
   ExclamationCircleOutlined,
 } from '@ant-design/icons';
 
-const FlashSaleOrderManagement = () => {
+
+const ShopOrderManagement = () => {
   const [products, setProducts] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
@@ -23,29 +24,7 @@ const FlashSaleOrderManagement = () => {
   const timezone = dayjs.tz.guess();
   const navigate = useNavigate();
 
-  // const handleDelete = async (key) => {
-  //   try {
-  //     const result = await axios.delete(`${domain}management/limitedProduct/` + key);
-  //     message.success("Delete successfully.");
-  //     const data = result.data.data;
-  //     // console.log(data);
-  //     const title = data;
-  //     const subTitle = "Delete limited product success!";
-  //     navigate(`/admin/success/${title}/${subTitle}`);
-  //   } catch (error) {
-  //     console.log(error);
-  //     let msg = null;
-  //     if (error.response) {
-  //       if (error.response.data.message) {
-  //         msg = error.response.data.message;
-  //       } else {
-  //         msg = error.response.data;
-  //       }
-  //       message.error(msg);
-  //     } else {
-  //       message.error("Update failed. Internal server error.");}
-  //   }
-  // };
+
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -212,41 +191,6 @@ const FlashSaleOrderManagement = () => {
         sortDirections: ['descend', 'ascend'],
     },
     {
-      title: 'Status',
-      key: 'orderStatus',
-      dataIndex: 'orderStatus',
-      render: (tag) => {
-        switch (tag) {
-          case "COMPLETED":
-            return (
-              <Tag color="success" icon={<CheckCircleOutlined />} key={tag}>
-                {tag}
-              </Tag>
-            );
-            case "CANCELLED":
-            return (
-              <Tag color="error" icon={<CloseCircleOutlined />} key={tag}>
-                {tag}
-              </Tag>
-            );
-            case "ACTIVE":
-            return (
-              <Tag color={"warning"} icon={<ClockCircleOutlined />} key={tag}>
-                {tag}
-              </Tag>
-            );
-            case "OTHER":
-            return (
-              <Tag color={"default"} icon={<ExclamationCircleOutlined />} key={tag}>
-                {tag}
-              </Tag>
-            );
-          default:
-            return (<span />);
-        }
-      },
-    },
-    {
       title: 'Purchase time',
       dataIndex: 'purchaseDateTime',
       key: 'purchaseDateTime',
@@ -284,7 +228,7 @@ const FlashSaleOrderManagement = () => {
       try {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
         axios.defaults.headers.common['Fellaverse-token'] = token;
-        const result = await axios.get(`${domain}management/flashSaleOrder`);
+        const result = await axios.get(`${domain}management/order`);
         const productList = result.data.data.map(f => {
           return {...f, key: f.id};
         });
@@ -322,4 +266,4 @@ const FlashSaleOrderManagement = () => {
   );
 };
 
-export default FlashSaleOrderManagement;
+export default ShopOrderManagement;

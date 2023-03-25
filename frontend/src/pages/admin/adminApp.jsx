@@ -16,6 +16,8 @@ import {
   UngroupOutlined,
   SubnodeOutlined
 } from '@ant-design/icons';
+import { domain } from '../../config';
+import axios from 'axios';
 
 import AdminIndex from './adminIndex';
 import LogoutForm from '../authentication/logout';
@@ -44,6 +46,8 @@ import EditFunction from './function/editFunction';
 import ExerciseManagement from './exercise/listExercise';
 import AddExercise from './exercise/addExercise';
 import EditExercise from './exercise/editExercise';
+import ShopOrderManagement from './order/listOrder';
+import DetailOrderManagement from './order/detailOrder';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -89,6 +93,8 @@ const AdminApp = () => {
       items.push(getItem("Shop Management", 'sub1', <ShopOutlined />, [
         getItem(<Link to='/admin'>Product</Link>, '7', <ShoppingOutlined />),
         getItem(<Link to='/admin'>Order</Link>, '8', <ShoppingCartOutlined />),
+        getItem(<Link to='/admin'>Product</Link>, '11', <ShoppingOutlined />),
+        getItem(<Link to='/admin/order'>Order</Link>, '12', <ShoppingCartOutlined />),
       ]));
     }
     if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
@@ -170,6 +176,8 @@ const AdminApp = () => {
                 <Route path="/limitedProduct/edit/:id" element={<EditLimitedProduct/>} />
                 <Route path="/saleOrder" element={<FlashSaleOrderManagement/>} />
                 <Route path="/saleOrder/detail/:id" element={<DetailSaleOrder/>} />
+                <Route path="/order" element={<ShopOrderManagement/>} />
+                <Route path="/order/detail/:id" element={<DetailOrderManagement/>} />
                 <Route path="/user" element={<UserManagement/>} />
                 <Route path="/user/edit/:id" element={<EditUserFunction/>} />
                 <Route path="/function" element={<FunctionManagement/>} />
