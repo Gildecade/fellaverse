@@ -5,8 +5,6 @@ import Highlighter from 'react-highlight-words';
 import { domain } from '../../../config';
 import axios from 'axios';
 import dayjs from 'dayjs';
-dayjs.extend(utc);
-dayjs.extend(timezone);
 import { Link, useNavigate } from 'react-router-dom';
 import {
   CheckCircleOutlined,
@@ -26,7 +24,6 @@ const FlashSaleOrderManagement = () => {
   const searchInput = useRef(null);
   const timezone = dayjs.tz.guess();
   const navigate = useNavigate();
-  const timezone = dayjs.tz.guess();
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();

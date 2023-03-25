@@ -5,9 +5,11 @@ import Highlighter from 'react-highlight-words';
 import { domain } from '../../config';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import { Link, useNavigate } from 'react-router-dom';
+var utc = require('dayjs/plugin/utc');
+var timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
-import { Link, useNavigate } from 'react-router-dom';
 
 const RecordManagement = () => {
   const [records, setRecords] = useState([]);
