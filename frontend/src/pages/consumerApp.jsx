@@ -35,6 +35,7 @@ import Shop from './shop/listShop'
 import DetailShop from './shop/detailShop';
 import RecordManagement from './record/listRecord';
 import AddRecord from './record/addRecord';
+import '../App.css';
 
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -86,16 +87,16 @@ const ConsumerApp = () => {
         minHeight: '100vh',
       }}
     >
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} theme="light">
+      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} theme="dark">
         <div
           style={{
             height: 32,
             margin: 16
           }}
         >
-        <img src="./title.png" alt="title" style={{width:170,height:32}} />
+        <img class="project-image" src="./title.png" alt="title" style={{width:170,height:32}} />
         </div>
-        <Menu theme="light" defaultSelectedKeys={['1']} mode="inline" items={items} />
+        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
       </Sider>
       <Layout className="site-layout" >
         <Header style={{

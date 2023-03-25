@@ -14,7 +14,8 @@ import {
   ApartmentOutlined,
   UserOutlined,
   UngroupOutlined,
-  SubnodeOutlined
+  SubnodeOutlined,
+  AuditOutlined
 } from '@ant-design/icons';
 import { domain } from '../../config';
 import axios from 'axios';
@@ -46,6 +47,11 @@ import EditFunction from './function/editFunction';
 import ExerciseManagement from './exercise/listExercise';
 import AddExercise from './exercise/addExercise';
 import EditExercise from './exercise/editExercise';
+// proList
+import ProListManagement from './proList/listProList';
+import AddProList from './proList/addProList';
+import EditProList from './proList/editProList';
+
 import ShopOrderManagement from './order/listOrder';
 import DetailOrderManagement from './order/detailOrder';
 import CourseManagement from './course/listCourse';
@@ -91,17 +97,18 @@ const AdminApp = () => {
       items.push(getItem(<Link to='/admin/user'>User Management</Link>, '4', <UserOutlined />));
       items.push(getItem(<Link to='/admin/function'>Function Management</Link>, '5', <UngroupOutlined />));
       items.push(getItem(<Link to='/admin/exercise'>Exercise Management</Link>, '6', <SubnodeOutlined />));
+      items.push(getItem(<Link to='/admin/prolist'>Announcement Management</Link>, '7', <AuditOutlined />));
     }
     if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
       items.push(getItem("Shop Management", 'sub1', <ShopOutlined />, [
-        getItem(<Link to='/admin/shop/course'>Course</Link>, '7', <ShoppingOutlined />),
-        getItem(<Link to='/admin/order'>Order</Link>, '8', <ShoppingCartOutlined />),
+        getItem(<Link to='/admin/shop/course'>Course</Link>, '8', <ShoppingOutlined />),
+        getItem(<Link to='/admin/order'>Order</Link>, '9', <ShoppingCartOutlined />),
       ]));
     }
     if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
       items.push(getItem("Sale Management", 'sub2', <ShopOutlined />, [
-        getItem(<Link to='/admin/limitedProduct'>Product</Link>, '9', <ShoppingCartOutlined />),
-        getItem(<Link to='/admin/saleOrder'>Order</Link>, '10', <ShoppingCartOutlined />),
+        getItem(<Link to='/admin/limitedProduct'>Product</Link>, '10', <ShoppingCartOutlined />),
+        getItem(<Link to='/admin/saleOrder'>Order</Link>, '11', <ShoppingCartOutlined />),
       ]));
     }
     setItems(items);
@@ -192,6 +199,9 @@ const AdminApp = () => {
                 <Route path="/exercise" element={<ExerciseManagement/>} />
                 <Route path="/exercise/add" element={<AddExercise/>} />
                 <Route path="/exercise/edit/:id" element={<EditExercise/>} />
+                <Route path="/prolist" element={<ProListManagement/>} />
+                <Route path="/prolist/add" element={<AddProList/>} />
+                <Route path="/prolist/edit/:id" element={<EditProList/>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
