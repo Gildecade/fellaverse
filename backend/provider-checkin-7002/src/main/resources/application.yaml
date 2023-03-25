@@ -3,17 +3,16 @@ server:
 spring:
   application:
     name: provider-checkin
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/fellaverse?serverTimeZone=UTC&useSSL=true
-    username: root
-    password: root
   jpa:
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+        jdbc:
+          time_zone: UTC
+  profiles:
+    include:
+      - dev
 # register this microservice to eureka server
 eureka:
   instance:

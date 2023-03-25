@@ -325,7 +325,7 @@ const UserCheckIn = () => {
         for (let i =0; i<12; i++) {
           calendarListMonthTemp.push([]);
         }
-        checkInList.forEach(element => {
+        sortedCheckIns.forEach(element => {
           if (element.length!=0) {
             //console.log("e=", parseInt(dayjs(element.startDateTime).format("MM")), "n2=", nowMonth, "TF=", parseInt(dayjs(element.startDateTime).format("MM")) == nowMonth);
             if (parseInt(dayjs(element.startDateTime).format("YYYYM")) == nowMonth) {
