@@ -14,6 +14,10 @@ import {
   CloseCircleOutlined,
   ExclamationCircleOutlined,
 } from '@ant-design/icons';
+var utc = require('dayjs/plugin/utc');
+var timezone = require('dayjs/plugin/timezone');
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const FlashSaleOrderManagement = () => {
   const [products, setProducts] = useState([]);
@@ -22,30 +26,8 @@ const FlashSaleOrderManagement = () => {
   const searchInput = useRef(null);
   const timezone = dayjs.tz.guess();
   const navigate = useNavigate();
+  const timezone = dayjs.tz.guess();
 
-  // const handleDelete = async (key) => {
-  //   try {
-  //     const result = await axios.delete(`${domain}management/limitedProduct/` + key);
-  //     message.success("Delete successfully.");
-  //     const data = result.data.data;
-  //     // console.log(data);
-  //     const title = data;
-  //     const subTitle = "Delete limited product success!";
-  //     navigate(`/admin/success/${title}/${subTitle}`);
-  //   } catch (error) {
-  //     console.log(error);
-  //     let msg = null;
-  //     if (error.response) {
-  //       if (error.response.data.message) {
-  //         msg = error.response.data.message;
-  //       } else {
-  //         msg = error.response.data;
-  //       }
-  //       message.error(msg);
-  //     } else {
-  //       message.error("Update failed. Internal server error.");}
-  //   }
-  // };
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);

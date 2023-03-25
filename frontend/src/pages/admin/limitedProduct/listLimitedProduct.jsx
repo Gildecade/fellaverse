@@ -23,6 +23,7 @@ const LimitedProductManagement = () => {
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
   const navigate = useNavigate();
+  const timezone = dayjs.tz.guess();
 
   const handleDelete = async (key) => {
     try {
@@ -252,7 +253,7 @@ const LimitedProductManagement = () => {
       dataIndex: 'createdDateTime',
       key: 'createdDateTime',
       render: (dateTime) => {
-        return dayjs.utc(dateTime).tz("America/Toronto").format('YYYY-MM-DD HH:mm:ss');
+        return dayjs.utc(dateTime).tz(timezone).format('YYYY-MM-DD HH:mm:ss');
       },
         sorter: (a, b) => {
           const nameA = a.createdDateTime; // ignore upper and lowercase
@@ -274,7 +275,7 @@ const LimitedProductManagement = () => {
       dataIndex: 'saleDateTime',
       key: 'saleDateTime',
       render: (dateTime) => {
-        return dayjs.utc(dateTime).tz("America/Toronto").format('YYYY-MM-DD HH:mm:ss');
+        return dayjs.utc(dateTime).tz(timezone).format('YYYY-MM-DD HH:mm:ss');
       },
         sorter: (a, b) => {
           const nameA = a.saleDateTime; // ignore upper and lowercase
