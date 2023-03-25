@@ -7,7 +7,7 @@ import {
   HomeOutlined,
   FireOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Col, Layout, Menu, Row, theme, Space } from 'antd';
+import { Breadcrumb, Col, Layout, Menu, Row, theme } from 'antd';
 import {
   Routes,
   Route,
@@ -27,8 +27,15 @@ import ForgotPasswordForm from './authentication/forgotPassword';
 import FlashSale from './flashSale/listFlashSale';
 import DetailFlashSale from './flashSale/detailFlashSale';
 import OrderSuccess from './flashSale/orderSuccess';
-
 import UserApp from './user/userApp';
+import UserCheckIn from './checkIn/listCheckIn';
+import AddCheckIn from './checkIn/addCheckIn';
+import EditCheckIn from './checkIn/editCheckIn';
+import Shop from './shop/listShop'
+import DetailShop from './shop/detailShop';
+import RecordManagement from './record/listRecord';
+import AddRecord from './record/addRecord';
+
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -60,15 +67,15 @@ const ConsumerApp = () => {
     getItem(<Link to='/'>{homePage}</Link>, '1', <HomeOutlined />),
     getItem(<Link to='/user'>Profile</Link>, 'p', <UserOutlined />),
     getItem('eShop', '2', <ShopOutlined />, [
-      getItem('Home', '3'),
+      getItem(<Link to='/shop'>{'Store'}</Link>, '3'),
       getItem(<Link to='/flash-sale'>{'Flash sale'}</Link>, '4'),
     ]),
     getItem('Workout', 'sub1', <FireOutlined />, [
-      getItem('Record', '5'),
-      // getItem(<Link to='/schedule'>{'Schedule'}</Link>, '6'),
+      getItem(<Link to='/record'>{'Record'}</Link>, '5'),
+      //getItem('Schedule', '6'),
     ]),
     getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '7'), getItem('Team 2', '8')]),
-    getItem('Files', '9', <FileOutlined />),
+    getItem(<Link to='/checkin'>{'Check in'}</Link>, '9', <FileOutlined />),
   ] :
   [
     getItem(<Link to='/'>{homePage}</Link>, '1', <HomeOutlined />),
@@ -102,7 +109,7 @@ const ConsumerApp = () => {
                 <Col lg={6} xxl={8}>
                 </Col>
                 <Col lg={6} xxl={8} style={{top:15,}}>
-                  <HeaderSearch></HeaderSearch>
+                  {/* <HeaderSearch></HeaderSearch> */}
                 </Col>
                 <Col lg={9} xxl={6}>
                 </Col>
@@ -158,9 +165,17 @@ const ConsumerApp = () => {
               <Route path='/user/*' element={<UserApp />}></Route>
               <Route path='/flash-sale' element={<FlashSale />}></Route>
               <Route path='/flash-sale/:id' element={<DetailFlashSale />} />
-              <Route path='/flash-sale/:title/:subTitle' element={<OrderSuccess />}></Route>                          
+              <Route path='/flash-sale/:title/:subTitle' element={<OrderSuccess />}></Route>
+              <Route path='/flash-sale/:title/:subTitle' element={<OrderSuccess />}></Route>
+              <Route path='/shop' element={<Shop />}></Route>
+              <Route path='/shop/:id' element={< DetailShop/>}></Route>
+              <Route path='/record' element={<RecordManagement />}></Route>
+              <Route path='/record/add' element={<AddRecord />}></Route>
               <Route path='/success/:title/:subTitle' element={<Success />} />
               <Route path='/forgotPassword' element={<ForgotPasswordForm />} />
+              <Route path='/checkIn' element={<UserCheckIn />} />
+              <Route path='/checkIn/add' element={<AddCheckIn />} />
+              <Route path='/checkIn/edit' element={<EditCheckIn />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

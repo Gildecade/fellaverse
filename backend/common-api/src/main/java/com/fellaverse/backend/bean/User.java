@@ -1,9 +1,11 @@
 package com.fellaverse.backend.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fellaverse.backend.enumerator.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.builder.HashCodeExclude;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 

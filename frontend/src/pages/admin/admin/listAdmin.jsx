@@ -249,7 +249,7 @@ const AdminManagement = () => {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
         axios.defaults.headers.common['Fellaverse-token'] = token;
         const result = await axios.get(`${domain}management/admin`);
-        // console.log(result);
+         console.log(localStorage);
         const adminList = result.data.data.map(f => {
           return {...f, key: f.id};
         });

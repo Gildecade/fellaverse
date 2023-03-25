@@ -4,7 +4,7 @@ import {
   UnorderedListOutlined,
   CalendarOutlined
 } from '@ant-design/icons';
-import { Breadcrumb, Col, Layout, Menu, Row, theme, Space } from 'antd';
+import { Layout, Menu, theme } from 'antd';
 import {
   Routes,
   Route,
@@ -15,6 +15,8 @@ import Profile from './profile';
 import PersonalFlashSaleOrder from './flashSaleOrder';
 import PersonalDetailSaleOrder from './detailFlashSaleOrder';
 import ViewSchedule from './viewSchedule';
+import ShopOrder from './shopOrder';
+import DetailShopOrder from './detailShopOrder';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -49,6 +51,7 @@ const UserApp = () => {
     getItem(<Link to='/user'>{homePage}</Link>, '1', <HomeOutlined />),
     getItem(<Link to='/user/flashSaleOrder'>Flash sale order</Link>, '2', <UnorderedListOutlined />),
     getItem(<Link to={'/user/schedule/' + userId}>Schedule</Link>, '3', <CalendarOutlined />),
+    getItem(<Link to='/user/order'>Shop order</Link>, '3', <UnorderedListOutlined />),
 
   ];
   return (
@@ -72,6 +75,8 @@ const UserApp = () => {
           <Route path='/flashSaleOrder' element={<PersonalFlashSaleOrder />}></Route>
           <Route path="/flashSaleOrder/detail/:id" element={<PersonalDetailSaleOrder/>} />
           <Route path="/schedule/:id" element={<ViewSchedule/>} />
+          <Route path='/order' element={<ShopOrder />}></Route>
+          <Route path='/order/detail/:id' element={<DetailShopOrder />}></Route>
         </Routes>
       </div>
     </Layout>

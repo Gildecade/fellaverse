@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -20,7 +20,7 @@ public class OrderRequestDTO implements Serializable {
     @NotNull(groups = ValidGroup.Crud.Create.class, message = "Quantity should be null when creating")
     private Integer quantity;
     @NotNull(groups = ValidGroup.Crud.Create.class, message = "Purchase Date Time should be null when creating")
-    private Instant purchaseDateTime;
+    private LocalDateTime purchaseDateTime;
     @NotNull(groups = ValidGroup.Crud.Create.class, message = "Amount should be null when creating")
     private Float amount;
     @NotNull(groups = ValidGroup.Crud.Create.class, message = "UserId should be null when creating")
