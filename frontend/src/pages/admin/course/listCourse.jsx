@@ -1,35 +1,37 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Input, Space, Table, Popconfirm, message } from 'antd';
+import { Button, Input, Space, Table, Tag, Popconfirm, message, Typography } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
-import { domain } from '../../config';
+import { domain } from '../../../config';
 import axios from 'axios';
-import dayjs from 'dayjs';
 import { Link, useNavigate } from 'react-router-dom';
-var utc = require('dayjs/plugin/utc');
-var timezone = require('dayjs/plugin/timezone');
-dayjs.extend(utc);
-dayjs.extend(timezone);
 
-const RecordManagement = () => {
-  const [records, setRecords] = useState([]);
+const { Title } = Typography;
+const CourseManagement = () => {
+  const [Courses, setCourses] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
-  const userId = localStorage.getItem('userId') ? localStorage.getItem('userId') : sessionStorage.getItem('userId');
-  const timezone = dayjs.tz.guess();
   const navigate = useNavigate();
+  var colors = ["magenta", "red", "volcano", "volcano", "gold", "lime", "green", "cyan", "blue", "geekblue", "purple"];
+  var colorDict = new Array();
 
+  const getExtract = (array) => {
+    const random = (min, max) => Math.floor(Math.random() * (max - min) + min);
+    let index=random(0, array.length);
+    return array.splice(index, 1);
+  }
   const handleDelete = async (key) => {
     try {
-      console.log(key);
-      const result = await axios.delete(`${domain}record/` + key); // TODO: should be /id/userid
+      const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
+      axios.defaults.headers.common['Fellaverse-token'] = token;
+      const result = await axios.delete(`${domain}management/shop/course/` + key);
       message.success("Delete successfully.");
       const data = result.data.data;
-      console.log(data);
+      // console.log(data);
       const title = data;
-      const subTitle = "Delete record success!";
-      navigate(`/success/${title}/${subTitle}`); //TODO
+      const subTitle = "Delete Course success!";
+      navigate(`admin/shop/Course`);
     } catch (error) {
       console.log(error);
       let msg = null;
@@ -44,21 +46,15 @@ const RecordManagement = () => {
         message.error("Update failed. Internal server error.");}
     }
   };
-
-
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
   };
-
-
   const handleReset = (clearFilters) => {
     clearFilters();
     setSearchText('');
   };
-
-
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
       <div
@@ -154,17 +150,15 @@ const RecordManagement = () => {
       ),
   });
 
-  const columns = [ // TODO: need to change cols
+  const columns = [
     {
-      title: 'Record Time',
-      dataIndex: 'createDateTime',  //TODO
-      key: 'createDateTime', // TODO
-      render: (dateTime) => {
-        return dayjs.utc(dateTime).tz(timezone).format('YYYY-MM-DD HH:mm:ss');
-      },
+      title: 'Product Name',
+      dataIndex: 'productName',
+      key: 'productName',
+      ...getColumnSearchProps('productName'),
         sorter: (a, b) => {
-          const nameA = a.createDateTime; // ignore upper and lowercase
-          const nameB = b.createDateTime; // ignore upper and lowercase
+          const nameA = a.productName.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.productName.toUpperCase(); // ignore upper and lowercase
           if (nameA < nameB) {
             return -1;
           }
@@ -178,44 +172,13 @@ const RecordManagement = () => {
         sortDirections: ['descend', 'ascend'],
     },
     {
-      title: 'Weights',
-      dataIndex: 'weights',
-      key: 'weights',
-      ...getColumnSearchProps('weights'),
-        sorter: (a, b) => a.weights - b.weights,
-        sortDirections: ['descend', 'ascend'],
-    },
-
-    {
-      title: 'Quantity',
-      dataIndex: 'quantity',
-      key: 'quantity',
-      ...getColumnSearchProps('quantity'),
-        sorter: (a, b) => a.quantity - b.quantity,
-        sortDirections: ['descend', 'ascend'],
-    },
-
-    {
-      title: 'Sets',
-      dataIndex: 'numOfSets',
-      key: 'numOfSets',
-      ...getColumnSearchProps('numOfSets'),
-        sorter: (a, b) => a.sets - b.sets,
-        sortDirections: ['descend', 'ascend'],
-    },
-
-    {
-      title: 'Exercise',
-      dataIndex: ['exercise', 'exerciseName'],  //TODO
-      key: 'exercise', // TODO
-      // {exercise.map((exercise) => {
-      //   <Option key={exercise.id} value={exercise.id}>{exercise.exerciseName}</Option>
-      // }
-      // )}, // TODO
-      ...getColumnSearchProps(['exercise', 'exerciseName']),
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+      ...getColumnSearchProps('description'),
         sorter: (a, b) => {
-          const nameA = a.exercise.exerciseName.toUpperCase(); // TODO
-          const nameB = b.exercise.exerciseName.toUpperCase(); 
+          const nameA = a.description.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.description.toUpperCase(); // ignore upper and lowercase
           if (nameA < nameB) {
             return -1;
           }
@@ -228,12 +191,112 @@ const RecordManagement = () => {
         },
         sortDirections: ['descend', 'ascend'],
     },
-
+    {
+      title: 'Price',
+      dataIndex: 'price',
+      key: 'price',
+      ...getColumnSearchProps('price'),
+        sorter: (a, b) => {
+          const nameA = a.price.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.price.toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+        
+          // names must be equal
+          return 0;
+        },
+        sortDirections: ['descend', 'ascend'],
+    },
+    {
+      title: 'Created Date Time',
+      dataIndex: 'createdDateTime',
+      key: 'createdDateTime',
+      ...getColumnSearchProps('createdDateTime'),
+        sorter: (a, b) => {
+          const nameA = a.createdDateTime.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.createdDateTime.toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+        
+          // names must be equal
+          return 0;
+        },
+        sortDirections: ['descend', 'ascend'],
+    },
+    {
+      title: 'Username',
+      dataIndex: ['user','username'],
+      key: 'username',
+      ...getColumnSearchProps(['user','username']),
+        sorter: (a, b) => {
+          const nameA = a.user.username.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.user.username.toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+        
+          // names must be equal
+          return 0;
+        },
+        sortDirections: ['descend', 'ascend'],
+    },
+    {
+      title: 'Email',
+      dataIndex: ['user','email'],
+      key: 'email',
+      ...getColumnSearchProps(['user','email']),
+        sorter: (a, b) => {
+          const nameA = a.user.email.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.user.email.toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+        
+          // names must be equal
+          return 0;
+        },
+        sortDirections: ['descend', 'ascend'],
+    },
+    {
+      title: 'Created Date Time',
+      key: 'createdDateTime',
+      dataIndex: 'createdDateTime',
+      ...getColumnSearchProps("createdDateTime"),
+        sorter: (a, b) => {
+          const nameA = a.createdDateTime.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.createdDateTime.toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+        
+          // names must be equal
+          return 0;
+        },
+        sortDirections: ['descend', 'ascend'],
+    },
     {
       title: 'Action',
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
+          <Link to={'edit/'+record.key} state={record}>Edit</Link>
           <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
             <a>Delete</a>
           </Popconfirm>
@@ -247,24 +310,15 @@ const RecordManagement = () => {
       try {
         const token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
         axios.defaults.headers.common['Fellaverse-token'] = token;
-
-        // TODO: get by user id
-        const result = await axios.get(`${domain}record/${userId}`); // TODO
-
-        const recordList = result.data.data.map(f => {  // changed to record list
+        const result = await axios.get(`${domain}management/shop/course`);
+        // console.log(result);
+        const CourseList = result.data.data.map(f => {
           return {...f, key: f.id};
         });
-        setRecords(recordList);
-        console.log(recordList);
+        setCourses(CourseList);
       } catch (error) {
         console.log(error);
-        let msg = "Internal server error."
-        if (error.response.data.message) {
-          msg = error.response.data.message;
-        } else if (error.response.data) {
-          msg = error.response.data;
-        }
-        message.error(msg);
+        message.error(error.response.data.message);
       }
 
     }
@@ -273,22 +327,23 @@ const RecordManagement = () => {
 
   return (
     <div>
+      <Title level={3}>Courses</Title>
       <Table
         columns={columns}
         pagination={{
           position: ['bottomRight'],
         }}
-        dataSource={records}
+        dataSource={Courses}
       />
-      <Link to={'/record/add'}>
+      <Link to={'/admin/shop/course/add'}>
         <Button
           type="primary"
         >
-          Add new record
+          Add new Course
         </Button>
       </Link>
     </div>
   );
 };
 
-export default RecordManagement;
+export default CourseManagement;

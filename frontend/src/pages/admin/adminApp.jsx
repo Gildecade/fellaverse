@@ -48,6 +48,9 @@ import AddExercise from './exercise/addExercise';
 import EditExercise from './exercise/editExercise';
 import ShopOrderManagement from './order/listOrder';
 import DetailOrderManagement from './order/detailOrder';
+import CourseManagement from './course/listCourse';
+import AddCourse from './course/addCourse';
+import EditCourse from './course/editCourse';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -91,10 +94,8 @@ const AdminApp = () => {
     }
     if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
       items.push(getItem("Shop Management", 'sub1', <ShopOutlined />, [
-        getItem(<Link to='/admin'>Product</Link>, '7', <ShoppingOutlined />),
-        getItem(<Link to='/admin'>Order</Link>, '8', <ShoppingCartOutlined />),
-        getItem(<Link to='/admin'>Product</Link>, '11', <ShoppingOutlined />),
-        getItem(<Link to='/admin/order'>Order</Link>, '12', <ShoppingCartOutlined />),
+        getItem(<Link to='/admin/shop/course'>Course</Link>, '7', <ShoppingOutlined />),
+        getItem(<Link to='/admin/order'>Order</Link>, '8', <ShoppingCartOutlined />),
       ]));
     }
     if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
@@ -117,10 +118,11 @@ const AdminApp = () => {
           <div
             style={{
               height: 32,
-              margin: 16,
-              background: 'rgba(255, 255, 255, 0.2)',
+              margin: 16
             }}
-          />
+          >
+          <img id="project-image" src="./title.png" alt="title" style={{width:170,height:32}} />
+          </div>
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
         </Sider>
         <Layout className="site-layout">
@@ -159,6 +161,7 @@ const AdminApp = () => {
                 padding: 24,
                 minHeight: 360,
                 background: colorBgContainer,
+                paddingTop: 1
               }}
             >
               <Routes>
@@ -171,6 +174,9 @@ const AdminApp = () => {
                 <Route path="/role" element={<RoleManagement/>} />
                 <Route path="/role/add" element={<AddRole/>} />
                 <Route path="/role/edit/:id" element={<EditRole/>} />
+                <Route path="/shop/course" element={<CourseManagement />} />
+                <Route path="/shop/course/add" element={<AddCourse/>} />
+                <Route path="/shop/course/edit/:id" element={<EditCourse/>} />
                 <Route path="/limitedProduct" element={<LimitedProductManagement/>} />
                 <Route path="/limitedProduct/add" element={<AddLimitedProduct/>} />
                 <Route path="/limitedProduct/edit/:id" element={<EditLimitedProduct/>} />

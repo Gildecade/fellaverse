@@ -72,7 +72,7 @@ const ConsumerApp = () => {
     ]),
     getItem('Workout', 'sub1', <FireOutlined />, [
       getItem(<Link to='/record'>{'Record'}</Link>, '5'),
-      getItem('Schedule', '6'),
+      //getItem('Schedule', '6'),
     ]),
     getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '7'), getItem('Team 2', '8')]),
     getItem(<Link to='/checkin'>{'Check in'}</Link>, '9', <FileOutlined />),
@@ -86,17 +86,18 @@ const ConsumerApp = () => {
         minHeight: '100vh',
       }}
     >
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} theme="light">
         <div
           style={{
             height: 32,
-            margin: 16,
-            background: 'rgba(255, 255, 255, 0.2)',
+            margin: 16
           }}
-        />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+        >
+        <img src="./title.png" alt="title" style={{width:170,height:32}} />
+        </div>
+        <Menu theme="light" defaultSelectedKeys={['1']} mode="inline" items={items} />
       </Sider>
-      <Layout className="site-layout">
+      <Layout className="site-layout" >
         <Header style={{
             padding: 0,
             background: colorBgContainer,
@@ -164,6 +165,7 @@ const ConsumerApp = () => {
               <Route path='/user/*' element={<UserApp />}></Route>
               <Route path='/flash-sale' element={<FlashSale />}></Route>
               <Route path='/flash-sale/:id' element={<DetailFlashSale />} />
+              <Route path='/flash-sale/:title/:subTitle' element={<OrderSuccess />}></Route>
               <Route path='/flash-sale/:title/:subTitle' element={<OrderSuccess />}></Route>
               <Route path='/shop' element={<Shop />}></Route>
               <Route path='/shop/:id' element={< DetailShop/>}></Route>
