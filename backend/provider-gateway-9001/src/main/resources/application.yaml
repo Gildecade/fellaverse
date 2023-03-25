@@ -150,5 +150,7 @@ gateway:  # DIY config
         - /api/auth/register
         - /api/auth/resetPassword
         - /api/limitedProduct
+        - /api/management/prolist
+        - /management/prolist
         - /shop
         - /api/shop
