@@ -4,8 +4,7 @@ import { Button, Form, Input, message, Select, InputNumber, Upload, Typography }
 import { PlusOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { domain } from '../../../config';
-import uploadFileToBlob, { isStorageConfigured } from '../upload/azure-storage-blob';
-import { v4 as uuidv4 } from 'uuid';
+import uploadFileToBlob, { isStorageConfigured, uploadVideoToBlob } from '../upload/azure-storage-blob';
 const storageConfigured = isStorageConfigured();
 const { Option } = Select;
 
@@ -51,8 +50,8 @@ const AddCourse = () => {
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
   const onFinish = async (values) => {
-    setLoading(true);
-    values = {...values, createdDateTime: new Date().getTime()};
+    //setLoading(true);
+    values = {...values, createdDateTime: new Date().getTime(), imageUrl: imageContainerUrl + imageSelected.name, videoUrl: videoContainerUrl + videoSelected.name };
     console.log('Received values of form: ', values);
     try {
       var currentDateObj = new Date();
@@ -62,30 +61,30 @@ const AddCourse = () => {
       values = {...values, createdDateTime: newDateObj};
 
       // add file extension by file types
-      if (imageSelected.type == "image/png") {
-        values = {...values, imageUrl: imageContainerUrl + uuidv4()+".png"};
-      }
-      else if (imageSelected.type == "image/jpeg")
-      {
-        values = {...values, imageUrl: imageContainerUrl + uuidv4()+".jpeg"};
-      }
-      else {
-        values = {...values, imageUrl: imageContainerUrl + uuidv4()};
-      }
+      // if (imageSelected.type == "image/png") {
+      //   values = {...values, imageUrl: imageContainerUrl + };
+      // }
+      // else if (imageSelected.type == "image/jpeg")
+      // {
+      //   values = {...values, imageUrl: imageContainerUrl + uuidv4()+".jpeg"};
+      // }
+      // else {
+      //   values = {...values, imageUrl: imageContainerUrl + uuidv4()};
+      // }
 
-      if (videoSelected.type == "video/mp4") {
-        values = {...values, videoUrl: videoContainerUrl + uuidv4() + ".mp4"};
-      }
-      else {
-        values = {...values, videoUrl: videoContainerUrl + uuidv4()};
-      }
+      // if (videoSelected.type == "video/mp4") {
+      //   values = {...values, videoUrl: videoContainerUrl + uuidv4() + ".mp4"};
+      // }
+      // else {
+      //   values = {...values, videoUrl: videoContainerUrl + uuidv4()};
+      // }
 
       const result = await axios.post(`${domain}management/shop/course`, values);
       message.success("Add successfully.");
       const data = result.data.data;
       onFileUpload(imageSelected);
-      onFileUpload(videoSelected);
-      console.log(data);
+      onVideoUpload(videoSelected);
+      // console.log(data);
 
       resetState(imageSelected, 0) 
       resetState(videoSelected, 1) 
@@ -153,6 +152,19 @@ const AddCourse = () => {
       await uploadFileToBlob(file);
     }
   };
+
+
+  const onVideoUpload = async (file) => {
+
+    if(file && file?.name){
+      // prepare UI
+      // setUploading(true);
+
+      // *** UPLOAD TO AZURE STORAGE ***
+      await uploadVideoToBlob(file);
+    }
+  };
+
 
   const resetState = (file, mode) => {
     if (mode == 0) {
