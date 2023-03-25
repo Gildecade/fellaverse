@@ -4,7 +4,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import { Breadcrumb, Col, Layout, Menu, Row, theme, Space } from 'antd';
+import { Breadcrumb, Col, Layout, Menu, Row, theme } from 'antd';
 import {
   ShopOutlined,
   HomeOutlined,
@@ -12,6 +12,9 @@ import {
   ShoppingOutlined,
   ShoppingCartOutlined,
   ApartmentOutlined,
+  UserOutlined,
+  UngroupOutlined,
+  SubnodeOutlined
 } from '@ant-design/icons';
 import { domain } from '../../config';
 import axios from 'axios';
@@ -32,6 +35,22 @@ import AddLimitedProduct from './limitedProduct/addLimitedProduct';
 import EditLimitedProduct from './limitedProduct/editLimitedProduct';
 import FlashSaleOrderManagement from './flashSaleOrder/listOrder';
 import DetailSaleOrder from './flashSaleOrder/detailOrder';
+// user
+import UserManagement from './user/listUser';
+import EditUserFunction from '../admin/user/editUserFunction';
+// function
+import FunctionManagement from './function/listFunction';
+import AddFunction from './function/addFunction';
+import EditFunction from './function/editFunction';
+// exercise
+import ExerciseManagement from './exercise/listExercise';
+import AddExercise from './exercise/addExercise';
+import EditExercise from './exercise/editExercise';
+import ShopOrderManagement from './order/listOrder';
+import DetailOrderManagement from './order/detailOrder';
+import CourseManagement from './course/listCourse';
+import AddCourse from './course/addCourse';
+import EditCourse from './course/editCourse';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -69,17 +88,20 @@ const AdminApp = () => {
     if (roles.indexOf("SuperAdmin") != -1) {
       items.push(getItem(<Link to='/admin/admin'>Admin Management</Link>, '2', <ContactsOutlined />));
       items.push(getItem(<Link to='/admin/role'>Role Management</Link>, '3', <ApartmentOutlined />));
+      items.push(getItem(<Link to='/admin/user'>User Management</Link>, '4', <UserOutlined />));
+      items.push(getItem(<Link to='/admin/function'>Function Management</Link>, '5', <UngroupOutlined />));
+      items.push(getItem(<Link to='/admin/exercise'>Exercise Management</Link>, '6', <SubnodeOutlined />));
     }
     if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
       items.push(getItem("Shop Management", 'sub1', <ShopOutlined />, [
-        getItem(<Link to='/admin'>Product</Link>, '4', <ShoppingOutlined />),
-        getItem(<Link to='/admin'>Order</Link>, '5', <ShoppingCartOutlined />),
+        getItem(<Link to='/admin/shop/course'>Course</Link>, '7', <ShoppingOutlined />),
+        getItem(<Link to='/admin/order'>Order</Link>, '8', <ShoppingCartOutlined />),
       ]));
     }
     if ((roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1)) {
       items.push(getItem("Sale Management", 'sub2', <ShopOutlined />, [
-        getItem(<Link to='/admin/limitedProduct'>Product</Link>, '6', <ShoppingCartOutlined />),
-        getItem(<Link to='/admin/saleOrder'>Order</Link>, '7', <ShoppingCartOutlined />),
+        getItem(<Link to='/admin/limitedProduct'>Product</Link>, '9', <ShoppingCartOutlined />),
+        getItem(<Link to='/admin/saleOrder'>Order</Link>, '10', <ShoppingCartOutlined />),
       ]));
     }
     setItems(items);
@@ -96,10 +118,11 @@ const AdminApp = () => {
           <div
             style={{
               height: 32,
-              margin: 16,
-              background: 'rgba(255, 255, 255, 0.2)',
+              margin: 16
             }}
-          />
+          >
+          <img id="project-image" src="./title.png" alt="title" style={{width:170,height:32}} />
+          </div>
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
         </Sider>
         <Layout className="site-layout">
@@ -138,6 +161,7 @@ const AdminApp = () => {
                 padding: 24,
                 minHeight: 360,
                 background: colorBgContainer,
+                paddingTop: 1
               }}
             >
               <Routes>
@@ -150,11 +174,24 @@ const AdminApp = () => {
                 <Route path="/role" element={<RoleManagement/>} />
                 <Route path="/role/add" element={<AddRole/>} />
                 <Route path="/role/edit/:id" element={<EditRole/>} />
+                <Route path="/shop/course" element={<CourseManagement />} />
+                <Route path="/shop/course/add" element={<AddCourse/>} />
+                <Route path="/shop/course/edit/:id" element={<EditCourse/>} />
                 <Route path="/limitedProduct" element={<LimitedProductManagement/>} />
                 <Route path="/limitedProduct/add" element={<AddLimitedProduct/>} />
                 <Route path="/limitedProduct/edit/:id" element={<EditLimitedProduct/>} />
                 <Route path="/saleOrder" element={<FlashSaleOrderManagement/>} />
                 <Route path="/saleOrder/detail/:id" element={<DetailSaleOrder/>} />
+                <Route path="/order" element={<ShopOrderManagement/>} />
+                <Route path="/order/detail/:id" element={<DetailOrderManagement/>} />
+                <Route path="/user" element={<UserManagement/>} />
+                <Route path="/user/edit/:id" element={<EditUserFunction/>} />
+                <Route path="/function" element={<FunctionManagement/>} />
+                <Route path="/function/add" element={<AddFunction/>} />
+                <Route path="/function/edit/:id" element={<EditFunction/>} />
+                <Route path="/exercise" element={<ExerciseManagement/>} />
+                <Route path="/exercise/add" element={<AddExercise/>} />
+                <Route path="/exercise/edit/:id" element={<EditExercise/>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>

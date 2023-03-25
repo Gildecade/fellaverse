@@ -151,3 +151,5 @@ gateway:  # DIY config
         - /api/auth/register
         - /api/auth/resetPassword
         - /api/limitedProduct
+        - /shop
+        - /api/shop

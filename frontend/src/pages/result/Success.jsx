@@ -15,8 +15,8 @@ const Success = () => {
       title={title}
       subTitle={subTitle}
       extra={[
-        <Link to={homePage}>
-          <Button type="primary">
+        <Link to={homePage} key="home-unique">
+          <Button type="primary" key="succeed-unique">
             Back Home
           </Button>
         </Link>

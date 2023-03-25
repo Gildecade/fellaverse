@@ -4,7 +4,6 @@ import com.fellaverse.backend.bean.Order;
 import com.fellaverse.backend.dto.OrderDTO;
 import org.mapstruct.*;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface OrderMapper {
     Order toEntity(OrderDTO orderDTO);
 

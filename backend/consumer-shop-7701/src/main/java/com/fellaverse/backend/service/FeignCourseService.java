@@ -2,6 +2,7 @@ package com.fellaverse.backend.service;
 import com.fellaverse.backend.config.ConsumerErrorDecoder;
 import com.fellaverse.backend.config.FeignBasicAuthRequestInterceptor;
 import com.fellaverse.backend.dto.CourseDTO;
+import com.fellaverse.backend.dto.CourseRecord;
 import com.fellaverse.backend.projection.CourseInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import java.util.List;
 public interface FeignCourseService {
 
     @GetMapping("")
-    List<CourseInfo> findAllCourse();
+    List<CourseRecord> findAllCourse();
 
     @PostMapping("")
     ResponseEntity<String> addCourse(CourseDTO courseDTO);

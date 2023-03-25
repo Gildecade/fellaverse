@@ -3,7 +3,7 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Form, Input, Select, message,InputNumber, Space, DatePicker } from 'antd';
 import axios from 'axios';
 import { domain } from '../../../config';
-import uploadFileToBlob, { isStorageConfigured, getBlobsInContainer } from '../upload/azure-storage-blob';
+import uploadFileToBlob, { isStorageConfigured } from '../upload/azure-storage-blob';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
@@ -105,8 +105,8 @@ const EditLimitedProduct = () => {
   
   // eslint-disable-next-line arrow-body-style
   const disabledDate = (current) => {
-    // Can not select days before today and today
-    return current && current < dayjs().endOf('day');
+    // Can not select days before today
+    return current && current < dayjs().startOf('day');
   };
 
   const onChange = (value, dateString) => {

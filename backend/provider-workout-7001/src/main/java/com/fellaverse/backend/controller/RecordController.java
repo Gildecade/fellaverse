@@ -1,14 +1,17 @@
 package com.fellaverse.backend.controller;
 
+import com.fellaverse.backend.dto.ExerciseDTO;
+import com.fellaverse.backend.dto.RecordAddDTO;
 import com.fellaverse.backend.dto.RecordDTO;
 import com.fellaverse.backend.jwt.annotation.JWTCheckToken;
+import com.fellaverse.backend.mapper.ExerciseMapper;
 import com.fellaverse.backend.mapper.RecordMapper;
 import com.fellaverse.backend.service.RecordService;
+import com.fellaverse.backend.validator.ValidGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import com.fellaverse.backend.validator.ValidGroup;
-import com.fellaverse.backend.bean.Record;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,10 +25,19 @@ public class RecordController {
     @Autowired
     private RecordMapper recordMapper;
 
+    @Autowired
+    private ExerciseMapper exerciseMapper;
+
+    @JWTCheckToken(function = "select exercise")
+    @GetMapping("/exercise")
+    public List<ExerciseDTO> findAllExercise(){
+        return recordService.findAllExercise().stream().map(exerciseMapper::toDto).collect(Collectors.toList());
+    }
+
     @JWTCheckToken(function = "add record")
     @PostMapping("")
-    public String addRecord(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) RecordDTO recordDTO) {
-        recordService.addRecord(recordMapper.toEntity(recordDTO));
+    public String addRecord(@RequestBody @Validated(value = ValidGroup.Crud.Create.class) RecordAddDTO recordAddDTO) {
+        recordService.addRecord(recordAddDTO);
         return "Add record success!";
     }
 

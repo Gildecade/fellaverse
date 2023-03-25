@@ -3,6 +3,7 @@ import { Button, Input, Space, Table, Tag, Popconfirm, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { domain } from '../../../config';
+import dayjs from 'dayjs';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -11,7 +12,10 @@ import {
   CloseCircleOutlined,
   ExclamationCircleOutlined,
 } from '@ant-design/icons';
-import moment from 'moment/moment';
+var utc = require('dayjs/plugin/utc');
+var timezone = require('dayjs/plugin/timezone');
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const LimitedProductManagement = () => {
   const [products, setProducts] = useState([]);
@@ -19,6 +23,7 @@ const LimitedProductManagement = () => {
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
   const navigate = useNavigate();
+  const timezone = dayjs.tz.guess();
 
   const handleDelete = async (key) => {
     try {
@@ -248,7 +253,7 @@ const LimitedProductManagement = () => {
       dataIndex: 'createdDateTime',
       key: 'createdDateTime',
       render: (dateTime) => {
-        return moment(dateTime).format('YYYY-MM-DD HH:mm:ss');
+        return dayjs.utc(dateTime).tz(timezone).format('YYYY-MM-DD HH:mm:ss');
       },
         sorter: (a, b) => {
           const nameA = a.createdDateTime; // ignore upper and lowercase
@@ -270,7 +275,7 @@ const LimitedProductManagement = () => {
       dataIndex: 'saleDateTime',
       key: 'saleDateTime',
       render: (dateTime) => {
-        return moment(dateTime).format('YYYY-MM-DD HH:mm:ss');
+        return dayjs.utc(dateTime).tz(timezone).format('YYYY-MM-DD HH:mm:ss');
       },
         sorter: (a, b) => {
           const nameA = a.saleDateTime; // ignore upper and lowercase
@@ -330,6 +335,7 @@ const LimitedProductManagement = () => {
 
     }
     initialize();
+    // dayjs.tz.setDefault("UTC");
   }, []);
 
   return (

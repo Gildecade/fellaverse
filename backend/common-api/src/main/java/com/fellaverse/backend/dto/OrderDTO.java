@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 /**
  * A DTO for the {@link com.fellaverse.backend.bean.Order} entity
@@ -29,7 +29,7 @@ public class OrderDTO implements Serializable {
     @NotNull(groups = ValidGroup.Crud.Update.class, message = " cannot be null")
     private Integer quantity;
     @NotNull(groups = ValidGroup.Crud.Update.class, message = " cannot be null")
-    private Instant purchaseDateTime;
+    private LocalDateTime purchaseDateTime;
     @NotNull(groups = ValidGroup.Crud.Update.class, message = " cannot be null")
     private Float amount;
 

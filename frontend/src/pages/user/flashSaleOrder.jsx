@@ -1,48 +1,29 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Input, Space, Table, Tag, Popconfirm, message } from 'antd';
+import { Button, Input, Space, Table, Tag, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { domain } from '../../config';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
 import {
   CheckCircleOutlined,
   ClockCircleOutlined,
   CloseCircleOutlined,
   ExclamationCircleOutlined,
 } from '@ant-design/icons';
-import moment from 'moment/moment';
+var utc = require('dayjs/plugin/utc');
+var timezone = require('dayjs/plugin/timezone');
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const PersonalFlashSaleOrder = () => {
   const [products, setProducts] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
-  const navigate = useNavigate();
+  const timezone = dayjs.tz.guess();
 
-  // const handleDelete = async (key) => {
-  //   try {
-  //     const result = await axios.delete(`${domain}management/limitedProduct/` + key);
-  //     message.success("Delete successfully.");
-  //     const data = result.data.data;
-  //     // console.log(data);
-  //     const title = data;
-  //     const subTitle = "Delete limited product success!";
-  //     navigate(`/admin/success/${title}/${subTitle}`);
-  //   } catch (error) {
-  //     console.log(error);
-  //     let msg = null;
-  //     if (error.response) {
-  //       if (error.response.data.message) {
-  //         msg = error.response.data.message;
-  //       } else {
-  //         msg = error.response.data;
-  //       }
-  //       message.error(msg);
-  //     } else {
-  //       message.error("Update failed. Internal server error.");}
-  //   }
-  // };
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -248,7 +229,7 @@ const PersonalFlashSaleOrder = () => {
       dataIndex: 'purchaseDateTime',
       key: 'purchaseDateTime',
       render: (dateTime) => {
-        return moment(dateTime).format('YYYY-MM-DD HH:mm:ss');
+        return dayjs.utc(dateTime).tz(timezone).format('YYYY-MM-DD HH:mm:ss');
       },
         sorter: (a, b) => {
           const nameA = a.purchaseDateTime; // ignore upper and lowercase

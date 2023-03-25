@@ -47,11 +47,6 @@ public class UserManageServiceImpl implements UserManageService {
     }
 
     @Override
-    public Boolean updateUserFunction(Long userId, Set<Function> functions) {
-        return null;
-    }
-
-    @Override
     public User findUserById(Long userId) {
         return userRepository.findById(userId).orElse(null);
     }

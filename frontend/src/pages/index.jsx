@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Carousel, Row, Col, Image } from 'antd';
+import { Carousel, Image } from 'antd';
 import GGko from '../images/GGko.jpg';
 
 const contentStyle = {
@@ -47,7 +47,7 @@ const Index = () => {
                     <Image
                       width={800}
                       height={450}
-                      src={'www.aaaa.com'}
+                      src={'https://fellaverse.blob.core.windows.net/product-images/forecast letter.png'}
                       fallback={GGko} />
                   </div>
                 </Carousel>
