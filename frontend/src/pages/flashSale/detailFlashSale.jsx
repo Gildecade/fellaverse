@@ -6,6 +6,8 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import GGko from '../../images/GGko.jpg';
 import moment from 'moment/moment';
 import dayjs from 'dayjs';
+var utc = require('dayjs/plugin/utc');
+var timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 

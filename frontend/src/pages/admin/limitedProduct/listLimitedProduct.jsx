@@ -4,8 +4,6 @@ import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { domain } from '../../../config';
 import dayjs from 'dayjs';
-dayjs.extend(utc);
-dayjs.extend(timezone);
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import {

@@ -5,8 +5,6 @@ import Highlighter from 'react-highlight-words';
 import { domain } from '../../../config';
 import axios from 'axios';
 import dayjs from 'dayjs';
-dayjs.extend(utc);
-dayjs.extend(timezone);
 import { Link, useNavigate } from 'react-router-dom';
 import {
   CheckCircleOutlined,
@@ -14,6 +12,10 @@ import {
   CloseCircleOutlined,
   ExclamationCircleOutlined,
 } from '@ant-design/icons';
+var utc = require('dayjs/plugin/utc');
+var timezone = require('dayjs/plugin/timezone');
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const FlashSaleOrderManagement = () => {
   const [products, setProducts] = useState([]);
