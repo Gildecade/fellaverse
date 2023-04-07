@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   ShopOutlined,
   FileOutlined,
-  TeamOutlined,
   UserOutlined,
   HomeOutlined,
   FireOutlined,

@@ -17,8 +17,6 @@ import {
   SubnodeOutlined,
   AuditOutlined
 } from '@ant-design/icons';
-import { domain } from '../../config';
-import axios from 'axios';
 
 import AdminIndex from './adminIndex';
 import LogoutForm from '../authentication/logout';
