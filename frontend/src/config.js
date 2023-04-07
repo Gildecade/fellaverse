@@ -1,3 +1,3 @@
 module.exports = {
-  domain: "https://fellaverse-provider-gateway.azuremicroservices.io/"
+  domain: "http://localhost/"
 }
