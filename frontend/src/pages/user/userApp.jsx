@@ -30,6 +30,7 @@ function getItem(label, key, icon, children) {
 const homePage = 'Home';
 
 const UserApp = () => {
+  const [collapsed, setCollapsed] = useState(false);
   const [ username, setUsername] = useState(null);
   const [ userId, setUserId] = useState(null);
 

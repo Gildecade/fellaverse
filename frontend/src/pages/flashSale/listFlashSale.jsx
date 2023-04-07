@@ -38,7 +38,7 @@ const FlashSale = () => {
             <Card 
               hoverable={true}
               style={{
-                width: 240,
+                width: 250,
               }}
               loading={loading}
               // cover={<img alt={product.productName} src={GGko}></img>}
