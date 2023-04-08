@@ -23,7 +23,8 @@ const RecordManagement = () => {
   const handleDelete = async (key) => {
     try {
       console.log(key);
-      const result = await axios.delete(`${domain}record/` + key); // TODO: should be /id/userid
+      console.log(`${domain}record/` + key.id + '/' + key.userId);
+      const result = await axios.delete(`${domain}record/` + key.id + '/' + key.userId); // TODO: should be /id/userid
       message.success("Delete successfully.");
       const data = result.data.data;
       console.log(data);

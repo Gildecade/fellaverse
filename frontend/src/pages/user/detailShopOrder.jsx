@@ -24,7 +24,7 @@ const DetailShopOrder = () => {
         <Descriptions.Item label="course name">{record.product.productName}</Descriptions.Item>
         <Descriptions.Item label="Description">{record.product.description }</Descriptions.Item>
         <Descriptions.Item label="Price">{record.product.price}</Descriptions.Item>
-        <Descriptions.Item label="link">{record.product.course.videoUrl}</Descriptions.Item>
+        <Descriptions.Item label="link">{record.product.videoUrl}</Descriptions.Item>
 
       </Descriptions>
       <br/>
