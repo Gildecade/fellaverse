@@ -195,7 +195,7 @@ const AddProList = () => {
         },
     ]}
     >
-    <Input />
+    <Input maxLength={60}/>
     </Form.Item>
 
     <Form.Item
@@ -208,7 +208,7 @@ const AddProList = () => {
         },
     ]}
     >
-      <TextArea rows={4} showCount={true} allowClear={true} />
+      <TextArea rows={4} showCount={true} allowClear={true} maxLength={256}/>
     </Form.Item>
 
     <Form.Item

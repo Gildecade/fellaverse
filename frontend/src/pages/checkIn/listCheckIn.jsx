@@ -171,7 +171,7 @@ const UserCheckIn = () => {
       if (element.length!=0) {
         //console.log("e=", parseInt(dayjs(element.startDateTime).format("MM")), "n2=", nowMonth, "TF=", parseInt(dayjs(element.startDateTime).format("MM")) == nowMonth);
         if (parseInt(dayjs(element.startDateTime).format("YYYYM")) == nowMonth) {
-          let day = dayjs(element.startDateTime).format("DD");
+          let day = dayjs(element.startDateTime).format("D");
           //console.log(day);
           calendarListTemp[day].push(element);
         }
@@ -329,7 +329,8 @@ const UserCheckIn = () => {
           if (element.length!=0) {
             //console.log("e=", parseInt(dayjs(element.startDateTime).format("MM")), "n2=", nowMonth, "TF=", parseInt(dayjs(element.startDateTime).format("MM")) == nowMonth);
             if (parseInt(dayjs(element.startDateTime).format("YYYYM")) == nowMonth) {
-              let day = dayjs(element.startDateTime).format("DD");
+              let day = dayjs(element.startDateTime).format("D");
+              //console.log("day",day);
               calendarListTemp[day].push(element);
             }
 
@@ -343,7 +344,7 @@ const UserCheckIn = () => {
         setCalendarListMonth(calendarListMonthTemp);
       } catch (error) {
         console.log(error);
-        message.error(error.response.data.message);
+        message.error(error.response);
       }
 
     }

@@ -17,8 +17,6 @@ import {
   SubnodeOutlined,
   AuditOutlined
 } from '@ant-design/icons';
-import { domain } from '../../config';
-import axios from 'axios';
 
 import AdminIndex from './adminIndex';
 import LogoutForm from '../authentication/logout';
@@ -57,6 +55,7 @@ import DetailOrderManagement from './order/detailOrder';
 import CourseManagement from './course/listCourse';
 import AddCourse from './course/addCourse';
 import EditCourse from './course/editCourse';
+import '../../App.css';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -87,6 +86,9 @@ const AdminApp = () => {
     setUsername(username);
     const roles = JSON.parse(localStorage.getItem('roles') ? localStorage.getItem('roles') : sessionStorage.getItem('roles'));
     setRoles(roles);
+    if (roles == null) {
+      return;
+    }
     var items = [
       getItem(<Link to='/admin'>{homePage}</Link>, '1', <HomeOutlined />),
     ];
@@ -128,7 +130,7 @@ const AdminApp = () => {
               margin: 16
             }}
           >
-          <img id="project-image" src="./title.png" alt="title" style={{width:170,height:32}} />
+          <img class="project-image" src="./title.png" alt="title" style={{width:170,height:32}} />
           </div>
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
         </Sider>
@@ -175,22 +177,30 @@ const AdminApp = () => {
                 {/* TODO: link your components(element) with route paths here */}
                 <Route path="/" element={<AdminIndex />} />
                 <Route path='/success/:title/:subTitle' element={<Success />} />
-                <Route path="/admin" element={<AdminManagement/>} />
-                <Route path="/admin/add" element={<AddAdmin/>} />
-                <Route path="/admin/edit/:id" element={<EditAdmin/>} />
-                <Route path="/role" element={<RoleManagement/>} />
-                <Route path="/role/add" element={<AddRole/>} />
-                <Route path="/role/edit/:id" element={<EditRole/>} />
-                <Route path="/shop/course" element={<CourseManagement />} />
-                <Route path="/shop/course/add" element={<AddCourse/>} />
-                <Route path="/shop/course/edit/:id" element={<EditCourse/>} />
-                <Route path="/limitedProduct" element={<LimitedProductManagement/>} />
-                <Route path="/limitedProduct/add" element={<AddLimitedProduct/>} />
-                <Route path="/limitedProduct/edit/:id" element={<EditLimitedProduct/>} />
-                <Route path="/saleOrder" element={<FlashSaleOrderManagement/>} />
-                <Route path="/saleOrder/detail/:id" element={<DetailSaleOrder/>} />
-                <Route path="/order" element={<ShopOrderManagement/>} />
-                <Route path="/order/detail/:id" element={<DetailOrderManagement/>} />
+                {(roles.indexOf("SuperAdmin") != -1) ? 
+                <>
+                  <Route path="/admin" element={<AdminManagement/>} /> 
+                  <Route path="/admin/add" element={<AddAdmin/>} /> 
+                  <Route path="/admin/edit/:id" element={<EditAdmin/>} /> 
+                  <Route path="/role" element={<RoleManagement/>} /> 
+                  <Route path="/role/add" element={<AddRole/>} /> 
+                  <Route path="/role/edit/:id" element={<EditRole/>} />
+                </>
+                :<></>}
+                {(roles.indexOf("SuperAdmin") != -1) || (roles.indexOf("ShopAdmin") != -1) ?
+                <>
+                    <Route path="/shop/course" element={<CourseManagement />} />
+                    <Route path="/shop/course/add" element={<AddCourse/>} />
+                    <Route path="/shop/course/edit/:id" element={<EditCourse/>} />
+                    <Route path="/limitedProduct" element={<LimitedProductManagement/>} />
+                    <Route path="/limitedProduct/add" element={<AddLimitedProduct/>} />
+                    <Route path="/limitedProduct/edit/:id" element={<EditLimitedProduct/>} />
+                    <Route path="/saleOrder" element={<FlashSaleOrderManagement/>} />
+                    <Route path="/saleOrder/detail/:id" element={<DetailSaleOrder/>} />
+                    <Route path="/order" element={<ShopOrderManagement/>} />
+                    <Route path="/order/detail/:id" element={<DetailOrderManagement/>} />
+                </>
+                :<></>}
                 <Route path="/user" element={<UserManagement/>} />
                 <Route path="/user/edit/:id" element={<EditUserFunction/>} />
                 <Route path="/function" element={<FunctionManagement/>} />

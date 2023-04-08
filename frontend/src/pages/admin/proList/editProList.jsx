@@ -188,7 +188,7 @@ const EditProList = () => {
         },
     ]}
     >
-    <Input />
+    <Input maxLength={59}/>
     </Form.Item>
 
     <Form.Item
@@ -196,7 +196,7 @@ const EditProList = () => {
       label="Content"
       initialValue={record.content}
     >
-      <TextArea rows={4} showCount={true} allowClear={true} />
+      <TextArea rows={4} showCount={true} allowClear={true} maxLength={255}/>
     </Form.Item>
 
     <Form.Item

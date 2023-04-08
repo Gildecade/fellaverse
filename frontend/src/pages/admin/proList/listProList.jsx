@@ -33,7 +33,7 @@ const ProListManagement = () => {
       const title = data;
       const subTitle = "Delete announcement success!";
       //navigate(`/admin/success/${title}/${subTitle}`);
-      window.location = '/checkIn';
+      window.location = '/admin/prolist';
     } catch (error) {
       console.log(error);
       let msg = null;
