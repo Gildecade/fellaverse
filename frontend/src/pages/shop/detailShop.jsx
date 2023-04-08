@@ -10,7 +10,6 @@ const { Meta } = Card;
 
 const DetailShop = () => {
   const [loading, setLoading] = useState(true);
-  const [disabled, setDisabled] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const productId = useParams().id;
   const parameters = useLocation();
@@ -67,12 +66,6 @@ const DetailShop = () => {
     }
   };
 
-  useEffect(() => {
-    var now = moment();
-    if (now.isBefore(product.saleDateTime)) {
-      setDisabled(true);
-    }
-  }, []);
 
   return (
     <div>
@@ -102,7 +95,7 @@ const DetailShop = () => {
               <Row>
                 <Space>
                   <InputNumber min={1} max={10} defaultValue={quantity} onChange={setQuantity}/>
-                  <Button type="primary" size={'large'} disabled={disabled} onClick={buy}>
+                  <Button type="primary" size={'large'}  onClick={buy}>
                     Purchase
                   </Button>
                 </Space>
