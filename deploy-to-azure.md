@@ -23,6 +23,8 @@
     - `az spring app deploy -n provider-workout -g fellaverse -s fellaverse --jar-path 'provider-workout-7001/target/provider-workout-7001-0.0.1-SNAPSHOT.jar' --disable-validation`
     - `az spring app deploy -n consumer-checkin -g fellaverse -s fellaverse --jar-path 'consumer-checkin-7012/target/consumer-checkin-7012-0.0.1-SNAPSHOT.jar' --disable-validation`
     - `az spring app deploy -n provider-checkin -g fellaverse -s fellaverse --jar-path 'provider-checkin-7002/target/provider-checkin-7002-0.0.1-SNAPSHOT.jar' --disable-validation`
+    - `az spring app deploy -n provider-flashsale -g fellaverse -s fellaverse --jar-path 'provider-flashsale-7502/target/provider-flashsale-7502-0.0.1-SNAPSHOT.jar' --disable-validation`
+    - `az spring app deploy -n consumer-flashsale -g fellaverse -s fellaverse --jar-path 'consumer-flashsale-7702/target/provider-flashsale-7702-0.0.1-SNAPSHOT.jar' --disable-validation`
 
 6. Log from azure
     - `az spring app logs --name eureka-8761 --service "fellaverse" --resource-group "fellaverse" -f`
