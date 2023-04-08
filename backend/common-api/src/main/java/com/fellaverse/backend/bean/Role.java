@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
+/**
+ * Bean file for role of the application administrator.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

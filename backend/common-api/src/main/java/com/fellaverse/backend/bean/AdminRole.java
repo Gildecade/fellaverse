@@ -1,7 +1,9 @@
 package com.fellaverse.backend.bean;
 
 import jakarta.persistence.*;
-
+/**
+ * Bean file for (administrator,role) pairs.
+ */
 @Entity
 @Table(name = "admin_role")
 public class AdminRole {

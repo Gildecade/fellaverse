@@ -3,7 +3,9 @@ package com.fellaverse.backend.bean;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-
+/**
+ * Bean file for user functions.
+ */
 @Entity
 @Table(name = "user_function")
 @AllArgsConstructor

@@ -5,7 +5,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.Instant;
-
+/**
+ * Bean file for user check-in function.
+ */
 @Entity
 @Table(name = "check_in")
 @Data

@@ -15,7 +15,9 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
+/**
+ * Bean file for homepage announcement.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

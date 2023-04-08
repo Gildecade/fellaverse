@@ -1,5 +1,6 @@
-package com.fellaverse.backend.bean;
+package com.fellaverse.backend.dto;
 
+import com.fellaverse.backend.bean.FlashSaleOrder;
 import com.fellaverse.backend.dto.LimitedProductDTO;
 import com.fellaverse.backend.enumerator.OrderStatus;
 import lombok.AllArgsConstructor;

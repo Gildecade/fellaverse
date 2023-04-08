@@ -9,7 +9,9 @@ import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.util.Objects;
-
+/**
+ * Bean file for (checkInId, userId) pairs.
+ */
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor

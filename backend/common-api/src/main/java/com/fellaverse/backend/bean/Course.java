@@ -3,7 +3,9 @@ package com.fellaverse.backend.bean;
 import jakarta.persistence.*;
 import lombok.*;
 
-
+/**
+ * Bean file for course product in shop.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

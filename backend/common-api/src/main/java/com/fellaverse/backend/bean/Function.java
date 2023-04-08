@@ -9,7 +9,9 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Set;
-
+/**
+ * bean file for application function.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

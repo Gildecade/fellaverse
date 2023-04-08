@@ -11,7 +11,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
-
+/**
+ * Bean file for user attributes.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

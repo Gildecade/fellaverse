@@ -15,7 +15,9 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-
+/**
+ * Bean file for limited product.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
