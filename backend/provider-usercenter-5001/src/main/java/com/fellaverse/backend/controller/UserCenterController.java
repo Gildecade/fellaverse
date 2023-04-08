@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for user center, including displaying user info, order info, etc.
+ */
 @RestController
 @RequestMapping("/api/user")
 public class UserCenterController {

@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+/**
+ * Controller for flash sale order management, including add and find.
+ */
 @RestController
 @RequestMapping("/api/management/flashSaleOrder")
 public class FlashSaleOrderController {

@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+/**
+ * Controller for limited product management, including CRUD.
+ */
 @RestController
 @RequestMapping("/api/management/limitedProduct")
 public class LimitedProductManageController {

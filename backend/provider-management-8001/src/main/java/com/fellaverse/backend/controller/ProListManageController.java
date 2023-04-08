@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-
+/**
+ * Controller for homepage announcement management services, including CRUD.
+ */
 @RestController
 @RequestMapping("api/management/prolist")
 public class ProListManageController {

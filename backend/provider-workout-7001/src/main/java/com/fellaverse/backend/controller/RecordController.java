@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for user record services, including CRD.
+ */
 @RestController
 @RequestMapping("/api/record")  // any requests under token will be proceeded
 public class RecordController {

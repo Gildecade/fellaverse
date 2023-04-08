@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-
+/**
+ * Controller for user checkin service, including CRUD.
+ */
 @RestController
 @RequestMapping("api/checkin")
 public class CheckInController {
