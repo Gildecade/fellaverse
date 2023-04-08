@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
+/**
+ * Bean file for user's training record.
+ */
 @Entity
 @Table(name = "record")
 public class Record {

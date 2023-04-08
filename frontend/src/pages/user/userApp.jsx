@@ -51,7 +51,7 @@ const UserApp = () => {
     getItem(<Link to='/user'>{homePage}</Link>, '1', <HomeOutlined />),
     getItem(<Link to='/user/flashSaleOrder'>Flash sale order</Link>, '2', <UnorderedListOutlined />),
     getItem(<Link to={'/user/schedule/' + userId}>Schedule</Link>, '3', <CalendarOutlined />),
-    getItem(<Link to='/user/order'>Shop order</Link>, '3', <UnorderedListOutlined />),
+    getItem(<Link to='/user/order'>Shop order</Link>, '4', <UnorderedListOutlined />),
 
   ];
   return (

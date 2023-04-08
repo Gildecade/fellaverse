@@ -12,7 +12,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
+/**
+ * Bean file for product in shop.
+ */
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor

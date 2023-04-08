@@ -9,7 +9,9 @@ import org.hibernate.Hibernate;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-
+/**
+ * Bean file for training schedule.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

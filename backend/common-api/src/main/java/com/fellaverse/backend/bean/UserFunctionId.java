@@ -9,7 +9,9 @@ import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.util.Objects;
-
+/**
+ * Bean file for ID of functionalities.
+ */
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor

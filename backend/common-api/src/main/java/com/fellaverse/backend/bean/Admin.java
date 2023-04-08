@@ -10,7 +10,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.List;
 import java.util.Set;
-
+/**
+ * Bean file for application administrator.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

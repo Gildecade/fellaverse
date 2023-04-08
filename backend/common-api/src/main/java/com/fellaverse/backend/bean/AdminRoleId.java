@@ -8,7 +8,9 @@ import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.util.Objects;
-
+/**
+ * Bean file for application administrator.
+ */
 @Embeddable
 public class AdminRoleId implements Serializable {
     private static final long serialVersionUID = 6470750271757164303L;

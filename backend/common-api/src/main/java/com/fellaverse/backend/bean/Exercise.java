@@ -8,7 +8,9 @@ import lombok.Setter;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
-
+/**
+ * Bean file for exercise types
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

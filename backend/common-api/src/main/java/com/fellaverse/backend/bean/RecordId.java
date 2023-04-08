@@ -10,6 +10,9 @@ import org.hibernate.Hibernate;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Bean file for (roleId, userId) pairs.
+ */
 @Embeddable
 public class RecordId implements Serializable {
     private static final long serialVersionUID = 1726692112059983460L;

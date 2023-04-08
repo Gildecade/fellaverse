@@ -10,7 +10,9 @@ import org.hibernate.Hibernate;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
-
+/**
+ * Bean file for training program.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
