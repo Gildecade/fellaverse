@@ -42,7 +42,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    Contents: './backend/consumer-checkin-7012/target/*.jar'
+    Contents: '**/*.jar'
     TargetFolder: '$(build.artifactstagingdirectory)'
 
 - task: CopyFiles@2
