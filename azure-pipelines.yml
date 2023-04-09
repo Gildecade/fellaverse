@@ -62,7 +62,7 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy frontend artifact to staging directory'
   inputs:
-    Contents: './frontend/build/**'
+    Contents: '**/frontend/build/**'
     TargetFolder: '$(build.artifactstagingdirectory)/frontend'
     
 - task: PublishBuildArtifacts@1
