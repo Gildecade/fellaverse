@@ -13,8 +13,9 @@ pool:
 
 steps:
 
+
 - task: Maven@3
-  displayName: 'Clean'
+  displayName: 'Clean and Install Package'
   inputs:
       mavenPomFile: './backend/pom.xml'
       mavenOptions: '-Xmx3072m'
@@ -24,8 +25,7 @@ steps:
       mavenAuthenticateFeed: true
       publishJUnitResults: false
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
-      goals: 'clean'
-
+      goals: 'clean install -DskipTests spring-boot:repackage'
 
 - task: Maven@3
   displayName: 'Build and Package'
@@ -38,14 +38,18 @@ steps:
     mavenAuthenticateFeed: true
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
-    options: '-DskipTests -amd spring-boot:repackage -e'
+    goals: 'package -DskipTests -amd spring-boot:repackage -e'
 
 - task: CopyFiles@2
+  displayName: 'Copy Jar to staging directory'
   inputs:
-    Contents: '**'
+    Contents: '**/*.jar'
     TargetFolder: '$(build.artifactstagingdirectory)'
+    
+
+
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish artifact'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
