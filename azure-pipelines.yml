@@ -38,8 +38,12 @@ steps:
     goals: 'package'
     options: '-DskipTests'
 
+- task: CopyFiles@2
+  inputs:
+    Contents: './backend/provider-management-8001/target/*.jar'
+    TargetFolder: '$(build.artifactstagingdirectory)'
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: './backend/provider-management-8001/target/*.jar'
+    ArtifactName: 'drop'
     publishLocation: 'Container'
