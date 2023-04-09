@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for user shop services, including listing course products, purchase course.
+ */
 @RestController
 @RequestMapping("/api/shop")  // any requests under token will be proceeded
 public class ShopController {
@@ -47,10 +50,7 @@ public class ShopController {
 
     @GetMapping("/{userId}/order")
     public List<OrderDTO> findOrderByUserId(@PathVariable("userId") Long userId) {
-//        return orderService.findByUserId(userId).stream().map(orderMapper::toDto).collect(Collectors.toList());
         return orderService.findByUserId(userId).stream().map(orderMapper::toDto).collect(Collectors.toList());
-
-//        return shopService.findAll().stream().map(courseFindAllMapper::toDto).collect(Collectors.toList());
     }
 
     @JWTCheckToken(function = "buy")

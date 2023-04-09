@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for user service management, including CRUD.
+ */
 @RestController
 @RequestMapping("api/management/user")
 public class UserManageController {

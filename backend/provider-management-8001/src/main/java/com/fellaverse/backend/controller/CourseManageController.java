@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller for course management, including CRUD.
+ */
 @RestController
 @RequestMapping("/api/management/shop/course")
 public class CourseManageController {

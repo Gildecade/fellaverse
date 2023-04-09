@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for user schedule services, including CRUD.
+ */
 @RestController
 @RequestMapping("/api/schedule")  // any requests under token will be proceeded
 public class ScheduleController {

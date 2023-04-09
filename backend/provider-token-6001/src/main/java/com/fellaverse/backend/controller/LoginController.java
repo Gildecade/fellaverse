@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controller for login services.
+ */
 @RestController
 @RequestMapping("/api/auth/*")  // any requests under token will be proceeded
 public class LoginController {

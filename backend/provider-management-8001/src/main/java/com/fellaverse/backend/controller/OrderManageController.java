@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+/**
+ * Controller for admin order control services, including add and find.
+ */
 @RestController
 @RequestMapping("/api/management/order")
 public class OrderManageController {

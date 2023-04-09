@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for exercise management, including CRUD.
+ */
 @RestController
 @RequestMapping("api/management/exercise")
 public class ExerciseManageController {

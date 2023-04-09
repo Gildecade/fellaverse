@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-
+/**
+ * Controller for function management, including CRUD.
+ */
 @RestController
 @RequestMapping("api/management/function")
 public class FunctionManageController {
@@ -41,7 +43,7 @@ public class FunctionManageController {
 
     @JWTCheckToken(role = {"SuperAdmin", "WorkoutAdmin"})
     @GetMapping("")
-    public Set<FunctionDTO> findAllExercise(){
+    public Set<FunctionDTO> findAllFunction(){
         return functionManageService.findAllFunctions().stream().map(functionDTOMapper::toDto).collect(Collectors.toSet());
     }
 
