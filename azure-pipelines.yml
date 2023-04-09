@@ -4,22 +4,49 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
 trigger:
+- main
 - azure-pipelines
 
-pool:
-  vmImage: ubuntu-latest
+
+pool: 
+  name: Fellaverse
 
 steps:
+
 - task: Maven@3
+  displayName: 'Clean'
   inputs:
-    mavenPomFile: 'backend/pom.xml'
-- task: AzureSpringCloud@0
+      mavenPomFile: './backend/pom.xml'
+      mavenOptions: '-Xmx3072m'
+      javaHomeOption: 'JDKVersion'
+      jdkVersionOption: '1.17'
+      jdkArchitectureOption: 'x64'
+      mavenAuthenticateFeed: true
+      publishJUnitResults: false
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      goals: 'clean'
+
+
+- task: Maven@3
+  displayName: 'Build and Package'
   inputs:
-    azureSubscription: 'Fellaverse Service Connection'
-    Action: 'Deploy'
-    AzureSpringCloud: fellaverse
-    AppName: tokenserver-6001
-    DeploymentType: 'Artifacts'
-    UseStagingDeployment: false
-    DeploymentName: 'default'
-    Package: ./backend/provider-token-6001-jar.jar
+    mavenPomFile: './backend/pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.17'
+    jdkArchitectureOption: 'x64'
+    mavenAuthenticateFeed: true
+    publishJUnitResults: false
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: 'package'
+    options: '-DskipTests -amd spring-boot:repackage -e'
+
+- task: CopyFiles@2
+  inputs:
+    Contents: '**'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
