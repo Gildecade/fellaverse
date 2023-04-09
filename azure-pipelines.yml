@@ -41,75 +41,15 @@ steps:
     goals: 'package -DskipTests -amd spring-boot:repackage -e'
 
 - task: CopyFiles@2
+  displayName: 'Copy Jar to staging directory'
   inputs:
     Contents: '**/*.jar'
     TargetFolder: '$(build.artifactstagingdirectory)'
+    
 
-- task: CopyFiles@2
-  inputs:
-    Contents: './backend/consumer-flashsale-7702/target/*.jar'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-    
-- task: CopyFiles@2
-  inputs:
-    Contents: './backend/consumer-management-8002/target/*.jar'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-    
-- task: CopyFiles@2
-  inputs:
-    Contents: './backend/consumer-shop-7701/target/*.jar'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-    
-- task: CopyFiles@2
-  inputs:
-    Contents: './backend/consumer-token-6002/target/*.jar'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-    
-- task: CopyFiles@2
-  inputs:
-    Contents: './backend/consumer-datacenter-5002/target/*.jar'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-    
-- task: CopyFiles@2
-  inputs:
-    Contents: './backend/consumer-workout-7999/target/*.jar'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-    
-- task: CopyFiles@2
-  inputs:
-    Contents: './backend/provider-checkin-7002/target/*.jar'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-    
-- task: CopyFiles@2
-  inputs:
-    Contents: './backend/provider-flashsale-7502/target/*.jar'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-    
-- task: CopyFiles@2
-  inputs:
-    Contents: './backend/provider-management-8001/target/*.jar'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-    
-- task: CopyFiles@2
-  inputs:
-    Contents: './backend/provider-shop-7501/target/*.jar'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-    
-- task: CopyFiles@2
-  inputs:
-    Contents: './backend/provider-token-6001/target/*.jar'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-
-- task: CopyFiles@2
-  inputs:
-    Contents: './backend/provider-usercenter-5001/target/*.jar'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-- task: CopyFiles@2
-  inputs:
-    Contents: './backend/provider-workout-7001/target/*.jar'
-    TargetFolder: '$(build.artifactstagingdirectory)'
 
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish artifact'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
