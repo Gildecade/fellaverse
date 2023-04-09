@@ -11,19 +11,6 @@ pool:
   name: Fellaverse
 
 steps:
-- task: Maven@3
-  displayName: 'Install repackage'
-  inputs:
-      mavenPomFile: './backend/pom.xml'
-      mavenOptions: '-Xmx3072m'
-      javaHomeOption: 'JDKVersion'
-      jdkVersionOption: '1.17'
-      jdkArchitectureOption: 'x64'
-      mavenAuthenticateFeed: true
-      publishJUnitResults: false
-      testResultsFiles: '**/surefire-reports/TEST-*.xml'
-      goals: 'install'
-      options: 'spring-boot:repackage'
 
 - task: Maven@3
   displayName: 'Clean'
