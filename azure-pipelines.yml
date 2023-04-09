@@ -24,8 +24,8 @@ steps:
       mavenAuthenticateFeed: true
       publishJUnitResults: false
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
-      goals: 'clean'
-      options: 'install'
+      goals: 'install'
+      options: 'clean'
 
 
 - task: Maven@3
