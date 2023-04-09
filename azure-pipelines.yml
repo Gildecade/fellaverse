@@ -12,6 +12,20 @@ pool:
 
 steps:
 - task: Maven@3
+  displayName: 'Clean'
+  inputs:
+      mavenPomFile: './backend/pom.xml'
+      mavenOptions: '-Xmx3072m'
+      javaHomeOption: 'JDKVersion'
+      jdkVersionOption: '1.17'
+      jdkArchitectureOption: 'x64'
+      mavenAuthenticateFeed: true
+      publishJUnitResults: false
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      goals: 'clean'
+
+- task: Maven@3
+  displayName: 'Build and Package'
   inputs:
     mavenPomFile: './backend/pom.xml'
     mavenOptions: '-Xmx3072m'
@@ -22,4 +36,4 @@ steps:
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
-    options: 'clean -DskipTests'
+    options: '-DskipTests'
