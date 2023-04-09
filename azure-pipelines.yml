@@ -37,3 +37,9 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
     options: '-DskipTests'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: './backend/provider-management-8001/target/*.jar'
+    publishLocation: 'Container'
