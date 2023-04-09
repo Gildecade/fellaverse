@@ -6,8 +6,9 @@
 trigger:
 - main
 
-pool:
-  vmImage: ubuntu-latest
+
+pool: 
+  name: Fellaverse
 
 steps:
 - task: Maven@3
