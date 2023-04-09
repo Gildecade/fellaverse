@@ -13,22 +13,9 @@ pool:
 
 steps:
 
-- task: Maven@3
-  displayName: 'Clean'
-  inputs:
-      mavenPomFile: './backend/pom.xml'
-      mavenOptions: '-Xmx3072m'
-      javaHomeOption: 'JDKVersion'
-      jdkVersionOption: '1.17'
-      jdkArchitectureOption: 'x64'
-      mavenAuthenticateFeed: true
-      publishJUnitResults: false
-      testResultsFiles: '**/surefire-reports/TEST-*.xml'
-      goals: 'clean'
-      options: '-DskipTests'
 
 - task: Maven@3
-  displayName: 'Install Package'
+  displayName: 'Clean and Install Package'
   inputs:
       mavenPomFile: './backend/pom.xml'
       mavenOptions: '-Xmx3072m'
@@ -38,7 +25,7 @@ steps:
       mavenAuthenticateFeed: true
       publishJUnitResults: false
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
-      goals: 'install spring-boot:repackage'
+      goals: 'clean install -DskipTests spring-boot:repackage'
 
 - task: Maven@3
   displayName: 'Build and Package'
@@ -51,8 +38,7 @@ steps:
     mavenAuthenticateFeed: true
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
-    options: '-DskipTests -amd spring-boot:repackage -e'
+    goals: 'package -DskipTests -amd spring-boot:repackage -e'
 
 - task: CopyFiles@2
   inputs:
