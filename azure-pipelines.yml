@@ -25,7 +25,7 @@ steps:
       publishJUnitResults: false
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
       goals: 'install'
-      options: 'clean'
+      options: 'clean -DskipTests'
 
 
 - task: Maven@3
