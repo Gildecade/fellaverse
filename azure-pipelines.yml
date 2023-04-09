@@ -40,17 +40,41 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package -DskipTests -amd spring-boot:repackage -e'
 
+- task: Npm@1
+  displayName: 'Npm install package'
+  inputs:
+    command: 'install'
+    workingDir: './frontend'
+- task: Npm@1
+  displayName: 'Npm run build'
+  inputs:
+    command: 'custom'
+    workingDir: './frontend'
+    customCommand: 'run build'
+
+
 - task: CopyFiles@2
-  displayName: 'Copy Jar to staging directory'
+  displayName: 'Copy backend artifact to staging directory'
   inputs:
     Contents: '**/*.jar'
-    TargetFolder: '$(build.artifactstagingdirectory)'
+    TargetFolder: '$(build.artifactstagingdirectory)/backend'
     
-
+- task: CopyFiles@2
+  displayName: 'Copy frontend artifact to staging directory'
+  inputs:
+    Contents: '**/frontend/build/**'
+    TargetFolder: '$(build.artifactstagingdirectory)/frontend'
+    
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish backend artifact'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/backend'
+    ArtifactName: 'BackendArtifact'
+    publishLocation: 'Container'
 
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish artifact'
+  displayName: 'Publish frontend artifact'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/frontend'
+    ArtifactName: 'FrontendArtifact'
     publishLocation: 'Container'
