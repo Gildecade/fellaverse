@@ -5,8 +5,7 @@ import { Button, Form, Input, Select, message, InputNumber, Upload, Typography, 
 import { PlusOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { domain } from '../../../config';
-import uploadFileToBlob, { isStorageConfigured } from '../upload/azure-storage-blob';
-import { v4 as uuidv4 } from 'uuid';
+import uploadFileToBlob, { isStorageConfigured, uploadVideoToBlob} from '../upload/azure-storage-blob';
 const storageConfigured = isStorageConfigured();
 
 const { Option } = Select;
@@ -62,24 +61,14 @@ const EditCourse = () => {
     try {
 
       if(imageSelected != null) {
-        if (imageSelected.type == "image/png") {
-          values.imageUrl = imageContainerUrl + uuidv4() + ".png";
-        }
-        else if (imageSelected.type == "image/jpeg") {
-          values.imageUrl = imageContainerUrl + uuidv4() + ".jpeg";
-        }
-        else {
-          values.imageUrl = imageContainerUrl + uuidv4();
-        }
+        values.imageUrl = imageContainerUrl + imageSelected.name;
+        onFileUpload(imageSelected);
+        
       }
 
       if (videoSelected != null) {
-        if (videoSelected.type == "video/mp4") {
-          values.videoUrl = videoContainerUrl + uuidv4() + ".mp4";
-        }
-        else {
-          values.videoUrl = videoContainerUrl + uuidv4();
-        }
+        values.videoUrl = videoContainerUrl + videoSelected.name;  
+        onVideoUpload(videoSelected);
       }
 
       const request = {...values, id: courseId};
@@ -150,6 +139,17 @@ const EditCourse = () => {
 
       // *** UPLOAD TO AZURE STORAGE ***
       await uploadFileToBlob(file);
+    }
+  };
+
+  const onVideoUpload = async (file) => {
+
+    if(file && file?.name){
+      // prepare UI
+      // setUploading(true);
+
+      // *** UPLOAD TO AZURE STORAGE ***
+      await uploadVideoToBlob(file);
     }
   };
 

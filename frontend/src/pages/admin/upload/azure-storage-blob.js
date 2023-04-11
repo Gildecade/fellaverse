@@ -5,20 +5,25 @@
 import { BlobServiceClient } from "@azure/storage-blob";
 
 const containerName = `product-images`;
+const videoContainerName = `course-videos`;
 const sasToken = process.env.REACT_APP_AZURE_STORAGE_SAS_TOKEN;
 const storageAccountName = process.env.REACT_APP_AZURE_STORAGE_RESOURCE_NAME;
+const videoSasToken = process.env.REACT_APP_AZURE_VIDEO_SAS_TOKEN;
 // </snippet_package>
 
 // <snippet_get_client>
 const uploadUrl = `https://${storageAccountName}.blob.core.windows.net/?${sasToken}`;
+const uploadVideoUrl = `https://${storageAccountName}.blob.core.windows.net/?${videoSasToken}`;
 
 // get BlobService = notice `?` is pulled out of sasToken - if created in Azure portal
 const blobService = new BlobServiceClient(uploadUrl);
+const videoBlobService = new BlobServiceClient(uploadVideoUrl);
 
 // get Container - full public read access
 const containerClient =
   blobService.getContainerClient(containerName);
-// </snippet_get_client>
+
+const videoContainerClient = videoBlobService.getContainerClient(videoContainerName);
 
 // <snippet_isStorageConfigured>
 // Feature flag - disable storage feature to app if not configured
@@ -61,6 +66,17 @@ const createBlobInContainer = async (file) => {
   // upload file
   await blobClient.uploadData(file, options);
 };
+
+const createVideoBlobInContainer = async (file) => {
+  // create blobClient for container
+  const blobClient = videoContainerClient.getBlockBlobClient(file.name);
+
+  // set mimetype as determined from browser with file upload control
+  const options = { blobHTTPHeaders: { blobContentType: file.type } };
+
+  // upload file
+  await blobClient.uploadData(file, options);
+};
 // </snippet_createBlobInContainer>
 
 // <snippet_uploadFileToBlob>
@@ -70,6 +86,13 @@ const uploadFileToBlob = async (file) => {
   // upload file
   await createBlobInContainer(file);
 };
+
+export const uploadVideoToBlob = async (file) => {
+  if (!file) return;
+
+  // upload file
+  await createVideoBlobInContainer(file);
+}
 // </snippet_uploadFileToBlob>
 
 export default uploadFileToBlob;
