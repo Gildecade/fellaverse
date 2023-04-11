@@ -57,7 +57,6 @@ class AdminManageControllerTest {
     @Test
     @Transactional
     void findAllAdmin() throws Exception {
-        String token = "eyJtb2R1bGUiOiJwcm92aWRlci10b2tlbiIsImFsZyI6IkhTMjU2In0.eyJzaXRlIjoid3d3LmZlbGxhdmVyc2UuY29tIiwianRpIjoiMSIsImlhdCI6MTY3NjA2NjIwOCwiaXNzIjoiZmVsbGFzIiwic3ViIjoie1wicm9sZXNcIjpbXCJTdXBlckFkbWluXCJdLFwidXNlcm5hbWVcIjpcIlN1cGVyQWRtaW5cIn0iLCJleHAiOjE2NzYwNjY4MDh9.pzuHXQf6x9YClPNbZcVFHOaO7G1_YJq_WfUEMKrHLcM";
 //        String token = jwtTokenService.createToken(map.get("id").toString(), (Map<String, Object>) map.get("resource"));
 //        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/management/admin")
 //                        .header("fellaverse-token", token))
