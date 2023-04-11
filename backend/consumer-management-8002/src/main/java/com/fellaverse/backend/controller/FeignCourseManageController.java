@@ -1,6 +1,7 @@
 package com.fellaverse.backend.controller;
 
 import com.fellaverse.backend.dto.CourseDTO;
+import com.fellaverse.backend.dto.CourseRecord;
 import com.fellaverse.backend.projection.CourseInfo;
 import com.fellaverse.backend.service.FeignCourseManageService;
 import com.fellaverse.backend.validator.ValidGroup;
@@ -22,7 +23,7 @@ public class FeignCourseManageController {
     private FeignCourseManageService feignCourseManageService;
 
     @GetMapping("")
-    public List<CourseInfo> findAllCourse() {
+    public List<CourseRecord> findAllCourse() {
         return feignCourseManageService.findAllCourse();
     }
 
@@ -44,7 +45,7 @@ public class FeignCourseManageController {
     @DeleteMapping("/{id}")
     public String deleteCourse(@PathVariable("id") Long id) {
         ResponseEntity<String> result = feignCourseManageService.deleteCourse(id);
-        Assert.isTrue(HttpStatus.NO_CONTENT == result.getStatusCode(), "Delete course failed!");
+        Assert.isTrue(HttpStatus.OK == result.getStatusCode(), "Delete course failed!");
         return result.getBody();
     }
 

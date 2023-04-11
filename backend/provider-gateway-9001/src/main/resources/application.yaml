@@ -29,6 +29,7 @@ spring:
     name: provider-gateway
   main:
     web-application-type: reactive
+    allow-bean-definition-overriding: true
   cloud:
     gateway:
       globalcors:
@@ -150,3 +151,7 @@ gateway:  # DIY config
         - /api/auth/register
         - /api/auth/resetPassword
         - /api/limitedProduct
+        - /api/management/prolist
+        - /management/prolist
+        - /shop
+        - /api/shop

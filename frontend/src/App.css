@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.project-image {
+  filter: brightness(0) invert(1);
+}

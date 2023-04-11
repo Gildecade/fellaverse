@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Space, message, Card, Image } from 'antd';
 import { domain } from '../../config';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import GGko from '../../images/GGko.jpg';
 
 const { Meta } = Card;
@@ -10,7 +10,6 @@ const { Meta } = Card;
 const FlashSale = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
   
   useEffect(() => {
     const initialize = async () => {
@@ -39,7 +38,7 @@ const FlashSale = () => {
             <Card 
               hoverable={true}
               style={{
-                width: 240,
+                width: 250,
               }}
               loading={loading}
               // cover={<img alt={product.productName} src={GGko}></img>}

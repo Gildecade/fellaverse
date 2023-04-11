@@ -1,6 +1,5 @@
-import { Badge, Descriptions, message, Statistic, Menu, } from 'antd';
+import { Descriptions, message, Statistic } from 'antd';
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import CountUp from 'react-countup';
 import axios from 'axios';
 import { domain } from '../../config';
@@ -8,16 +7,6 @@ import { domain } from '../../config';
 const Profile = () => {
   const [user, setUser] = useState([]);
   const formatter = (value) => <CountUp end={value} separator="," />;
-  const items = [
-    {
-      key: 1,
-      label: 'Home',
-    },
-    {
-      key: 2,
-      label: 'Flash Sale Order',
-    },
-  ];
 
   useEffect(() => {
     const initialize = async () => {

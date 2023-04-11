@@ -4,22 +4,77 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
 trigger:
+- main
 - azure-pipelines
 
-pool:
-  vmImage: ubuntu-latest
+
+pool: 
+  name: Fellaverse
 
 steps:
+
+
 - task: Maven@3
+  displayName: 'Clean and Install Package'
   inputs:
-    mavenPomFile: 'backend/pom.xml'
-- task: AzureSpringCloud@0
+      mavenPomFile: './backend/pom.xml'
+      mavenOptions: '-Xmx3072m'
+      javaHomeOption: 'JDKVersion'
+      jdkVersionOption: '1.17'
+      jdkArchitectureOption: 'x64'
+      mavenAuthenticateFeed: true
+      publishJUnitResults: false
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      goals: 'clean install -DskipTests spring-boot:repackage'
+
+- task: Maven@3
+  displayName: 'Build and Package'
   inputs:
-    azureSubscription: 'Fellaverse Service Connection'
-    Action: 'Deploy'
-    AzureSpringCloud: fellaverse
-    AppName: tokenserver-6001
-    DeploymentType: 'Artifacts'
-    UseStagingDeployment: false
-    DeploymentName: 'default'
-    Package: ./backend/provider-token-6001-jar.jar
+    mavenPomFile: './backend/pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.17'
+    jdkArchitectureOption: 'x64'
+    mavenAuthenticateFeed: true
+    publishJUnitResults: false
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: 'package -DskipTests -amd spring-boot:repackage -e'
+
+- task: Npm@1
+  displayName: 'Npm install package'
+  inputs:
+    command: 'install'
+    workingDir: './frontend'
+- task: Npm@1
+  displayName: 'Npm run build'
+  inputs:
+    command: 'custom'
+    workingDir: './frontend'
+    customCommand: 'run build'
+
+
+- task: CopyFiles@2
+  displayName: 'Copy backend artifact to staging directory'
+  inputs:
+    Contents: '**/*.jar'
+    TargetFolder: '$(build.artifactstagingdirectory)/backend'
+    
+- task: CopyFiles@2
+  displayName: 'Copy frontend artifact to staging directory'
+  inputs:
+    Contents: '**/frontend/build/**'
+    TargetFolder: '$(build.artifactstagingdirectory)/frontend'
+    
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish backend artifact'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/backend'
+    ArtifactName: 'BackendArtifact'
+    publishLocation: 'Container'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish frontend artifact'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/frontend'
+    ArtifactName: 'FrontendArtifact'
+    publishLocation: 'Container'

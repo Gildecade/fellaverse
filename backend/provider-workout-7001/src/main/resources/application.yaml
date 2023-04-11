@@ -3,14 +3,20 @@ server:
 spring:
   application:
     name: provider-workout
-  profiles:
-    include:
-      - dev
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # create db fellaverse manually in IDEA
+    url: jdbc:mysql://fellaverse2.mysql.database.azure.com:3306/fellaverse?useSSL=true
+    username: fella
+    password: zesqiq-6ryvte-Cejxew
   jpa:
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+        jdbc:
+          time_zone: UTC
 # register this microservice to eureka server
 eureka:
   instance:

@@ -1,12 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Button, InputNumber, Space, Table, Tag, Popconfirm, message, Card, Image, Row, Col } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Button, InputNumber, Space, message, Image, Row, Col } from 'antd';
 import { domain } from '../../config';
 import axios from 'axios';
-import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import GGko from '../../images/GGko.jpg';
 import moment from 'moment/moment';
-
-const { Meta } = Card;
+import dayjs from 'dayjs';
+var utc = require('dayjs/plugin/utc');
+var timezone = require('dayjs/plugin/timezone');
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const DetailFlashSale = () => {
   const [loading, setLoading] = useState(false);
@@ -16,6 +19,7 @@ const DetailFlashSale = () => {
   const parameters = useLocation();
   const navigate = useNavigate();
   const product = parameters.state;
+  const timezone = dayjs.tz.guess();
   // console.log(product);
   const delay = ms => new Promise(res => setTimeout(res, ms));
 
@@ -63,10 +67,8 @@ const DetailFlashSale = () => {
       }
     }
     initialize();
-    var now = moment();
-    console.log(now);
-    console.log(moment(product.saleDateTime));
-    if (now.isBefore(product.saleDateTime)) {
+    var now = dayjs();
+    if (now.isBefore(dayjs.utc(product.saleDateTime).tz(timezone).format('YYYY-MM-DD HH:mm:ss'))) {
       setDisabled(true);
     }
   }, []);

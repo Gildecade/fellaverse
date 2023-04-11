@@ -8,10 +8,12 @@ const LogoutForm = () => {
     message.success("Successfully logged out");
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("username");
+    sessionStorage.removeItem("userId");
     sessionStorage.removeItem("roles");
     sessionStorage.removeItem("functions");
     localStorage.removeItem("token");
     localStorage.removeItem("username");
+    localStorage.removeItem("userId");
     localStorage.removeItem("roles");
     localStorage.removeItem("functions");
     await delay(1000);
